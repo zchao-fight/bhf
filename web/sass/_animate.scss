@@ -1,0 +1,30 @@
+@charset "UTF-8";
+// 弹簧式放大
+@keyframes scale-spring {
+  0% {opacity: 0.5; 
+    -ms-transform: scale(.5); 
+    transform: scale(.5);
+  }
+  80% {
+    opacity: 0.8; 
+    -ms-transform: 
+    scale(1.1); 
+    transform: scale(1.1);}
+  100% {
+    opacity: 1; 
+    -ms-transform: 
+    scale(1); 
+    transform: scale(1);
+  }
+}
+// 向上滑动
+@keyframes up-small{
+  0% {
+    transform: translate3d(0, 20px, 0);  
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);  
+    opacity: 1;
+  }
+}

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ccf.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="cn.ccf.pojo.User" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="Password" property="password" jdbcType="VARCHAR" />
+    <result column="ContactID" property="contactid" jdbcType="INTEGER" />
+    <result column="RealName" property="realname" jdbcType="VARCHAR" />
+    <result column="Sex" property="sex" jdbcType="INTEGER" />
+    <result column="Age" property="age" jdbcType="INTEGER" />
+    <result column="Job" property="job" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="VARCHAR" />
+    <result column="RoleID" property="roleid" jdbcType="INTEGER" />
+    <result column="WorkPhone" property="workphone" jdbcType="VARCHAR" />
+    <result column="DepartmentID" property="departmentid" jdbcType="INTEGER" />
+    <result column="State" property="state" jdbcType="INTEGER" />
+    <result column="Online" property="online" jdbcType="INTEGER" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, Name, Password, ContactID, RealName, Sex, Age, Job, Phone, RoleID, WorkPhone, 
+    DepartmentID, State, Online, Remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.ccf.pojo.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from com_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from com_user
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+ 
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from com_user
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ccf.pojo.User" >
+    insert into com_user (ID, Name, Password, 
+      ContactID, RealName, Sex, 
+      Age, Job, Phone, RoleID, 
+      WorkPhone, DepartmentID, State, 
+      Online, Remark)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{contactid,jdbcType=INTEGER}, #{realname,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{age,jdbcType=INTEGER}, #{job,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{roleid,jdbcType=INTEGER}, 
+      #{workphone,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
+      #{online,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ccf.pojo.User" >
+    insert into com_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="password != null" >
+        Password,
+      </if>
+      <if test="contactid != null" >
+        ContactID,
+      </if>
+      <if test="realname != null" >
+        RealName,
+      </if>
+      <if test="sex != null" >
+        Sex,
+      </if>
+      <if test="age != null" >
+        Age,
+      </if>
+      <if test="job != null" >
+        Job,
+      </if>
+      <if test="phone != null" >
+        Phone,
+      </if>
+      <if test="roleid != null" >
+        RoleID,
+      </if>
+      <if test="workphone != null" >
+        WorkPhone,
+      </if>
+      <if test="departmentid != null" >
+        DepartmentID,
+      </if>
+      <if test="state != null" >
+        State,
+      </if>
+      <if test="online != null" >
+        Online,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="contactid != null" >
+        #{contactid,jdbcType=INTEGER},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="job != null" >
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="workphone != null" >
+        #{workphone,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="online != null" >
+        #{online,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ccf.pojo.User" >
+    update com_user
+    <set >
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        Password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="contactid != null" >
+        ContactID = #{contactid,jdbcType=INTEGER},
+      </if>
+      <if test="realname != null" >
+        RealName = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        Sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null" >
+        Age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="job != null" >
+        Job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        RoleID = #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="workphone != null" >
+        WorkPhone = #{workphone,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        DepartmentID = #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        State = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="online != null" >
+        Online = #{online,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ccf.pojo.User" >
+    update com_user
+    set Name = #{name,jdbcType=VARCHAR},
+      Password = #{password,jdbcType=VARCHAR},
+      ContactID = #{contactid,jdbcType=INTEGER},
+      RealName = #{realname,jdbcType=VARCHAR},
+      Sex = #{sex,jdbcType=INTEGER},
+      Age = #{age,jdbcType=INTEGER},
+      Job = #{job,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR},
+      RoleID = #{roleid,jdbcType=INTEGER},
+      WorkPhone = #{workphone,jdbcType=VARCHAR},
+      DepartmentID = #{departmentid,jdbcType=INTEGER},
+      State = #{state,jdbcType=INTEGER},
+      Online = #{online,jdbcType=INTEGER},
+      Remark = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

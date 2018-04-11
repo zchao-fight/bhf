@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="situation">
+    <output-path>$PROJECT_DIR$/out/artifacts/situation</output-path>
+    <root id="archive" name="situation.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="bhf" />
+        </element>
+      </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/web" />
+    </root>
+  </artifact>
+</component>

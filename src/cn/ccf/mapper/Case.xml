@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ccf.mapper.CaseMapper" >
+  <resultMap id="BaseResultMap" type="cn.ccf.pojo.Case" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="Type" property="type" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="Keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="Eventscale" property="eventscale" jdbcType="VARCHAR" />
+    <result column="Eventlevel" property="eventlevel" jdbcType="VARCHAR" />
+    <result column="Eventtime" property="eventtime" jdbcType="VARCHAR" />
+    <result column="Eventaddress" property="eventaddress" jdbcType="VARCHAR" />
+    <result column="EventDescribe" property="eventdescribe" jdbcType="VARCHAR" />
+    <result column="EventSolution" property="eventsolution" jdbcType="VARCHAR" />
+    <result column="EventResult" property="eventresult" jdbcType="VARCHAR" />
+    <result column="FileName" property="filename" jdbcType="VARCHAR" />
+    <result column="FilePath" property="filepath" jdbcType="VARCHAR" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, Type, Name, Keywords, Eventscale, Eventlevel, Eventtime, Eventaddress, EventDescribe, 
+    EventSolution, EventResult, FileName, FilePath, Remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.ccf.pojo.CaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from com_case_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from com_case_info
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from com_case_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.ccf.pojo.CaseExample" >
+    delete from com_case_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.ccf.pojo.Case" >
+    insert into com_case_info (ID, Type, Name, 
+      Keywords, Eventscale, Eventlevel, 
+      Eventtime, Eventaddress, EventDescribe, 
+      EventSolution, EventResult, FileName, 
+      FilePath, Remark)
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{keywords,jdbcType=VARCHAR}, #{eventscale,jdbcType=VARCHAR}, #{eventlevel,jdbcType=VARCHAR}, 
+      #{eventtime,jdbcType=VARCHAR}, #{eventaddress,jdbcType=VARCHAR}, #{eventdescribe,jdbcType=VARCHAR}, 
+      #{eventsolution,jdbcType=VARCHAR}, #{eventresult,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, 
+      #{filepath,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ccf.pojo.Case" >
+    insert into com_case_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="type != null" >
+        Type,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="keywords != null" >
+        Keywords,
+      </if>
+      <if test="eventscale != null" >
+        Eventscale,
+      </if>
+      <if test="eventlevel != null" >
+        Eventlevel,
+      </if>
+      <if test="eventtime != null" >
+        Eventtime,
+      </if>
+      <if test="eventaddress != null" >
+        Eventaddress,
+      </if>
+      <if test="eventdescribe != null" >
+        EventDescribe,
+      </if>
+      <if test="eventsolution != null" >
+        EventSolution,
+      </if>
+      <if test="eventresult != null" >
+        EventResult,
+      </if>
+      <if test="filename != null" >
+        FileName,
+      </if>
+      <if test="filepath != null" >
+        FilePath,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="eventscale != null" >
+        #{eventscale,jdbcType=VARCHAR},
+      </if>
+      <if test="eventlevel != null" >
+        #{eventlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="eventtime != null" >
+        #{eventtime,jdbcType=VARCHAR},
+      </if>
+      <if test="eventaddress != null" >
+        #{eventaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="eventdescribe != null" >
+        #{eventdescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="eventsolution != null" >
+        #{eventsolution,jdbcType=VARCHAR},
+      </if>
+      <if test="eventresult != null" >
+        #{eventresult,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.ccf.pojo.CaseExample" resultType="java.lang.Integer" >
+    select count(*) from com_case_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update com_case_info
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        Type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        Name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keywords != null" >
+        Keywords = #{record.keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventscale != null" >
+        Eventscale = #{record.eventscale,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventlevel != null" >
+        Eventlevel = #{record.eventlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventtime != null" >
+        Eventtime = #{record.eventtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventaddress != null" >
+        Eventaddress = #{record.eventaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventdescribe != null" >
+        EventDescribe = #{record.eventdescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventsolution != null" >
+        EventSolution = #{record.eventsolution,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventresult != null" >
+        EventResult = #{record.eventresult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filename != null" >
+        FileName = #{record.filename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filepath != null" >
+        FilePath = #{record.filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        Remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update com_case_info
+    set ID = #{record.id,jdbcType=INTEGER},
+      Type = #{record.type,jdbcType=VARCHAR},
+      Name = #{record.name,jdbcType=VARCHAR},
+      Keywords = #{record.keywords,jdbcType=VARCHAR},
+      Eventscale = #{record.eventscale,jdbcType=VARCHAR},
+      Eventlevel = #{record.eventlevel,jdbcType=VARCHAR},
+      Eventtime = #{record.eventtime,jdbcType=VARCHAR},
+      Eventaddress = #{record.eventaddress,jdbcType=VARCHAR},
+      EventDescribe = #{record.eventdescribe,jdbcType=VARCHAR},
+      EventSolution = #{record.eventsolution,jdbcType=VARCHAR},
+      EventResult = #{record.eventresult,jdbcType=VARCHAR},
+      FileName = #{record.filename,jdbcType=VARCHAR},
+      FilePath = #{record.filepath,jdbcType=VARCHAR},
+      Remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ccf.pojo.Case" >
+    update com_case_info
+    <set >
+      <if test="type != null" >
+        Type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        Keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="eventscale != null" >
+        Eventscale = #{eventscale,jdbcType=VARCHAR},
+      </if>
+      <if test="eventlevel != null" >
+        Eventlevel = #{eventlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="eventtime != null" >
+        Eventtime = #{eventtime,jdbcType=VARCHAR},
+      </if>
+      <if test="eventaddress != null" >
+        Eventaddress = #{eventaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="eventdescribe != null" >
+        EventDescribe = #{eventdescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="eventsolution != null" >
+        EventSolution = #{eventsolution,jdbcType=VARCHAR},
+      </if>
+      <if test="eventresult != null" >
+        EventResult = #{eventresult,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        FileName = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        FilePath = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ccf.pojo.Case" >
+    update com_case_info
+    set Type = #{type,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      Keywords = #{keywords,jdbcType=VARCHAR},
+      Eventscale = #{eventscale,jdbcType=VARCHAR},
+      Eventlevel = #{eventlevel,jdbcType=VARCHAR},
+      Eventtime = #{eventtime,jdbcType=VARCHAR},
+      Eventaddress = #{eventaddress,jdbcType=VARCHAR},
+      EventDescribe = #{eventdescribe,jdbcType=VARCHAR},
+      EventSolution = #{eventsolution,jdbcType=VARCHAR},
+      EventResult = #{eventresult,jdbcType=VARCHAR},
+      FileName = #{filename,jdbcType=VARCHAR},
+      FilePath = #{filepath,jdbcType=VARCHAR},
+      Remark = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

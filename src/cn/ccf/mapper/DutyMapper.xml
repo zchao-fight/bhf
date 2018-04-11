@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ccf.mapper.DutyMapper" >
+  <resultMap id="BaseResultMap" type="cn.ccf.pojo.Duty" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="LeaderName" property="leadername" jdbcType="VARCHAR" />
+    <result column="AdviserName" property="advisername" jdbcType="VARCHAR" />
+    <result column="OpertorName" property="opertorname" jdbcType="VARCHAR" />
+    <result column="PreDate" property="predate" jdbcType="VARCHAR" />
+    <result column="Type" property="type" jdbcType="VARCHAR" />
+    <result column="StartTime" property="starttime" jdbcType="VARCHAR" />
+    <result column="EndTime" property="endtime" jdbcType="VARCHAR" />
+    <result column="ContactInfo" property="contactinfo" jdbcType="VARCHAR" />
+    <result column="TaskCompletion" property="taskcompletion" jdbcType="VARCHAR" />
+    <result column="EventInfo" property="eventinfo" jdbcType="VARCHAR" />
+    <result column="DepartmentID" property="departmentid" jdbcType="VARCHAR" />
+    <result column="ShiftEvents" property="shiftevents" jdbcType="VARCHAR" />
+    <result column="IsSign" property="issign" jdbcType="INTEGER" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Id, LeaderName, AdviserName, OpertorName, PreDate, Type, StartTime, EndTime, ContactInfo, 
+    TaskCompletion, EventInfo, DepartmentID, ShiftEvents, IsSign, Remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.ccf.pojo.DutyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from zb_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from zb_info
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zb_info
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.ccf.pojo.DutyExample" >
+    delete from zb_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.ccf.pojo.Duty" >
+    insert into zb_info (Id, LeaderName, AdviserName, 
+      OpertorName, PreDate, Type, 
+      StartTime, EndTime, ContactInfo, 
+      TaskCompletion, EventInfo, DepartmentID, 
+      ShiftEvents, IsSign, Remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{leadername,jdbcType=VARCHAR}, #{advisername,jdbcType=VARCHAR}, 
+      #{opertorname,jdbcType=VARCHAR}, #{predate,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{starttime,jdbcType=VARCHAR}, #{endtime,jdbcType=VARCHAR}, #{contactinfo,jdbcType=VARCHAR}, 
+      #{taskcompletion,jdbcType=VARCHAR}, #{eventinfo,jdbcType=VARCHAR}, #{departmentid,jdbcType=VARCHAR}, 
+      #{shiftevents,jdbcType=VARCHAR}, #{issign,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ccf.pojo.Duty" >
+    insert into zb_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="leadername != null" >
+        LeaderName,
+      </if>
+      <if test="advisername != null" >
+        AdviserName,
+      </if>
+      <if test="opertorname != null" >
+        OpertorName,
+      </if>
+      <if test="predate != null" >
+        PreDate,
+      </if>
+      <if test="type != null" >
+        Type,
+      </if>
+      <if test="starttime != null" >
+        StartTime,
+      </if>
+      <if test="endtime != null" >
+        EndTime,
+      </if>
+      <if test="contactinfo != null" >
+        ContactInfo,
+      </if>
+      <if test="taskcompletion != null" >
+        TaskCompletion,
+      </if>
+      <if test="eventinfo != null" >
+        EventInfo,
+      </if>
+      <if test="departmentid != null" >
+        DepartmentID,
+      </if>
+      <if test="shiftevents != null" >
+        ShiftEvents,
+      </if>
+      <if test="issign != null" >
+        IsSign,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="leadername != null" >
+        #{leadername,jdbcType=VARCHAR},
+      </if>
+      <if test="advisername != null" >
+        #{advisername,jdbcType=VARCHAR},
+      </if>
+      <if test="opertorname != null" >
+        #{opertorname,jdbcType=VARCHAR},
+      </if>
+      <if test="predate != null" >
+        #{predate,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="contactinfo != null" >
+        #{contactinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="taskcompletion != null" >
+        #{taskcompletion,jdbcType=VARCHAR},
+      </if>
+      <if test="eventinfo != null" >
+        #{eventinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="shiftevents != null" >
+        #{shiftevents,jdbcType=VARCHAR},
+      </if>
+      <if test="issign != null" >
+        #{issign,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.ccf.pojo.DutyExample" resultType="java.lang.Integer" >
+    select count(*) from zb_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update zb_info
+    <set >
+      <if test="record.id != null" >
+        Id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.leadername != null" >
+        LeaderName = #{record.leadername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advisername != null" >
+        AdviserName = #{record.advisername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.opertorname != null" >
+        OpertorName = #{record.opertorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.predate != null" >
+        PreDate = #{record.predate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        Type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null" >
+        StartTime = #{record.starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endtime != null" >
+        EndTime = #{record.endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactinfo != null" >
+        ContactInfo = #{record.contactinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskcompletion != null" >
+        TaskCompletion = #{record.taskcompletion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventinfo != null" >
+        EventInfo = #{record.eventinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentid != null" >
+        DepartmentID = #{record.departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shiftevents != null" >
+        ShiftEvents = #{record.shiftevents,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issign != null" >
+        IsSign = #{record.issign,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        Remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update zb_info
+    set Id = #{record.id,jdbcType=INTEGER},
+      LeaderName = #{record.leadername,jdbcType=VARCHAR},
+      AdviserName = #{record.advisername,jdbcType=VARCHAR},
+      OpertorName = #{record.opertorname,jdbcType=VARCHAR},
+      PreDate = #{record.predate,jdbcType=VARCHAR},
+      Type = #{record.type,jdbcType=VARCHAR},
+      StartTime = #{record.starttime,jdbcType=VARCHAR},
+      EndTime = #{record.endtime,jdbcType=VARCHAR},
+      ContactInfo = #{record.contactinfo,jdbcType=VARCHAR},
+      TaskCompletion = #{record.taskcompletion,jdbcType=VARCHAR},
+      EventInfo = #{record.eventinfo,jdbcType=VARCHAR},
+      DepartmentID = #{record.departmentid,jdbcType=VARCHAR},
+      ShiftEvents = #{record.shiftevents,jdbcType=VARCHAR},
+      IsSign = #{record.issign,jdbcType=INTEGER},
+      Remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ccf.pojo.Duty" >
+    update zb_info
+    <set >
+      <if test="leadername != null" >
+        LeaderName = #{leadername,jdbcType=VARCHAR},
+      </if>
+      <if test="advisername != null" >
+        AdviserName = #{advisername,jdbcType=VARCHAR},
+      </if>
+      <if test="opertorname != null" >
+        OpertorName = #{opertorname,jdbcType=VARCHAR},
+      </if>
+      <if test="predate != null" >
+        PreDate = #{predate,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        Type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        StartTime = #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        EndTime = #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="contactinfo != null" >
+        ContactInfo = #{contactinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="taskcompletion != null" >
+        TaskCompletion = #{taskcompletion,jdbcType=VARCHAR},
+      </if>
+      <if test="eventinfo != null" >
+        EventInfo = #{eventinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        DepartmentID = #{departmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="shiftevents != null" >
+        ShiftEvents = #{shiftevents,jdbcType=VARCHAR},
+      </if>
+      <if test="issign != null" >
+        IsSign = #{issign,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ccf.pojo.Duty" >
+    update zb_info
+    set LeaderName = #{leadername,jdbcType=VARCHAR},
+      AdviserName = #{advisername,jdbcType=VARCHAR},
+      OpertorName = #{opertorname,jdbcType=VARCHAR},
+      PreDate = #{predate,jdbcType=VARCHAR},
+      Type = #{type,jdbcType=VARCHAR},
+      StartTime = #{starttime,jdbcType=VARCHAR},
+      EndTime = #{endtime,jdbcType=VARCHAR},
+      ContactInfo = #{contactinfo,jdbcType=VARCHAR},
+      TaskCompletion = #{taskcompletion,jdbcType=VARCHAR},
+      EventInfo = #{eventinfo,jdbcType=VARCHAR},
+      DepartmentID = #{departmentid,jdbcType=VARCHAR},
+      ShiftEvents = #{shiftevents,jdbcType=VARCHAR},
+      IsSign = #{issign,jdbcType=INTEGER},
+      Remark = #{remark,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

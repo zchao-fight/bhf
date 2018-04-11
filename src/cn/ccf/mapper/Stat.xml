@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ccf.mapper.StatMapper">
+	<select id="comObjectGroupby" resultType="map">
+		select ObjType,count(1)
+		as stat from com_object where ObjType is not null group by ObjType
+	</select>
+
+	<select id="yztCameraGroupby" resultType="map">
+		select ObjType,count(1)
+		as stat from yzt_camera where ObjType is not null group by ObjType
+	</select>
+
+	<select id="selectByEventTypeAndWeek" resultType="map">
+		SELECT
+		com_zy_class.ChildType as name, count(1) as num from yzt_event LEFT
+		JOIN com_zy_class on com_zy_class.ID = yzt_event.EventTypeID
+		WHERE
+		YEARWEEK(date_format(time,'%Y-%m-%d')) = YEARWEEK(now()) and
+		EventTypeID is not null
+		GROUP BY EventTypeID
+	</select>
+	<select id="selectByEventTypeAndMonth" resultType="map">
+		SELECT
+		com_zy_class.ChildType as name, count(1) as num from yzt_event LEFT
+		JOIN com_zy_class on com_zy_class.ID = yzt_event.EventTypeID
+		where
+		date_format(time,'%Y-%m')=date_format(now(),'%Y-%m') and EventTypeID
+		is not null
+		GROUP BY EventTypeID
+	</select>
+	<select id="selectByEventTypeAndSeason" resultType="map">
+		SELECT
+		com_zy_class.ChildType as name, count(1) as num from yzt_event LEFT
+		JOIN com_zy_class on com_zy_class.ID = yzt_event.EventTypeID
+		where
+		QUARTER(Time)=QUARTER(now()) and EventTypeID is not null
+		GROUP BY
+		EventTypeID
+	</select>
+	<select id="selectByEventTypeAndYear" resultType="map">
+		SELECT
+		com_zy_class.ChildType as name, count(1) as num from yzt_event LEFT
+		JOIN com_zy_class on com_zy_class.ID = yzt_event.EventTypeID
+		where
+		YEAR(time)=YEAR(NOW()) and EventTypeID is not null
+		GROUP BY EventTypeID
+	</select>
+
+	<select id="selectByEventLevelAndWeek" resultType="map">
+		SELECT Level,
+		count(1) as num from yzt_event WHERE
+		YEARWEEK(date_format(time,'%Y-%m-%d')) = YEARWEEK(now()) and Level is
+		not null GROUP BY Level
+
+	</select>
+	<select id="selectByEventLevelAndMonth" resultType="map">
+		SELECT Level,
+		count(1) as num from yzt_event where
+		date_format(time,'%Y-%m')=date_format(now(),'%Y-%m') and Level is not
+		null GROUP BY Level
+
+	</select>
+	<select id="selectByEventLevelAndSeason" resultType="map">
+		SELECT
+		Level,
+		count(1) as num from yzt_event where
+		QUARTER(Time)=QUARTER(now()) and Level is not null GROUP BY Level
+
+	</select>
+	<select id="selectByEventLevelAndYear" resultType="map">
+		SELECT Level,
+		count(1) as num from yzt_event where YEAR(time)=YEAR(NOW()) and Level
+		is not null GROUP BY Level
+
+	</select>
+
+	<select id="selectByComObjectType" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+
+		select count(1) from com_object where ObjType = #{0}
+	</select>
+
+	<select id="selectByyztCamType" resultType="java.lang.Integer">
+		select count(1) from
+		yzt_camera
+	</select>
+
+
+	<select id="selectVisit" resultType="map">
+		SELECT count(1) as num, com_department.`Name` FROM `mh_visit` left JOIN com_department on mh_visit.departmentID = com_department.ID GROUP BY departmentID;
+	</select>
+	
+	
+	<select id="selectNotice" resultType="map">
+		SELECT count(1) as num,
+		com_department.`Name` FROM mh_notice LEFT JOIN com_department on
+		mh_notice.DepartmentID = com_department.ID where DATE_SUB(CURDATE(),
+		INTERVAL 30 DAY) &lt;= date_format(mh_notice.CreateDate,'%Y/%m/%d')
+		GROUP BY DepartmentID
+	</select>
+	<select id="selectNews" resultType="map">
+		SELECT count(1) as num,
+		com_department.`Name` FROM mh_news LEFT JOIN com_department on
+		mh_news.DepartmentID = com_department.ID where DATE_SUB(CURDATE(),
+		INTERVAL 30 DAY) &lt;= date_format(mh_news.CreateDate,'%Y-%m-%d') GROUP BY DepartmentID
+	</select>
+	<select id="selectWork" resultType="map">
+		SELECT count(1) as num,
+		com_department.`Name` FROM mh_work LEFT JOIN com_department on
+		mh_work.DepartmentID = com_department.ID where DATE_SUB(CURDATE(),
+		INTERVAL 30 DAY) &lt;= date_format(mh_work.CreateDate,'%Y-%m-%d') GROUP BY DepartmentID
+	</select>
+	<select id="selectStyle" resultType="map">
+		SELECT count(1) as num,
+		com_department.`Name` FROM mh_basic_style LEFT JOIN com_department on
+		mh_basic_style.DepartmentID = com_department.ID where DATE_SUB(CURDATE(),
+		INTERVAL 30 DAY) &lt;= date_format(mh_basic_style.CreateDate,'%Y-%m-%d') GROUP BY DepartmentID
+	</select>
+	<select id="selectLaw" resultType="map">
+		SELECT count(1) as num,type as Name FROM com_law_info GROUP BY Type
+	</select>
+
+	<!-- <select id="selectNotice" resultType="map"> SELECT count(1) as num, 
+		com_department.`Name` FROM mh_notice LEFT JOIN com_department on mh_notice.DepartmentID 
+		= com_department.ID where DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(CreateDate) 
+		GROUP BY DepartmentID </select> <select id="selectNews" resultType="map"> 
+		SELECT count(1) as num, com_department.`Name` FROM mh_notice LEFT JOIN com_department 
+		on mh_notice.DepartmentID = com_department.ID where DATE_SUB(CURDATE(), INTERVAL 
+		30 DAY) <= date(CreateDate) GROUP BY DepartmentID </select> <select id="selectWork" 
+		resultType="map"> SELECT count(1) as num, com_department.`Name` FROM mh_notice 
+		LEFT JOIN com_department on mh_notice.DepartmentID = com_department.ID where 
+		DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(CreateDate) GROUP BY DepartmentID 
+		</select> <select id="selectStyle" resultType="map"> SELECT count(1) as num, 
+		com_department.`Name` FROM mh_notice LEFT JOIN com_department on mh_notice.DepartmentID 
+		= com_department.ID where DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(CreateDate) 
+		GROUP BY DepartmentID </select> <select id="selectLaw" resultType="map"> 
+		SELECT count(1) as num, com_department.`Name` FROM mh_notice LEFT JOIN com_department 
+		on mh_notice.DepartmentID = com_department.ID where DATE_SUB(CURDATE(), INTERVAL 
+		30 DAY) <= date(CreateDate) GROUP BY DepartmentID </select> -->
+
+
+	<select id="selectBySignNotAllDay" resultType="map">
+		SELECT count(1) as
+		num,
+		com_department.`Name` FROM zb_info left JOIN com_department ON
+		zb_info.DepartmentID = com_department.ID WHERE
+		YEARWEEK(date_format(PreDate,'%Y-%m-%d')) = YEARWEEK(now())-1 AND
+		EndTime is not null and zb_info.type != '全天' GROUP BY DepartmentID
+	</select>
+	<select id="selectBySignAllDay" resultType="map">
+		SELECT count(1)*2 as
+		num,
+		com_department.`Name` FROM zb_info left JOIN com_department ON
+		zb_info.DepartmentID = com_department.ID WHERE
+		YEARWEEK(date_format(PreDate,'%Y-%m-%d')) = YEARWEEK(now())-1 AND
+		EndTime is not null and zb_info.type = '全天' GROUP BY DepartmentID
+	</select>
+
+
+	<select id="selectDutyFeedBackByWeek" resultType="map">
+		select
+		com_department.Name, count(1) as num from zb_info LEFT JOIN
+		com_department ON zb_info.DepartmentID = com_department.ID
+		WHERE
+		YEARWEEK(date_format(PreDate,'%Y-%m-%d')) = YEARWEEK(now())
+		AND
+		ShiftEvents is NOT NULL GROUP BY DepartmentID
+	</select>
+	<select id="selectDutyFeedBackByMonth" resultType="map">
+		select
+		com_department.Name, count(1) as num from zb_info LEFT JOIN
+		com_department ON zb_info.DepartmentID = com_department.ID
+		where
+		date_format(PreDate,'%Y-%m')=date_format(now(),'%Y-%m')
+		AND ShiftEvents
+		is NOT NULL GROUP BY DepartmentID
+	</select>
+	<select id="selectDutyFeedBackBySeason" resultType="map">
+		select
+		com_department.Name, count(1) as num from zb_info LEFT JOIN
+		com_department ON zb_info.DepartmentID = com_department.ID
+		where
+		QUARTER(PreDate)=QUARTER(now())
+		AND ShiftEvents is NOT NULL GROUP BY
+		DepartmentID
+	</select>
+	<select id="selectDutyFeedBackByYear" resultType="map">
+		select
+		com_department.Name, count(1) as num from zb_info LEFT JOIN
+		com_department ON zb_info.DepartmentID = com_department.ID
+		where
+		YEAR(PreDate)=YEAR(NOW())
+		AND ShiftEvents is NOT NULL GROUP BY
+		DepartmentID
+	</select>
+
+</mapper>

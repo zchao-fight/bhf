@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ccf.mapper.TreeMapper">
+    <select id="getParentTreeNode" resultType="cn.ccf.pojo.TreeNode">
+          select id, ParentID as pId, name from com_department
+    </select>
+    <select id="getChildTreeNode" resultType="cn.ccf.pojo.YZTCamera">
+          select * from yzt_camera
+    </select>
+    <select id="getCamera" resultType="cn.ccf.pojo.YZTCamera">
+        select * from yzt_camera
+    </select>
+    <select id="getDepartment" resultType="cn.ccf.pojo.Department">
+        select * from com_department
+    </select>
+    <select id="getEquipment" resultType="cn.ccf.pojo.Equipment">
+        select * from com_equipment_info
+    </select>
+    <select id="getContact" resultType="cn.ccf.pojo.Contact">
+        select * from com_contact
+    </select>
+
+
+</mapper>

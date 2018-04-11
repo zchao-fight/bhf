@@ -1,0 +1,430 @@
+@charset "UTF-8";
+.ml{
+  margin-left: $num;
+}
+
+.mr{
+  margin-right: $num;
+}
+
+.mt{
+  margin-top: $num;
+}
+
+.mb{
+  margin-bottom: $num;
+}
+
+.tc{
+  text-align: center;
+}
+
+.tr{
+  text-align: right;
+}
+
+.hide{
+  display: none !important;
+}
+
+.pull-left {
+  float:left;
+}
+
+.pull-right {
+  float:right;
+}
+
+.txt-default{
+  color: $color;
+}
+
+.txt-primary{
+  color: $color-primary;
+}
+
+.txt-light,
+.txt-tips
+{
+  color: $color-light;
+}
+
+.txt-success{
+  color: $color-success;
+}
+
+.txt-error{
+  color: $color-error;
+}
+
+.txt-danger{
+  color: $color-danger;
+}
+
+.txt-price{
+  color: $color-price;
+}
+
+.txt-lg{
+  font-size: $size-lg;
+}
+
+.txt-sm{
+  font-size: $size-sm;
+}
+/*搜索*/ 
+.search{
+  width: 420px;
+  border: 2px solid rgba(33,40,46,.2);
+  @include clearfix;
+  .s-inp{
+    float: left;
+    width: 316px;
+    background: #fff;
+    border-color: #fff;
+    border-radius: 0;
+    padding: 5px;
+    height: 38px;
+    &:focus{
+      box-shadow: none;
+      border-color: #fff;
+    }
+  }
+  .btn{
+    float: left;
+    width: 100px;
+    padding: 5px;
+    height: 38px;
+    border-radius: 0;
+  }
+}
+
+/*panel*/ 
+.panel{
+  .panel-hd{
+    border-bottom: 1px solid $color-border;
+    height: 40px;
+    line-height: 40px;
+    font-size: $size-lg;
+    color: $color-dark;
+    position: relative;
+    &:after{
+      content:"";
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 80px;
+      height: 2px;
+      line-height: 2px;
+      overflow: hidden;
+      background: $color-primary;
+    }
+  }
+  .panel-bd{
+    padding-top: $num;
+  }
+}
+.panel-tab{
+  .tab-hd{
+    border-bottom: 1px solid $color-border;
+    height: 40px;
+    line-height: 40px;
+    font-size: $size-lg;
+    color: $color-dark;
+    position: relative;
+    li{
+      float: left;
+      text-align: center;
+      min-width: 80px;
+      position: relative;
+      a{
+        color: $color-light;
+      }
+    }
+    .active{
+      a{
+        color: $color;
+      }
+      &:after{
+        content:"";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0px;
+        height: 2px;
+        line-height: 2px;
+        overflow: hidden;
+        background: $color-primary;
+      }
+    }
+  }
+  .tab-bd{
+    padding-top: $num;
+    .tab-item{
+      display: none;
+    }
+    .active{
+      display: block;
+    }
+  }
+}
+/*-----新闻列表-----*/ 
+.news-list{
+  li{
+    position: relative;
+    height: 42px;
+    line-height: 42px;
+    position: relative;
+    padding-right: 100px;
+    @include slh;
+    &:before{
+      content: "\e600";
+      float: left;
+      margin: 0px 10px 0 0;
+      color: #20b9f9;
+      font-family:"iconfont" !important;
+      font-size:18px;
+      font-style:normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+  .news-date{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: $color-light;
+  }
+}
+.news-list-onlytxt li{
+  padding-right: 0;
+}
+.news-list-line li{
+  border-bottom: 1px dashed $color-border;
+}
+/*-----进度条-----*/ 
+.progress{
+  position: relative;
+  height: 20px;
+  border-radius: 2px;
+  background-color: #fff;
+  .progress-bar{
+    width: 0;
+    max-width: 100%;
+    height: 20px;
+    border-radius: 2px;
+    text-align: right;
+    color: #fff;
+    background-color: $color-primary;
+    animation: animate-positive 1s;
+  }
+}
+@-webkit-keyframes animate-positive{
+  0% { width: 0%; }
+}
+@keyframes animate-positive{
+  0% { width: 0%; }
+}
+
+/*下拉菜单*/
+.dropdown{
+  position: relative;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none; 
+  float: left;
+  min-width: 120px;
+  padding: 4px 3px;
+  margin: 6px 0 0; 
+  list-style: none;
+  font-size: $size;
+  text-align: left;
+  background-color: #fff;
+  border: 1px solid $color-border; 
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  animation: .3s linear up-small;
+  &:before{
+    content:"";
+    position: absolute;
+    top: -11px;
+    right: 28px;
+    width: 0;
+    height: 0;
+    display: block;
+    content: " ";
+    border-color: transparent;
+    border-style: solid;
+    pointer-events: none;
+    border-bottom-color: #fff;
+    border-width: 6px;
+    z-index: 2;
+  }
+  &:after{
+    content:"";
+    position: absolute;
+    top: -12px;
+    right: 28px;
+    width: 0;
+    height: 0;
+    display: block;
+    content: " ";
+    border-color: transparent;
+    border-style: solid;
+    pointer-events: none;
+    border-bottom-color: $color-border;
+    border-width: 6px;
+  }
+  &.pull-right {
+    right: 0;
+    left: auto;
+  }
+  > li > a {
+    display: block;
+    padding: 5px 10px;
+    clear: both;
+    font-weight: normal;
+    line-height: 20px;
+    color: $color;
+    white-space: nowrap; 
+
+  }
+}
+
+.dropdown-menu > li > a {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: $color-primary;
+    background-color: #f8fdff;
+    border: 1px solid $color-primary;
+    padding: 4px 9px;
+  }
+}
+
+.dropdown-menu > .active > a {
+  &,
+  &:hover,
+  &:focus {
+    color: #fff;
+    text-decoration: none;
+    outline: 0;
+    background-color: $bg-light;
+  }
+}
+
+.open {
+  > .dropdown-menu {
+    display: block;
+  }
+}
+
+.dropdown-menu-right {
+  left: auto; 
+  right: 0;
+}
+
+.dropdown-menu-left {
+  left: 0;
+  right: auto;
+}
+
+.pull-right > .dropdown-menu {
+  right: 0;
+  left: auto;
+}
+/*返回顶部*/
+.return-top{
+  position: absolute;
+  top: 0;
+  right: $num;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background: $color-primary;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+}
+/*-----标签-----*/ 
+.badge{
+  display: inline-block;
+  min-width: 10px;
+  padding: 2px 4px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background: #e94b4b;
+  border-radius: 10px;
+}
+/*-----面包屑-----*/ 
+.breadcrumb{
+  height: 36px;
+  line-height: 36px;
+  color: $color;
+  margin-bottom: 8px;
+  a{
+    color: $color;
+    &:hover{
+      color: $color-hover;
+    }
+  }
+  .sep{
+    margin:0 5px;
+    color: $color-light;
+    font-family: "5B8B\4F53";
+  }
+}
+/*-----翻页-----*/
+.page{
+  text-align: right;
+  padding: 10px 0;
+  select{
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+  .btn{
+    margin-left: 10px;
+    min-width: 32px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+@charset "UTF-8";
+// 文字颜色
+$color: #37393b; // 默认文字颜色
+$color-link: #37393b; // 链接文字颜色
+$color-hover: #5dcfff; // 链接划入颜色
+$color-primary: #5dcfff; // 突出文字颜色
+$color-light: #a8aeb2; // 弱化文字颜色
+$color-dark: #37393b; // 加深颜色
+$color-disabled: #999; //禁用颜色
+
+$color-success: #333; // 成功颜色
+$color-error: #f00; // 失败颜色
+$color-warning: #333; // 警告文字颜色
+$color-danger: #333; // 危险文字颜色
+$color-price: #333; // 价格文字颜色
+
+// 边框颜色
+$color-border: #dee1e7; // 边框色
+$color-border-light: #eee; // 浅色边框
+
+$color-border-dark: #333; // 深色边框
+
+//背景颜色
+$bg-light: #fafafa; //浅色背景
+$bg-dark: #f6f7f9; //浅色背景
+// 字号
+$size: 14px; // 默认字体
+$size-lg: 16px; // 大号字体
+$size-mlg: 18px; // 更大号字体
+$size-sm: 12px; // 小号字体
+
+// 圆角
+$radius: 5px; // 默认圆角弧度
+
+// 间距
+$num: 20px; // 间距
+$num-sm: 10px; // 小间距
+$num-lg: 30px; // 大间距
+
+// 高度
+$height: 30px; //输入框 按钮高度
