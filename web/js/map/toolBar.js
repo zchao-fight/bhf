@@ -303,17 +303,17 @@ function setObjType(type) {
             var resourceLayerBody = $('#resourceLayerBody');
             resourceLayerBody.html('');
             addInteraction();
-            $.post(BASE_URL+'/map/getManagementUnit.action', function (data) {
+            $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
                 var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="界碑" readonly="readonly" style="width: 150px;margin-right:50px;"> 界碑类型：<select name="childtype" style="width: 150px;"><option selected="selected">同号三立柱</option><option>同号双立柱</option><option>单立柱</option></select></div>';
                 var line2 = '<div>设施名称：<input type="text"  name="name" style="width:150px;margin-right:15px;"> 建设地址（段）: <input name="address" type="text" style="width: 130px;"></div>';
                 var line3 = '<div>设施状态：<select name="status"  style="width: 150px;margin-right:50px;"><option value="1">良好</option><option value="0">正常</option><option value="-1">损坏</option></select> 投资（万元）: <input name="invest" type="text" style="width: 130px;"></div>';
                 var line4 = '<div>竣工时间: <input id="completionTime" name="finishtime" style="width: 150px;margin-right:40px;" type="text"   class="Wdate" onClick="WdatePicker({dateFmt:\'yyyy-MM-dd\'})" />' +
                     '管理单位：<select name="managerunit" style="width: 150px;">';
                 var tempStr = '';
-                    $.each(data, function (i, item) {
-                        tempStr += '<option>'+item.name+'</option>';
-                    });
-                    line4 += tempStr + '</select></div>';
+                $.each(data, function (i, item) {
+                    tempStr += '<option>' + item.name + '</option>';
+                });
+                line4 += tempStr + '</select></div>';
                 var line5 = '<div>经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> 维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
                 var line6 = '<div>多媒体：<input type="file" name="file" style="margin-bottom:10px;margin-top:5px;"></div>';
                 var line7 = '<div>备注（选填）: <textarea name="remark" placeholder="......" style="width: 350px;height:120px;"></textarea></div>';
@@ -392,10 +392,12 @@ function submitFacilityData() {
         processData: false,
         success: function (returndata) {
             $('#resourceLayer').modal('hide');
-            console.log(111111111111111);
             console.log(returndata.flag);
-            console.log(11111111111111111);
-            alert('新建资源成功');
+            if (returndata.flag === 1) {
+                alert('新建资源成功');
+            } else {
+                alert('新建资源失败');
+            }
         },
         error: function (returndata) {
             alert("error:" + '资源错误');
