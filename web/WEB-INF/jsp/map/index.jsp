@@ -627,6 +627,15 @@
                                 <li><a href="javascript:setObjType(1000)" onclick="">界碑</a></li>
                                 <li><a href="javascript:setObjType(1001)" onclick="">国门</a></li>
                                 <li class="divider"></li>
+                                <li><a href="javascript:setObjType(1002)" onclick="">监控中心</a></li>
+                                <li><a href="javascript:setObjType(1003)" onclick="">监控站</a></li>
+                                <li><a href="javascript:setObjType(1004)" onclick="">报警装置</a></li>
+                                <li class="divider"></li><li class="divider"></li><li class="divider"></li>
+                                <li><a href="javascript:setObjType(1005)" onclick="">执勤房</a></li>
+                                <li><a href="javascript:setObjType(1006)" onclick="">瞭望塔</a></li>
+                                <li><a href="javascript:setObjType(1007)" onclick="">标志牌</a></li>
+                                <li><a href="javascript:setObjType(1008)" onclick="">灯塔</a></li>
+                                <li class="divider"></li>
                             </ul>
                         </li>
 
