@@ -21,15 +21,15 @@
     <link href="${ctx}/css/ol.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/css/ligerui-dialog.css" rel="stylesheet" type="text/css"/>
 
-    <link rel="stylesheet" href="${ctx}/css/bootstrap.css"  type="text/css">
+    <link rel="stylesheet" href="${ctx}/css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="${ctx}/css/jquery.dataTables.min.css" type="text/css">
     <link rel="stylesheet" href="${ctx}/css/panel.css" type="text/css">
     <link rel="stylesheet" href="${ctx}/css/measuretool.css" type="text/css">
     <link rel="stylesheet" href="${ctx}/css/p-ol3.min.css" type="text/css">
     <link rel="stylesheet" href="${ctx}/css/defaults.css" type="text/css">
     <link rel="stylesheet" href="${ctx}/css/viewer.css" type="text/css">
-    <link rel="stylesheet" href="${ctx}/css/custom.css"  type="text/css">
-    <link rel="stylesheet" href="${ctx}/css/jquery.mCustomScrollbar.css" type="text/css" >
+    <link rel="stylesheet" href="${ctx}/css/custom.css" type="text/css">
+    <link rel="stylesheet" href="${ctx}/css/jquery.mCustomScrollbar.css" type="text/css">
     <link rel="stylesheet" href="${ctx}/css/zTreeStyle.css" type="text/css">
     <script type="text/javascript" src="${ctx}/js/jquery.min.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${ctx}/js/My97DatePicker/WdatePicker.js" charset="UTF-8"></script>
@@ -52,17 +52,19 @@
     <script type="text/javascript" src="${ctx}/js/jquery.dataTables.min.js"></script>
     <style>
 
-        ._mCS_1 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
-            background:#09c;
-        }/*给第一个滚动条加样式*/
+        ._mCS_1 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+            background: #09c;
+        }
+
+        /*给第一个滚动条加样式*/
 
     </style>
 
 </head>
 <script>
-    (function($){
-        $(window).load(function(){
-            $(".ztree").mCustomScrollbar({scrollInertia:2000,mouseWheelPixels:100});
+    (function ($) {
+        $(window).load(function () {
+            $(".ztree").mCustomScrollbar({scrollInertia: 2000, mouseWheelPixels: 100});
         });
     })(jQuery);
 </script>
@@ -70,7 +72,7 @@
 
 <%--树形--%>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         getVideoTree();
         getResourceTree();
@@ -79,27 +81,28 @@
         function ml_close_demo() {
             $('.float-news').animate({
                 left: '-450px'
-            }, 300, function(){
+            }, 300, function () {
                 $('.float-open').delay(50).animate({
                     left: '-2px'
                 }, 300);
             });
         }
+
         function ml_open_demo() {
             $('.float-open').animate({
                 left: '-70px'
-            }, 100, function(){
+            }, 100, function () {
                 $('.float-news').delay(50).animate({
                     left: '0px'
                 }, 300);
             });
         }
 
-        $('.float-close').click(function(){
+        $('.float-close').click(function () {
             ml_close_demo();
             return false;
         });
-        $('.open-btn').click(function(){
+        $('.open-btn').click(function () {
             ml_open_demo();
             return false;
         });
@@ -107,7 +110,6 @@
         // setTimeout(function(){ml_close_demo()},5000);
 
     });
-
 
 
 </script>
@@ -143,10 +145,13 @@
             </ul>
             <div class="newprd-clip">
                 <div class="tempWrap" style="position:relative; width:220px;">
-                    <div class="j-sw-c" style="width:220px; position: relative; padding: 0px; margin: 0px; left: -450px;">
-                        <ul class="ztree" id="videoTree" style="float: left; width: 220px;overflow-y:auto;overflow-x:hidden;height: 300px">
+                    <div class="j-sw-c"
+                         style="width:220px; position: relative; padding: 0px; margin: 0px; left: -450px;">
+                        <ul class="ztree" id="videoTree"
+                            style="float: left; width: 220px;overflow-y:auto;overflow-x:hidden;height: 300px">
                         </ul>
-                        <ul class="ztree" id="resourceTree" style="float: left; width: 220px;overflow-y:auto;overflow-x:hidden;height: 300px">
+                        <ul class="ztree" id="resourceTree"
+                            style="float: left; width: 220px;overflow-y:auto;overflow-x:hidden;height: 300px">
                         </ul>
                     </div>
                 </div>
@@ -170,51 +175,55 @@
             </ul>
             <div class="newprd-clip">
                 <div class="tempWrap" style="overflow:hidden; position:relative; width:250px">
-                    <div class="j-sw-c" style=" position: relative; overflow: hidden; padding: 0px; margin: 0px; left: -5640px;">
+                    <div class="j-sw-c"
+                         style=" position: relative; overflow: hidden; padding: 0px; margin: 0px; left: -5640px;">
                         <ul class="address_book" style="float: left; width: 230px;font-size: 12px;color:white">
-                                <table style="width:240px;" id="contact" >
-                                    <thead>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    </thead>
-                                    <c:if test="${!empty contact}">
-                                        <c:forEach items="${contact}" var="item">
-                                            <tr>
-                                                <td  style="width:25%;">${item.name}</td>
-                                                <td  style="width:30%;">${item.phone}</td>
-                                                <td style="width:15%;"><a><img src="${ctx}/images/map/left_menu/phone.png"></a></td>
-                                                <td  style="width:15%;"><a><img src="${ctx}/images/map/left_menu/message.png"></a></td>
-                                                <td  style="width:15%;">&nbsp;&nbsp;<a><img src="${ctx}/images/map/left_menu/chat.png"></a></td>
-                                            </tr>
-                                        </c:forEach>
-                                    </c:if>
-                                </table>
+                            <table style="width:240px;" id="contact">
+                                <thead>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                </thead>
+                                <c:if test="${!empty contact}">
+                                    <c:forEach items="${contact}" var="item">
+                                        <tr>
+                                            <td style="width:25%;">${item.name}</td>
+                                            <td style="width:30%;">${item.phone}</td>
+                                            <td style="width:15%;"><a><img src="${ctx}/images/map/left_menu/phone.png"></a>
+                                            </td>
+                                            <td style="width:15%;"><a><img
+                                                    src="${ctx}/images/map/left_menu/message.png"></a></td>
+                                            <td style="width:15%;">&nbsp;&nbsp;<a><img
+                                                    src="${ctx}/images/map/left_menu/chat.png"></a></td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:if>
+                            </table>
                             <script>
                                 //新加的
                                 $(document).ready(function () {
                                     $('#contact').DataTable({
-                                        "lengthChange":false,
-                                        "iDisplayLength":4,
-                                        "searching" : false,
-                                        "pagingType":   "simple",
-                                        "oLanguage" : { // 国际化配置
-                                            "sProcessing" : "正在获取数据，请稍后...",
-                                            "sLengthMenu" : "显示 _MENU_ 条",
-                                            "sZeroRecords" : "没有找到数据",
-                                            "sInfo" : "",
-                                            "sInfoEmpty" : "记录数为0",
-                                            "sInfoFiltered" : "",
-                                            "sInfoPostFix" : "",
-                                            "sSearch" : "查询",
-                                            "sUrl" : "",
-                                            "oPaginate" : {
-                                                "sFirst" : "第一页",
-                                                "sPrevious" : "上一页",
-                                                "sNext" : "下一页",
-                                                "sLast" : "最后一页"
+                                        "lengthChange": false,
+                                        "iDisplayLength": 4,
+                                        "searching": false,
+                                        "pagingType": "simple",
+                                        "oLanguage": { // 国际化配置
+                                            "sProcessing": "正在获取数据，请稍后...",
+                                            "sLengthMenu": "显示 _MENU_ 条",
+                                            "sZeroRecords": "没有找到数据",
+                                            "sInfo": "",
+                                            "sInfoEmpty": "记录数为0",
+                                            "sInfoFiltered": "",
+                                            "sInfoPostFix": "",
+                                            "sSearch": "查询",
+                                            "sUrl": "",
+                                            "oPaginate": {
+                                                "sFirst": "第一页",
+                                                "sPrevious": "上一页",
+                                                "sNext": "下一页",
+                                                "sLast": "最后一页"
                                             }
                                         }
 
@@ -232,7 +241,13 @@
             </div>
         </div>
         <script type="text/javascript">
-            jQuery(".hp-tab-newprd").slide({ titCell:".j-sw-nav li",mainCell:".j-sw-c",effect:"left",easing:"easeInOutSine",delayTime:500 });
+            jQuery(".hp-tab-newprd").slide({
+                titCell: ".j-sw-nav li",
+                mainCell: ".j-sw-c",
+                effect: "left",
+                easing: "easeInOutSine",
+                delayTime: 500
+            });
         </script>
     </div>
 </div>
@@ -242,20 +257,21 @@
 
 <div id="globleSearch">
     <div style="width: 300px; position: relative; ">
-        <input  id="searchKeyword" name="keyword" placeholder="请输入搜索内容" >
+        <input id="searchKeyword" name="keyword" placeholder="请输入搜索内容">
         <button onclick="showResult()" style="padding:0;"><img src="${ctx}/images/search.png"></button>
     </div>
 </div>
 
 
 <div id="searchResult">
-    <p >
-        <span id="totalNum" style="font-style:italic;font-weight: 300;font-size: 15px;color:#4AD5FC;padding-left:10px;margin: 20px 0;display: block;"></span>
+    <p>
+        <span id="totalNum"
+              style="font-style:italic;font-weight: 300;font-size: 15px;color:#4AD5FC;padding-left:10px;margin: 20px 0;display: block;"></span>
         <a class="ol-popup-closer" style="float: right;margin-right:10px;" onclick="hideSearchResult()">
         </a>
     </p>
 
-    <div class="panel-group" id="accordion" >
+    <div class="panel-group" id="accordion">
         <div class="panel panel-default panel-whole1">
             <div class="panel-heading">
                 <h4 class="panel-title" style="color:#4AD5FC;">
@@ -280,8 +296,6 @@
         </div>
 
 
-
-
         <div class="panel panel-default panel-whole2">
             <div class="panel-heading">
                 <h4 class="panel-title" style="color:#4AD5FC;">
@@ -289,7 +303,7 @@
                     <a data-toggle="collapse" data-parent="#accordion"
                        href="#collapseTwo" title="展开">
                          <span class="totalResultNumbers"
-                                 style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
+                               style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
                     </a>
                 </h4>
             </div>
@@ -308,7 +322,7 @@
                     <a data-toggle="collapse" data-parent="#accordion"
                        href="#collapseThree" title="展开">
                         <span class="totalResultNumbers"
-                                 style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
+                              style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
                     </a>
 
                 </h4>
@@ -362,7 +376,7 @@
                     <a data-toggle="collapse" data-parent="#accordion"
                        href="#collapseSix" title="展开">
                         <span class="totalResultNumbers"
-                                 style="float: right; margin-right: 30px;font-size: 14px;color: #4AD5FC">+</span>
+                              style="float: right; margin-right: 30px;font-size: 14px;color: #4AD5FC">+</span>
                     </a>
 
                 </h4>
@@ -382,7 +396,7 @@
                     <a data-toggle="collapse" data-parent="#accordion"
                        href="#collapseSeven" title="展开">
                         <span class="totalResultNumbers"
-                                 style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
+                              style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
                     </a>
 
                 </h4>
@@ -402,7 +416,7 @@
                     <a data-toggle="collapse" data-parent="#accordion"
                        href="#collapseEight" title="展开">
                         <span class="totalResultNumbers"
-                                 style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
+                              style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
                     </a>
 
                 </h4>
@@ -422,7 +436,7 @@
                     <a data-toggle="collapse" data-parent="#accordion"
                        href="#collapseNine" title="展开">
                         <span class="totalResultNumbers"
-                                style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
+                              style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
                     </a>
 
                 </h4>
@@ -442,7 +456,7 @@
                     <a data-toggle="collapse" data-parent="#accordion"
                        href="#collapseTen" title="展开">
                         <span class="totalResultNumbers"
-                                 style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
+                              style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
                     </a>
 
                 </h4>
@@ -462,7 +476,7 @@
                     <a data-toggle="collapse" data-parent="#accordion"
                        href="#collapseEleven" title="展开">
                         <span class="totalResultNumbers"
-                                 style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
+                              style="float: right; margin-right: 30px;font-size: 20px;color: #4AD5FC">+</span>
                     </a>
                 </h4>
             </div>
@@ -571,9 +585,10 @@
 </style>
 <style>
     #plotting_tool_bar li img {
-        width:32px;
-        height:32px;
+        width: 32px;
+        height: 32px;
     }
+
     #plotting_tool_bar li:hover {
         background-color: #007FC0;
     }
@@ -582,25 +597,26 @@
 
 
 <!-- 新建资源图层模态框（Modal） -->
-<div class="modal fade" id="resourceLayer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="resourceLayer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="sd">新建资源</h4>
             </div>
-            <div class="modal-body" >
+            <div class="modal-body">
                 <form id="resourceLayerBody" enctype="multipart/form-data">
 
                 </form>
             </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" id="submitFacilityButton" class="btn btn-primary">提交更改</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" id="submitFacilityButton" class="btn btn-primary">提交更改</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal -->
 </div>
 
 
@@ -610,9 +626,9 @@
             <div style="color: #000;">
                 <ul class="nav navbar-nav" style="margin:0">
                     <%--<li><a href="javascript:zoomOut()"><img src="${ctx}/images/map/military/zoomout.png" alt="放大"--%>
-                                                            <%--title="放大"></a></li>--%>
+                    <%--title="放大"></a></li>--%>
                     <%--<li><a href="javascript:zoomIn()"><img src="${ctx}/images/map/military/zoomin.png" alt="缩小"--%>
-                                                           <%--title="缩小"></a></li>--%>
+                    <%--title="缩小"></a></li>--%>
                     <!-- <li class="btn-primary"><a href="javascript:void(0)" onclick="moveToLeft()">左移</a></li>
                      <li class="btn-primary"><a href="javascript:void(0)">右移</a></li>-->
                     <!--active 表示选中颜色假设-->
@@ -621,14 +637,15 @@
                                                            title="漫游"></a></li>
 
 
-                        <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><img
-                                src="${ctx}/images/map/menu/new.png" title="新建" alt="新建"></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:setObjType(1000)" onclick="">界碑</a></li>
-                                <li><a href="javascript:setObjType(1001)" onclick="">国门</a></li>
-                                <li class="divider"></li>
-                            </ul>
-                        </li>
+                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle"
+                                            data-toggle="dropdown"><img
+                            src="${ctx}/images/map/menu/new.png" title="新建" alt="新建"></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:setObjType(1000)" onclick="">界碑</a></li>
+                            <li><a href="javascript:setObjType(1001)" onclick="">国门</a></li>
+                            <li class="divider"></li>
+                        </ul>
+                    </li>
 
                     <li><a id="measureLength" href="javascript:void(0)"><img
                             src="${ctx}/images/map/military/measureLength.png" alt="测距" title="测距"></a></li>
@@ -644,7 +661,8 @@
                     <li><a href="javascript:activate(P.PlotTypes.MARKER)()"><img
                             src="${ctx}/images/map/military/point_menu.png" title="点标" alt="点标"></a>
                     </li>
-                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><img
+                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle"
+                                            data-toggle="dropdown"><img
                             src="${ctx}/images/map/military/line_menu.png" title="线标" alt="线标"></a>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:void(0)" onclick="activate(P.PlotTypes.ARC)"><img
@@ -660,7 +678,8 @@
                                     src="${ctx}/images/map/military/line/free_line.png" title="自由线" alt="自由线"></a></li>
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><img
+                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle"
+                                            data-toggle="dropdown"><img
                             src="${ctx}/images/map/military/region_menu.png" title="面标" alt="面标"></a>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:void(0)" onclick="activate(P.PlotTypes.CIRCLE)"><img
@@ -694,7 +713,8 @@
                                     alt=聚集地"></a></li>
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><img
+                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle"
+                                            data-toggle="dropdown"><img
                             src="${ctx}/images/map/military/arrow_menu.png" title="箭头" alt="箭头"></a>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:void(0)" onclick="activate(P.PlotTypes.DOUBLE_ARROW)"><img
@@ -729,48 +749,81 @@
                                     alt="分队战斗行动（尾）"></a></li>
                         </ul>
                     </li>
-                        <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="${ctx}/images/map/military/military_list.png" title="军标" alt="军标" /></a>
-                            <ul class="dropdown-menu" id="military_list" style="overflow-y: scroll;width: 100px;">
-                                <li><a href="javascript:void(0)" onclick="setObjType(100)"><img src="${ctx}/images/map/military/military_pic/100.png" title="解放军1" alt="人员"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(101)"><img src="${ctx}/images/map/military/military_pic/101.png" title="解放军2" alt="车辆"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(102)"><img src="${ctx}/images/map/military/military_pic/102.png" title="解放军3" alt="飞机"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(103)"><img src="${ctx}/images/map/military/military_pic/103.png" title="解放军排" alt="单位"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(104)"><img src="${ctx}/images/map/military/military_pic/104.png" title="解放军连" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(105)"><img src="${ctx}/images/map/military/military_pic/105.png" title="解放军营" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(106)"><img src="${ctx}/images/map/military/military_pic/106.png" title="难民收容点" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(107)"><img src="${ctx}/images/map/military/military_pic/107.png" title="观察点" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(108)"><img src="${ctx}/images/map/military/military_pic/108.png" title="拒马" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(109)"><img src="${ctx}/images/map/military/military_pic/109.png" title="通道" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(110)"><img src="${ctx}/images/map/military/military_pic/110.png" title="巡逻哨" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(111)"><img src="${ctx}/images/map/military/military_pic/111.png" title="高机阵地" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(112)"><img src="${ctx}/images/map/military/military_pic/112.png" title="克钦独立军排" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(113)"><img src="${ctx}/images/map/military/military_pic/113.png" title="克钦独立军连" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(114)"><img src="${ctx}/images/map/military/military_pic/114.png" title="克钦独立军营" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(115)"><img src="${ctx}/images/map/military/military_pic/115.png" title="缅甸政府军排" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(116)"><img src="${ctx}/images/map/military/military_pic/116.png" title="缅甸政府军连" alt="军标"></a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:void(0)" onclick="setObjType(117)"><img src="${ctx}/images/map/military/military_pic/117.png" title="缅甸政府军营" alt="军标"></a></li>
-                                <li class="divider"></li>
-                            </ul>
-                        </li>
-                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><img
+                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="${ctx}/images/map/military/military_list.png" title="军标" alt="军标"/></a>
+                        <ul class="dropdown-menu" id="military_list" style="overflow-y: scroll;width: 100px;">
+                            <li><a href="javascript:void(0)" onclick="setObjType(100)"><img
+                                    src="${ctx}/images/map/military/military_pic/100.png" title="解放军1" alt="人员"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(101)"><img
+                                    src="${ctx}/images/map/military/military_pic/101.png" title="解放军2" alt="车辆"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(102)"><img
+                                    src="${ctx}/images/map/military/military_pic/102.png" title="解放军3" alt="飞机"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(103)"><img
+                                    src="${ctx}/images/map/military/military_pic/103.png" title="解放军排" alt="单位"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(104)"><img
+                                    src="${ctx}/images/map/military/military_pic/104.png" title="解放军连" alt="军标"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(105)"><img
+                                    src="${ctx}/images/map/military/military_pic/105.png" title="解放军营" alt="军标"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(106)"><img
+                                    src="${ctx}/images/map/military/military_pic/106.png" title="难民收容点" alt="军标"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(107)"><img
+                                    src="${ctx}/images/map/military/military_pic/107.png" title="观察点" alt="军标"></a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(108)"><img
+                                    src="${ctx}/images/map/military/military_pic/108.png" title="拒马" alt="军标"></a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(109)"><img
+                                    src="${ctx}/images/map/military/military_pic/109.png" title="通道" alt="军标"></a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(110)"><img
+                                    src="${ctx}/images/map/military/military_pic/110.png" title="巡逻哨" alt="军标"></a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(111)"><img
+                                    src="${ctx}/images/map/military/military_pic/111.png" title="高机阵地" alt="军标"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(112)"><img
+                                    src="${ctx}/images/map/military/military_pic/112.png" title="克钦独立军排" alt="军标"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(113)"><img
+                                    src="${ctx}/images/map/military/military_pic/113.png" title="克钦独立军连" alt="军标"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(114)"><img
+                                    src="${ctx}/images/map/military/military_pic/114.png" title="克钦独立军营" alt="军标"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(115)"><img
+                                    src="${ctx}/images/map/military/military_pic/115.png" title="缅甸政府军排" alt="军标"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(116)"><img
+                                    src="${ctx}/images/map/military/military_pic/116.png" title="缅甸政府军连" alt="军标"></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(117)"><img
+                                    src="${ctx}/images/map/military/military_pic/117.png" title="缅甸政府军营" alt="军标"></a>
+                            </li>
+                            <li class="divider"></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle"
+                                            data-toggle="dropdown"><img
                             src="${ctx}/images/map/military/picture_menu.png" alt="要图标绘" title="要图标绘"></a>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:void(0)" onclick="setObjType(1)"><img
@@ -779,8 +832,9 @@
                             <li><a href="javascript:void(0)" onclick="setObjType(2)"><img
                                     src="${ctx}/images/map/military/vehicle_menu.png" title="车辆" alt="车辆"></a></li>
                             <li class="divider"></li>
-                            <li><a href="javascript:void(0)" onclick="setObjType(3)"><img src="${ctx}/images/map/military/plane_menu.png"
-                                                                         title="飞机" alt="飞机"></a></li>
+                            <li><a href="javascript:void(0)" onclick="setObjType(3)"><img
+                                    src="${ctx}/images/map/military/plane_menu.png"
+                                    title="飞机" alt="飞机"></a></li>
                             <li class="divider"></li>
                             <li><a href="javascript:void(0)" onclick="setObjType(4)"><img
                                     src="${ctx}/images/map/department/department_menu.png" title="单位" alt="单位"></a></li>
@@ -793,46 +847,54 @@
                             <li class="divider"></li>
                         </ul>
                     </li>
-                      <%--  <li>
-                            <a id="export-png" href="javascript:void(0)">
-                                <img src="${ctx}/images/map/menu/download.png" alt="导出" title="导出">
-                            </a>
-                        </li>--%>
-                        <li>
-                            <a id="saveLayer" onclick="$('#myModal').show()"  href="#" data-toggle="modal" data-target="#myModal">
-                                <img src="${ctx}/images/map/menu/save.png"  alt="保存图层" title="保存图层">
-                            </a>
+                    <%--  <li>
+                          <a id="export-png" href="javascript:void(0)">
+                              <img src="${ctx}/images/map/menu/download.png" alt="导出" title="导出">
+                          </a>
+                      </li>--%>
+                    <li>
+                        <a id="saveLayer" onclick="$('#myModal').show()" href="#" data-toggle="modal"
+                           data-target="#myModal">
+                            <img src="${ctx}/images/map/menu/save.png" alt="保存图层" title="保存图层">
+                        </a>
 
-                            <!-- 模态框（Modal） -->
-                            <div class="modal fade" id="myModal" style="display: none"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabel">保存图层-图层信息</h4>
-                                        </div>
-                                        <div class="modal-body" style="margin-left:30px;">
-                                            &nbsp; &#12288;&#12288;标 题:&nbsp;&nbsp;<input type="text" id="layerName" style="width: 350px"  placeholder="请输入标题">
-                                            <span style="color: red">*</span>
-                                            <br>
-                                                备 注 信 息:&nbsp;&nbsp;<textarea id="layerRemark" placeholder="请输入备注信息" style="height:200px;width:350px;"></textarea>
-                                            <%--<div id="saveLayerTip" style="color: red;font-size:12px;">提示信息：若当前图层无元素，不建议保存，但您仍可以保存</div>--%>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                            <button type="button" class="btn btn-primary" onclick="saveLayer()">提交</button>
-                                        </div>
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal -->
-                            </div>
-                        </li>
+                        <!-- 模态框（Modal） -->
+                        <div class="modal fade" id="myModal" style="display: none" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">保存图层-图层信息</h4>
+                                    </div>
+                                    <div class="modal-body" style="margin-left:30px;">
+                                        &nbsp; &#12288;&#12288;标 题:&nbsp;&nbsp;<input type="text" id="layerName"
+                                                                                      style="width: 350px"
+                                                                                      placeholder="请输入标题">
+                                        <span style="color: red">*</span>
+                                        <br>
+                                        备 注 信 息:&nbsp;&nbsp;<textarea id="layerRemark" placeholder="请输入备注信息"
+                                                                      style="height:200px;width:350px;"></textarea>
+                                        <%--<div id="saveLayerTip" style="color: red;font-size:12px;">提示信息：若当前图层无元素，不建议保存，但您仍可以保存</div>--%>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn btn-primary" onclick="saveLayer()">提交</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal -->
+                        </div>
+                    </li>
 
 
-<script>
-    $("#military_list").height((document.body.clientHeight-60)+"px");
-</script>
-    <li style="padding-right: 0"><a href="javascript:void(0)" onclick="sendCommand('switch_map','')"><img
-                                src="${ctx}/images/map/military/switch_map.png" title="切换地图" alt="切换地图"></a></li>
+                    <script>
+                        $("#military_list").height((document.body.clientHeight - 60) + "px");
+                    </script>
+                    <li style="padding-right: 0"><a href="javascript:void(0)"
+                                                    onclick="sendCommand('switch_map','')"><img
+                            src="${ctx}/images/map/military/switch_map.png" title="切换地图" alt="切换地图"></a></li>
                     <%--</li>--%>
                     <%--<li class="btn"><a href="javascript:void(0)">定位</a></li>--%>
                     <%--<li class="btn dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">切换<b--%>
@@ -850,7 +912,8 @@
 
 
 <%--右侧统计--%>
-<div class="float-right-open"  style="position: fixed;top:40px;right:2px;padding:4px 4px 4px 6px;width:20px;height: 20px;">
+<div class="float-right-open"
+     style="position: fixed;top:40px;right:2px;padding:4px 4px 4px 6px;width:20px;height: 20px;">
     <a class="right-open-btn" href="javascript:void(0);">
         <img src="${ctx}/images/map/right_cartogram/expand_right.png" style="opacity:0.6;">
     </a>
@@ -859,7 +922,7 @@
     $('.right-open-btn').click(function () {
         $('.float-right-open').animate({
             right: '-25px'
-        }, 100, function(){
+        }, 100, function () {
             $('.right-panel').delay(50).animate({
                 right: '0px'
             }, 300);
@@ -868,158 +931,170 @@
 
 </script>
 <div id="right-panel" class="right-panel" style="position: fixed;top:40px;bottom:0;width: 250px;right:-250px;">
-    <div  style="height:20px; ">
+    <div style="height:20px; ">
         <a class="right-close-btn" href="javascript:void(0)" style="margin-top: 2px;">
             <img src="${ctx}/images/map/right_cartogram/shrink_right.png">
         </a>
     </div>
-    <div id="cartogram1" class="rect" style="height: 24%;">统计图一</div>
-    <div id="cartogram2" class="rect" style="height: 24%;margin-top: 2px;">统计图二</div>
-    <div id="cartogram3" class="rect" style="height: 24%;margin-top: 2px;">统计图三</div>
-    <div id="cartogram4" class="rect" style="height: 24%;margin-top: 2px;">统计图四</div>
+
+    <div>
+        <div id="cartogram1" class="rect" style="height: 24%;"></div>
+        <div style="float:right"><img src="${ctx}/images/map/left_menu/message.png"></div>
+    </div>
+
+    <div>
+        <div id="cartogram2" class="rect" style="height: 24%;margin-top: 2px;">统计图二</div>
+    </div>
+
+    <div>
+        <div id="cartogram3" class="rect" style="height: 24%;margin-top: 2px;">统计图三</div>
+    </div>
+
+    <div>
+        <div id="cartogram4" class="rect" style="height: 24%;margin-top: 2px;">统计图四</div>
+    </div>
 </div>
-    <script type="text/javascript">
-            // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('cartogram1'));
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('cartogram1'));
 
-            // 指定图表的配置项和数据
-            option = {
+    // 指定图表的配置项和数据
+    option = {
 
-                tooltip : {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    orient : 'vertical',
-                    x : 'left',
-                    data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-                },
-                toolbox: {
-                    show : true,
-                    feature : {
-                        mark : {show: true},
-                        dataView : {show: true, readOnly: false},
-                        magicType : {
-                            show: true,
-                            type: ['pie', 'funnel'],
-                            option: {
-                                funnel: {
-                                    x: '25%',
-                                    width: '50%',
-                                    funnelAlign: 'left',
-                                    max: 1548
-                                }
-                            }
-                        },
-                        restore : {show: true},
-                        saveAsImage : {show: true}
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {
+                    show: true,
+                    type: ['pie', 'funnel'],
+                    option: {
+                        funnel: {
+                            x: '25%',
+                            width: '50%',
+                            funnelAlign: 'left',
+                            max: 1548
+                        }
                     }
                 },
-                calculable : true,
-                series : [
-                    {
-                        name:'访问来源',
-                        type:'pie',
-                        radius : '55%',
-                        center: ['50%', '60%'],
-                        data:[
-                            {value:335, name:'直接访问'},
-                            {value:310, name:'邮件营销'},
-                            {value:234, name:'联盟广告'},
-                            {value:135, name:'视频广告'},
-                            {value:1548, name:'搜索引擎'}
-                        ]
-                    }
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        series: [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: [
+                    {value: 335, name: '直接访问'},
+                    {value: 310, name: '邮件营销'},
+                    {value: 234, name: '联盟广告'},
+                    {value: 135, name: '视频广告'},
+                    {value: 1548, name: '搜索引擎'}
                 ]
-            };
+            }
+        ]
+    };
 
 
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        </script>
-        <script type="text/javascript">
-            // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('cartogram2'));
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('cartogram2'));
 
-            // 指定图表的配置项和数据
-            var option = {
-                tooltip: {},
-                legend: {
-                    data:['销量']
-                },
-                xAxis: {
-                    data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                },
-                yAxis: {},
-                series: [{
-                    name: '销量',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
-            };
+    // 指定图表的配置项和数据
+    var option = {
+        tooltip: {},
+        legend: {
+            data: ['销量']
+        },
+        xAxis: {
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
 
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        </script>
-        <script type="text/javascript">
-            // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('cartogram3'));
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('cartogram3'));
 
-            // 指定图表的配置项和数据
-            var option = {
-                backgroundColor: '#1F4866',
-                tooltip: {},
-                legend: {
-                    data:['销量']
-                },
-                xAxis: {
-                    data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                },
-                yAxis: {},
-                series: [{
-                    name: '销量',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
-            };
+    // 指定图表的配置项和数据
+    var option = {
+        backgroundColor: '#1F4866',
+        tooltip: {},
+        legend: {
+            data: ['销量']
+        },
+        xAxis: {
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
 
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        </script>
-        <script type="text/javascript">
-            // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('cartogram4'));
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('cartogram4'));
 
-            // 指定图表的配置项和数据
-            var option = {
-                backgroundColor: '#1F4866',
-                tooltip: {},
-                legend: {
-                    data:['销量']
-                },
-                xAxis: {
-                    data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                },
-                yAxis: {},
-                series: [{
-                    name: '销量',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
-            };
+    // 指定图表的配置项和数据
+    var option = {
+        backgroundColor: '#1F4866',
+        tooltip: {},
+        legend: {
+            data: ['销量']
+        },
+        xAxis: {
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
 
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        </script>
-
-
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
 
 
 <!-- Popup -->
 <div id="popup" class="ol-popup" style="background-color: #4A5254;color:#FEFBEC">
     <div id="popup-header" style="padding: 10px 0px;color: #4AD5FC;">
-        <span >属性信息</span>
-        <a href="javascript:void(0)" id="popup-closer" class="ol-popup-closer" style="float:right;margin-right: 10px;"></a>
+        <span>属性信息</span>
+        <a href="javascript:void(0)" id="popup-closer" class="ol-popup-closer"
+           style="float:right;margin-right: 10px;"></a>
     </div>
     <div id="popup-content">
 
@@ -1051,8 +1126,6 @@
     });
 
 
-
-
     tileLayer = new ol.layer.Tile({
         source: new ol.source.TileWMS({
             url: 'http://localhost:8080/geoserver/ccf_bhf/wms',
@@ -1063,9 +1136,9 @@
                 LAYERS: 'bhf'
                 //,
 //                 CQL_FILTER: "NAME LIKE '%芒%'"
- //                CQL_FILTER: ''
+                //                CQL_FILTER: ''
             },
-            serverType:'geoserver'   //服务器类型
+            serverType: 'geoserver'   //服务器类型
 //            crossOrigin: 'anonymous'
         })
     });
@@ -1085,8 +1158,6 @@
         }),
         target: 'map'
     });
-
-
 
 
     //map.on('click', function(e){
@@ -1110,14 +1181,6 @@
     //});
 
 
-
-
-
-
-
-
-
-
     // 初始化标绘绘制工具，添加绘制结束事件响应
     plotDraw = new P.PlotDraw(map);
     plotDraw.on(P.Event.PlotDrawEvent.DRAW_END, onDrawEnd, false, this);
@@ -1130,7 +1193,7 @@
         color: '#FF0000',
         width: 2
     });
-//    var fill = new ol.style.Fill({color: 'rgba(0,255,0,0.4)'});
+    //    var fill = new ol.style.Fill({color: 'rgba(0,255,0,0.4)'});
     var fill = new ol.style.Fill({color: 'rgba(255,0,0,0.5)'});
     var image = new ol.style.Circle({fill: fill, stroke: stroke, radius: 8});
     drawStyle = new ol.style.Style({image: image, fill: fill, stroke: stroke});
@@ -1150,18 +1213,18 @@
         }
     };
 
-/*    // 初始化加载一个扇形标绘符号
-    var sector = new P.PlotFactory.createPlot(P.PlotTypes.SECTOR, [center, [98.5847, 24.4365], [98.5141, 24.4161]]);
-    var feature = new ol.Feature({
-        geometry: sector
-    });
-    drawOverlay.getSource().addFeature(feature);*/
+    /*    // 初始化加载一个扇形标绘符号
+        var sector = new P.PlotFactory.createPlot(P.PlotTypes.SECTOR, [center, [98.5847, 24.4365], [98.5141, 24.4161]]);
+        var feature = new ol.Feature({
+            geometry: sector
+        });
+        drawOverlay.getSource().addFeature(feature);*/
 
 
     // 绘制结束后，添加到FeatureOverlay显示。
     function onDrawEnd(event) {
         var feature = event.feature;
-        feature.set('type','military_vector');
+        feature.set('type', 'military_vector');
 //        var format = new ol.format.WKT(),
 //        wkt = format.writeGeometry(feature.getGeometry());
 //        alert(wkt);
@@ -1190,14 +1253,13 @@
         get('btn-delete').style.display = 'none';
     }
 
-//    var temwkt ="POLYGON((98.57849887047745 24.440809887661608,98.59123862387986 24.43857666193879,98.59135350583394 24.439948416373255,98.59469220320423 24.436002683117458,98.59074646994844 24.43266398574717,98.59086022158287 24.43403583437494,98.57792655155602 24.433942060604558))";
-//   var temwkt ="POINT(98.62182177276613 24.437487052917483)";
-//    var tempformat = new ol.format.WKT();
-//    var fea = tempformat.readFeature(temwkt);
-//    drawOverlay.getSource().addFeature(fea);
-//
-//    var temp = tempformat.writeGeometry(fea.getGeometry());
-
+    //    var temwkt ="POLYGON((98.57849887047745 24.440809887661608,98.59123862387986 24.43857666193879,98.59135350583394 24.439948416373255,98.59469220320423 24.436002683117458,98.59074646994844 24.43266398574717,98.59086022158287 24.43403583437494,98.57792655155602 24.433942060604558))";
+    //   var temwkt ="POINT(98.62182177276613 24.437487052917483)";
+    //    var tempformat = new ol.format.WKT();
+    //    var fea = tempformat.readFeature(temwkt);
+    //    drawOverlay.getSource().addFeature(fea);
+    //
+    //    var temp = tempformat.writeGeometry(fea.getGeometry());
 
 
 </script>
