@@ -5,24 +5,32 @@ import cn.ccf.mapper.*;
 import cn.ccf.pojo.*;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
+import org.apache.xmlbeans.impl.xb.xsdschema.impl.FacetImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class SituationController {
+
+    private static final String VIRTUAL_FILE_PATH = "d:/upload/";
+
+
     @Autowired
     private DepartmentMapper departmentMapper;
     @Autowired
@@ -50,6 +58,8 @@ public class SituationController {
     @Autowired
     private TreeMapper treeMapper;
 
+    @Autowired
+    private UploadMapper uploadMapper;
 
     //md5加密 spring框架自带md5加密
     public String MD5(String password) {
@@ -67,9 +77,57 @@ public class SituationController {
         List<Contact> contacts = treeMapper.getContact();
         request.setAttribute("contact", contacts);
 
-
         request.getSession().setAttribute("user_id", id);
         return "map/index";
+    }
+
+    @RequestMapping("map/createFacility")
+    @ResponseBody
+    public JSONObject createFacility(@RequestParam("file") MultipartFile file,Facility facility, HttpServletRequest request) {
+        int result = facilityMapper.insert(facility);
+        System.out.println(result);
+        if (file.getSize() != 0) {
+            String originalName = file.getOriginalFilename();
+            int index = originalName.lastIndexOf(".");
+            String uuid = UUID.randomUUID().toString();
+            String newFileName = uuid + originalName.substring(index);
+            try {
+                file.transferTo(new File(VIRTUAL_FILE_PATH+newFileName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                Upload upload = new Upload();
+                upload.setFilename(newFileName);
+                upload.setFilepath("http://localhost:8080");
+                Date date = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                upload.setAddtime(dateFormat.format(date));
+                upload.setSourceid(facility.getId());
+                String fileSuffix = originalName.substring(index+1);
+                String[] suffixArray = {"jpg","png", "jpeg", "gif"};
+                boolean picFlag = Arrays.asList(suffixArray).contains(fileSuffix.toLowerCase());
+                if (picFlag) {
+                    upload.setType(32769);
+                } else {
+                    upload.setType(32768);
+                }
+                uploadMapper.insert(upload);
+            }
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("flag", "1");
+        return jsonObject;
+    }
+
+    @RequestMapping("map/getManagementUnit")
+    @ResponseBody
+    public List<Department> getManagementUnit() {
+
+        List<Department> managementUnits;
+        DepartmentExample departmentExample = new DepartmentExample();
+        managementUnits = departmentMapper.selectByExample(departmentExample);
+        return managementUnits;
+
     }
 
     @RequestMapping("map/saveLayer")
@@ -381,6 +439,8 @@ public class SituationController {
     public String likeKeyword(String keyword) {
         return "%" + keyword + "%";
     }
+
+
 }
 
 

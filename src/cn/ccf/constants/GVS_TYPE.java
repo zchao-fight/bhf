@@ -28,8 +28,8 @@ public class GVS_TYPE
    	public static final int GVS_UNIT_POLICESTATION = GVS_UNIT + 0X13;   //派出所
 
     //监控设施
-   	public static final int GVS_MONITOR = GVS_ALL_ICON + 0X200;
-   	public static final int GVS_MONITOR_CAMERA = GVS_MONITOR + 0x10;
+   	private static final int GVS_MONITOR = GVS_ALL_ICON + 0X200;
+   	private static final int GVS_MONITOR_CAMERA = GVS_MONITOR + 0x10;
    	public static final int GVS_MONITOR_CAMERABLOT = GVS_MONITOR_CAMERA + 0X01; //枪机
    	public static final int GVS_MONITOR_CAMERABALL = GVS_MONITOR_CAMERA + 0X02; //球机
    	public static final int GVS_MONITOR_CAMERABIG = GVS_MONITOR_CAMERA + 0X03;  //大球
@@ -42,7 +42,7 @@ public class GVS_TYPE
 
 
     //交通设施
-   	public static final int GVS_TRAFFIC = GVS_ALL_ICON + 0X400;
+   	private static final int GVS_TRAFFIC = GVS_ALL_ICON + 0X400;
    	public static final int GVS_TRAFFIC_ROAD = GVS_TRAFFIC + 0X01;      //道路
    	public static final int GVS_TRAFFIC_WHARF = GVS_TRAFFIC + 0X02;     //码头
    	public static final int GVS_TRAFFIC_TRAMAC = GVS_TRAFFIC + 0X03;    //停机平
@@ -51,14 +51,14 @@ public class GVS_TYPE
    	public static final int GVS_TRAFFIC_PORT = GVS_TRAFFIC + 0X06;    //口岸
    
     //拦阻设施
-   	public static final int GVS_BLOCK = GVS_ALL_ICON + 0X800;
+	private static final int GVS_BLOCK = GVS_ALL_ICON + 0X800;
    	public static final int GVS_BLOCK_VECHICLE = GVS_BLOCK + 0X01;      //车辆
    	public static final int GVS_BLOCK_ISOLATION =  GVS_BLOCK + 0X02;    //隔离带
    	public static final int GVS_BLOCK_WIRENET = GVS_BLOCK + 0X03;       //铁丝网
    	public static final int GVS_BLOCK_IRONFENCE = GVS_BLOCK + 0X04;     //铁栅栏
 
     //配套设施
-   	public static final int GVS_SUPPORTING = GVS_ALL_ICON + 0X1000;
+	private static final int GVS_SUPPORTING = GVS_ALL_ICON + 0X1000;
    	public static final int GVS_SUPPORTING_1 = GVS_SUPPORTING + 0X01;   //标志牌
     public static final int GVS_SUPPORTING_2 = GVS_SUPPORTING + 0X02;   //灯塔
     public static final int GVS_SUPPORTING_3 = GVS_SUPPORTING + 0X03;   //电子墙
@@ -66,7 +66,7 @@ public class GVS_TYPE
     public static final int GVS_SUPPORTING_5 = GVS_SUPPORTING + 0X05;   //执勤房
 
     //其它
-    public static final int GVS_OBJOther = GVS_ALL_ICON + 0X2000;
+	private static final int GVS_OBJOther = GVS_ALL_ICON + 0X2000;
     public static final int GVS_OBJOther_1 = GVS_OBJOther + 0x01;       //界碑
     public static final int GVS_OBJOther_2 = GVS_OBJOther + 0x02;       //国门
 

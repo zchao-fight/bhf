@@ -299,13 +299,33 @@ function setObjType(type) {
             break;
         //资源管理
         case 1000:
-            objType = 1000;
-            break;
+            var facilityPicSrc = '../images/map/facility/gateway.png';
+            var resourceLayerBody = $('#resourceLayerBody');
+            resourceLayerBody.html('');
+            addInteraction();
+            $.post(BASE_URL+'/map/getManagementUnit.action', function (data) {
+                var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="界碑" readonly="readonly" style="width: 150px;margin-right:50px;"> 界碑类型：<select name="childtype" style="width: 150px;"><option selected="selected">同号三立柱</option><option>同号双立柱</option><option>单立柱</option></select></div>';
+                var line2 = '<div>设施名称：<input type="text"  name="name" style="width:150px;margin-right:15px;"> 建设地址（段）: <input name="address" type="text" style="width: 130px;"></div>';
+                var line3 = '<div>设施状态：<select name="status"  style="width: 150px;margin-right:50px;"><option value="1">良好</option><option value="0">正常</option><option value="-1">损坏</option></select> 投资（万元）: <input name="invest" type="text" style="width: 130px;"></div>';
+                var line4 = '<div>竣工时间: <input id="completionTime" name="finishtime" style="width: 150px;margin-right:40px;" type="text"   class="Wdate" onClick="WdatePicker({dateFmt:\'yyyy-MM-dd\'})" />' +
+                    '管理单位：<select name="managerunit" style="width: 150px;">';
+                var tempStr = '';
+                    $.each(data, function (i, item) {
+                        tempStr += '<option>'+item.name+'</option>';
+                    });
+                    line4 += tempStr + '</select></div>';
+                var line5 = '<div>经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> 维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
+                var line6 = '<div>多媒体：<input type="file" name="file" style="margin-bottom:10px;margin-top:5px;"></div>';
+                var line7 = '<div>备注（选填）: <textarea name="remark" placeholder="......" style="width: 350px;height:120px;"></textarea></div>';
+                $('#submitFacilityButton').on('click', function () {
+                    submitFacilityData();
+                });
+                resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
+            });
+            return;
         case 1001:
-            objType = 1001;
             break;
         case 1002:
-            objType = 1002;
             break;
     }
 
@@ -314,6 +334,77 @@ function setObjType(type) {
 var jointStr = "";
 var geoStr = null; // 当前绘制图形的坐标串
 var currentFeature = null; //当前绘制的几何要素
+
+
+/**
+ * 绘制结束事件的回调函数，
+ * @param {ol.interaction.DrawEvent} evt 绘制结束事件
+ */
+function drawEndCallBack(evt) {
+    // var geoType = $("#type option:selected").val();//绘制图形类型
+    var geoType = 'Point';
+
+    currentFeature = evt.feature; //当前绘制的要素
+    var geo = currentFeature.getGeometry(); //获取要素的几何信息
+    var coordinates = geo.getCoordinates(); //获取几何坐标
+    console.log(coordinates);
+    //将几何坐标拼接为字符串
+    if (geoType === "Polygon") {
+        geoStr = coordinates[0].join(";");
+    }
+    else {
+        geoStr = coordinates.join(";");
+        $('#longitude').val(coordinates[0]);
+        $('#latitude').val(coordinates[1]);
+    }
+    $('#resourceLayer').modal('show'); //打开属性信息设置对话框
+    map.removeInteraction(draw);
+}
+
+/**
+ * 根据绘制类型进行交互绘制图形处理
+ */
+function addInteraction() {
+    // var value = typeSelect.value; //绘制类型
+    //实例化交互绘制类对象并添加到地图容器中
+    draw = new ol.interaction.Draw({
+        source: source, //绘制层数据源
+        type: 'Point'  //几何图形类型
+    });
+    map.addInteraction(draw);
+    //添加绘制结束事件监听，在绘制结束后保存信息到数据库
+    draw.on('drawend', drawEndCallBack, this);
+}
+
+/**
+ * 将绘制的几何数据与对话框设置的属性数据提交到后台处理
+ */
+function submitFacilityData() {
+    // var geoType = $("#type option:selected").val(); //绘制图形类型
+    var form = new FormData(document.getElementById("resourceLayerBody"));
+    $.ajax({
+        url: BASE_URL + '/map/createFacility.action',
+        type: "POST",
+        data: form,
+        async: false,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (returndata) {
+            $('#resourceLayer').modal('hide');
+            console.log(111111111111111);
+            console.log(returndata.flag);
+            console.log(11111111111111111);
+            alert('新建资源成功');
+        },
+        error: function (returndata) {
+            alert("error:" + '资源错误');
+        }
+    });
+    currentFeature = null;  //置空当前绘制的几何要素
+    geoStr = null; //置空当前绘制图形的geoStr
+}
+
 
 function addIcon(coord, type) {
     if (type === null) {
@@ -394,12 +485,13 @@ function addIcon(coord, type) {
             case 117:
                 picSrc = "../images/map/military/military_pic/117.png";
                 break;
-            case 1000:
-                picSrc = '';
+            default:
                 return;
         }
 
     }
+
+
     //添加feature
     var iconFeature = new ol.Feature({
         geometry: new ol.geom.Point(coord),
@@ -450,35 +542,6 @@ function addIcon(coord, type) {
     // }));
     // layer.getSource().addFeature(fea);
 }
-
-/**
- * 绘制结束事件的回调函数，
- * @param {ol.interaction.DrawEvent} evt 绘制结束事件
- */
-function drawEndCallBack(evt) {
-    var geoType = $("#type option:selected").val();//绘制图形类型
-    $("#dialog-confirm").dialog("open"); //打开属性信息设置对话框
-    currentFeature = evt.feature; //当前绘制的要素
-    var geo = currentFeature.getGeometry(); //获取要素的几何信息
-    var coordinates = geo.getCoordinates(); //获取几何坐标
-    //将几何坐标拼接为字符串
-    if (geoType === "Polygon") {
-        geoStr = coordinates[0].join(";");
-    }
-    else {
-        geoStr = coordinates.join(";");
-    }
-}
-
-
-
-
-
-
-
-
-
-
 
 /**
  * @author zc

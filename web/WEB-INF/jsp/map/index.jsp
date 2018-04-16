@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="${ctx}/css/jquery.mCustomScrollbar.css" type="text/css" >
     <link rel="stylesheet" href="${ctx}/css/zTreeStyle.css" type="text/css">
     <script type="text/javascript" src="${ctx}/js/jquery.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="${ctx}/js/My97DatePicker/WdatePicker.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${ctx}/js/ligerui.min.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${ctx}/js/niuniucapture.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${ctx}/js/capturewrapper.js" charset="UTF-8"></script>
@@ -115,6 +116,7 @@
 @author zc
 --%>
 <body onkeydown="if (event.keyCode!==13){}else showResult();">
+
 <%--左侧菜单--%>
 <div class="float-open" id="float-open" style="left:-2px;">
     <a class="open-btn" href="javascript:void(0);">
@@ -578,6 +580,30 @@
 
 </style>
 
+
+<!-- 新建资源图层模态框（Modal） -->
+<div class="modal fade" id="resourceLayer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="sd">新建资源</h4>
+            </div>
+            <div class="modal-body" >
+                <form id="resourceLayerBody" enctype="multipart/form-data">
+
+                </form>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="submitFacilityButton" class="btn btn-primary">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
 <div id="navigate-tool-bar">
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid" style="padding-right:0">
@@ -600,7 +626,6 @@
                             <ul class="dropdown-menu">
                                 <li><a href="javascript:setObjType(1000)" onclick="">界碑</a></li>
                                 <li><a href="javascript:setObjType(1001)" onclick="">国门</a></li>
-                                <li><a href="javascript:setObjType(1002)" onclick="">拦阻设施</a></li>
                                 <li class="divider"></li>
                             </ul>
                         </li>
@@ -1177,10 +1202,10 @@
 
 </script>
 
-
 </body>
 <script>
     var BASE_URL = '${ctx}';
+
 </script>
 <script type="text/javascript" src="${ctx}/js/map/toolBar.js" charset="UTF-8"></script>
 <script type="text/javascript" src="${ctx}/js/map/mapSearch.js" charset="UTF-8"></script>

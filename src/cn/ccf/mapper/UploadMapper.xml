@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ccf.mapper.UploadMapper" >
+  <insert id="insert" parameterType="cn.ccf.pojo.Upload" >
+    insert into com_upload (ID, Type, SourceID,
+    AddTime, FilePath, FileName,
+    Remark)
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{sourceid,jdbcType=INTEGER},
+    #{addtime,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR},
+    #{remark,jdbcType=VARCHAR})
+  </insert>
+</mapper>

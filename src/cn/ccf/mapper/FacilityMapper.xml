@@ -137,7 +137,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.ccf.pojo.Facility" >
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="cn.ccf.pojo.Facility" >
     insert into com_object (ID, LayerID, DomainID, 
       ObjType, Name, Address, 
       BuildRange, Latitude, Longitude, 
