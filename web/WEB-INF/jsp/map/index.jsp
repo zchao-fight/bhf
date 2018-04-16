@@ -91,7 +91,7 @@
         function ml_open_demo() {
             $('.float-open').animate({
                 left: '-70px'
-            }, 100, function () {
+            }, 100, function(){
                 $('.float-news').delay(50).animate({
                     left: '0px'
                 }, 300);
@@ -257,7 +257,7 @@
 
 <div id="globleSearch">
     <div style="width: 300px; position: relative; ">
-        <input id="searchKeyword" name="keyword" placeholder="请输入搜索内容">
+        <input  id="searchKeyword" name="keyword" placeholder="请输入搜索内容" >
         <button onclick="showResult()" style="padding:0;"><img src="${ctx}/images/search.png"></button>
     </div>
 </div>
@@ -376,7 +376,7 @@
                     <a data-toggle="collapse" data-parent="#accordion"
                        href="#collapseSix" title="展开">
                         <span class="totalResultNumbers"
-                              style="float: right; margin-right: 30px;font-size: 14px;color: #4AD5FC">+</span>
+                                 style="float: right; margin-right: 30px;font-size: 14px;color: #4AD5FC">+</span>
                     </a>
 
                 </h4>
@@ -646,6 +646,23 @@
                             <li class="divider"></li>
                         </ul>
                     </li>
+                        <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><img
+                                src="${ctx}/images/map/menu/new.png" title="新建" alt="新建"></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:setObjType(1000)" onclick="">界碑</a></li>
+                                <li><a href="javascript:setObjType(1001)" onclick="">国门</a></li>
+                                <li class="divider"></li>
+                                <li><a href="javascript:setObjType(1002)" onclick="">监控中心</a></li>
+                                <li><a href="javascript:setObjType(1003)" onclick="">监控站</a></li>
+                                <li><a href="javascript:setObjType(1004)" onclick="">报警装置</a></li>
+                                <li class="divider"></li><li class="divider"></li><li class="divider"></li>
+                                <li><a href="javascript:setObjType(1005)" onclick="">执勤房</a></li>
+                                <li><a href="javascript:setObjType(1006)" onclick="">瞭望塔</a></li>
+                                <li><a href="javascript:setObjType(1007)" onclick="">标志牌</a></li>
+                                <li><a href="javascript:setObjType(1008)" onclick="">灯塔</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                        </li>
 
                     <li><a id="measureLength" href="javascript:void(0)"><img
                             src="${ctx}/images/map/military/measureLength.png" alt="测距" title="测距"></a></li>
@@ -1010,91 +1027,92 @@
     };
 
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-</script>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('cartogram2'));
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        </script>
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('cartogram2'));
 
-    // 指定图表的配置项和数据
-    var option = {
-        tooltip: {},
-        legend: {
-            data: ['销量']
-        },
-        xAxis: {
-            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-        },
-        yAxis: {},
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-        }]
-    };
+            // 指定图表的配置项和数据
+            var option = {
+                tooltip: {},
+                legend: {
+                    data:['销量']
+                },
+                xAxis: {
+                    data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '销量',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20]
+                }]
+            };
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-</script>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('cartogram3'));
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        </script>
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('cartogram3'));
 
-    // 指定图表的配置项和数据
-    var option = {
-        backgroundColor: '#1F4866',
-        tooltip: {},
-        legend: {
-            data: ['销量']
-        },
-        xAxis: {
-            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-        },
-        yAxis: {},
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-        }]
-    };
+            // 指定图表的配置项和数据
+            var option = {
+                backgroundColor: '#1F4866',
+                tooltip: {},
+                legend: {
+                    data:['销量']
+                },
+                xAxis: {
+                    data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '销量',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20]
+                }]
+            };
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-</script>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('cartogram4'));
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        </script>
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('cartogram4'));
 
-    // 指定图表的配置项和数据
-    var option = {
-        backgroundColor: '#1F4866',
-        tooltip: {},
-        legend: {
-            data: ['销量']
-        },
-        xAxis: {
-            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-        },
-        yAxis: {},
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-        }]
-    };
+            // 指定图表的配置项和数据
+            var option = {
+                backgroundColor: '#1F4866',
+                tooltip: {},
+                legend: {
+                    data:['销量']
+                },
+                xAxis: {
+                    data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '销量',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20]
+                }]
+            };
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-</script>
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        </script>
+
+
 
 
 <!-- Popup -->
 <div id="popup" class="ol-popup" style="background-color: #4A5254;color:#FEFBEC">
     <div id="popup-header" style="padding: 10px 0px;color: #4AD5FC;">
-        <span>属性信息</span>
-        <a href="javascript:void(0)" id="popup-closer" class="ol-popup-closer"
-           style="float:right;margin-right: 10px;"></a>
+        <span >属性信息</span>
+        <a href="javascript:void(0)" id="popup-closer" class="ol-popup-closer" style="float:right;margin-right: 10px;"></a>
     </div>
     <div id="popup-content">
 
@@ -1126,6 +1144,8 @@
     });
 
 
+
+
     tileLayer = new ol.layer.Tile({
         source: new ol.source.TileWMS({
             url: 'http://localhost:8080/geoserver/ccf_bhf/wms',
@@ -1136,9 +1156,9 @@
                 LAYERS: 'bhf'
                 //,
 //                 CQL_FILTER: "NAME LIKE '%芒%'"
-                //                CQL_FILTER: ''
+ //                CQL_FILTER: ''
             },
-            serverType: 'geoserver'   //服务器类型
+            serverType:'geoserver'   //服务器类型
 //            crossOrigin: 'anonymous'
         })
     });
@@ -1158,6 +1178,8 @@
         }),
         target: 'map'
     });
+
+
 
 
     //map.on('click', function(e){
@@ -1181,6 +1203,14 @@
     //});
 
 
+
+
+
+
+
+
+
+
     // 初始化标绘绘制工具，添加绘制结束事件响应
     plotDraw = new P.PlotDraw(map);
     plotDraw.on(P.Event.PlotDrawEvent.DRAW_END, onDrawEnd, false, this);
@@ -1193,7 +1223,7 @@
         color: '#FF0000',
         width: 2
     });
-    //    var fill = new ol.style.Fill({color: 'rgba(0,255,0,0.4)'});
+//    var fill = new ol.style.Fill({color: 'rgba(0,255,0,0.4)'});
     var fill = new ol.style.Fill({color: 'rgba(255,0,0,0.5)'});
     var image = new ol.style.Circle({fill: fill, stroke: stroke, radius: 8});
     drawStyle = new ol.style.Style({image: image, fill: fill, stroke: stroke});
@@ -1213,18 +1243,18 @@
         }
     };
 
-    /*    // 初始化加载一个扇形标绘符号
-        var sector = new P.PlotFactory.createPlot(P.PlotTypes.SECTOR, [center, [98.5847, 24.4365], [98.5141, 24.4161]]);
-        var feature = new ol.Feature({
-            geometry: sector
-        });
-        drawOverlay.getSource().addFeature(feature);*/
+/*    // 初始化加载一个扇形标绘符号
+    var sector = new P.PlotFactory.createPlot(P.PlotTypes.SECTOR, [center, [98.5847, 24.4365], [98.5141, 24.4161]]);
+    var feature = new ol.Feature({
+        geometry: sector
+    });
+    drawOverlay.getSource().addFeature(feature);*/
 
 
     // 绘制结束后，添加到FeatureOverlay显示。
     function onDrawEnd(event) {
         var feature = event.feature;
-        feature.set('type', 'military_vector');
+        feature.set('type','military_vector');
 //        var format = new ol.format.WKT(),
 //        wkt = format.writeGeometry(feature.getGeometry());
 //        alert(wkt);
@@ -1253,13 +1283,14 @@
         get('btn-delete').style.display = 'none';
     }
 
-    //    var temwkt ="POLYGON((98.57849887047745 24.440809887661608,98.59123862387986 24.43857666193879,98.59135350583394 24.439948416373255,98.59469220320423 24.436002683117458,98.59074646994844 24.43266398574717,98.59086022158287 24.43403583437494,98.57792655155602 24.433942060604558))";
-    //   var temwkt ="POINT(98.62182177276613 24.437487052917483)";
-    //    var tempformat = new ol.format.WKT();
-    //    var fea = tempformat.readFeature(temwkt);
-    //    drawOverlay.getSource().addFeature(fea);
-    //
-    //    var temp = tempformat.writeGeometry(fea.getGeometry());
+//    var temwkt ="POLYGON((98.57849887047745 24.440809887661608,98.59123862387986 24.43857666193879,98.59135350583394 24.439948416373255,98.59469220320423 24.436002683117458,98.59074646994844 24.43266398574717,98.59086022158287 24.43403583437494,98.57792655155602 24.433942060604558))";
+//   var temwkt ="POINT(98.62182177276613 24.437487052917483)";
+//    var tempformat = new ol.format.WKT();
+//    var fea = tempformat.readFeature(temwkt);
+//    drawOverlay.getSource().addFeature(fea);
+//
+//    var temp = tempformat.writeGeometry(fea.getGeometry());
+
 
 
 </script>

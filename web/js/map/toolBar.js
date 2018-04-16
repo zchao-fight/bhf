@@ -324,9 +324,208 @@ function setObjType(type) {
             });
             return;
         case 1001:
-            break;
+            var facilityPicSrc = '../images/map/facility/gateway.png';
+            var resourceLayerBody = $('#resourceLayerBody');
+            resourceLayerBody.html('');
+            addInteraction();
+            $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
+                var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="国门" readonly="readonly" style="width: 150px;margin-right:50px;"> 国门类型：<select name="childtype" style="width: 150px;"><option selected="selected">其他</option></select></div>';
+                var line2 = '<div>设施名称：<input type="text"  name="name" style="width:150px;margin-right:15px;"> 建设地址（段）: <input name="address" type="text" style="width: 130px;"></div>';
+                var line3 = '<div>设施状态：<select name="status"  style="width: 150px;margin-right:50px;"><option value="1">良好</option><option value="0">正常</option><option value="-1">损坏</option></select> 投资（万元）: <input name="invest" type="text" style="width: 130px;"></div>';
+                var line4 = '<div>竣工时间: <input id="completionTime" name="finishtime" style="width: 150px;margin-right:40px;" type="text"   class="Wdate" onClick="WdatePicker({dateFmt:\'yyyy-MM-dd\'})" />' +
+                    '管理单位：<select name="managerunit" style="width: 150px;">';
+                var tempStr = '';
+                $.each(data, function (i, item) {
+                    tempStr += '<option>' + item.name + '</option>';
+                });
+                line4 += tempStr + '</select></div>';
+                var line5 = '<div>经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> 维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
+                var line6 = '<div>多媒体：<input type="file" name="file" style="margin-bottom:10px;margin-top:5px;"></div>';
+                var line7 = '<div>备注（选填）: <textarea name="remark" placeholder="......" style="width: 350px;height:120px;"></textarea></div>';
+                $('#submitFacilityButton').on('click', function () {
+                    submitFacilityData();
+                });
+                resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
+            });
+            return;
         case 1002:
-            break;
+            var facilityPicSrc = '../images/map/facility/gateway.png';
+            var resourceLayerBody = $('#resourceLayerBody');
+            resourceLayerBody.html('');
+            addInteraction();
+            $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
+                var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="监控中心" readonly="readonly" style="width: 150px;margin-right:50px;"> 监控中心类型：<select name="childtype" style="width: 120px;"><option selected="selected">地级</option><option>县级</option></select></div>';
+                var line2 = '<div>设施名称：<input type="text"  name="name" style="width:150px;margin-right:15px;"> 建设地址（段）: <input name="address" type="text" style="width: 130px;"></div>';
+                var line3 = '<div>设施状态：<select name="status"  style="width: 150px;margin-right:50px;"><option value="1">良好</option><option value="0">正常</option><option value="-1">损坏</option></select> 投资（万元）: <input name="invest" type="text" style="width: 130px;"></div>';
+                var line4 = '<div>竣工时间: <input id="completionTime" name="finishtime" style="width: 150px;margin-right:40px;" type="text"   class="Wdate" onClick="WdatePicker({dateFmt:\'yyyy-MM-dd\'})" />' +
+                    '管理单位：<select name="managerunit" style="width: 150px;">';
+                var tempStr = '';
+                $.each(data, function (i, item) {
+                    tempStr += '<option>' + item.name + '</option>';
+                });
+                line4 += tempStr + '</select></div>';
+                var line5 = '<div>经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> 维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
+                var line6 = '<div>多媒体：<input type="file" name="file" style="margin-bottom:10px;margin-top:5px;"></div>';
+                var line7 = '<div>备注（选填）: <textarea name="remark" placeholder="......" style="width: 350px;height:120px;"></textarea></div>';
+                $('#submitFacilityButton').on('click', function () {
+                    submitFacilityData();
+                });
+                resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
+            });
+            return;
+        case 1003:
+            var facilityPicSrc = '../images/map/facility/gateway.png';
+            var resourceLayerBody = $('#resourceLayerBody');
+            resourceLayerBody.html('');
+            addInteraction();
+            $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
+                var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="监控站" readonly="readonly" style="width: 150px;margin-right:50px;"> 监控站类型：<select name="childtype" style="width: 150px;"><option selected="selected">其他</option></select></div>';
+                var line2 = '<div>设施名称：<input type="text"  name="name" style="width:150px;margin-right:15px;"> 建设地址（段）: <input name="address" type="text" style="width: 130px;"></div>';
+                var line3 = '<div>设施状态：<select name="status"  style="width: 150px;margin-right:50px;"><option value="1">良好</option><option value="0">正常</option><option value="-1">损坏</option></select> 投资（万元）: <input name="invest" type="text" style="width: 130px;"></div>';
+                var line4 = '<div>竣工时间: <input id="completionTime" name="finishtime" style="width: 150px;margin-right:40px;" type="text"   class="Wdate" onClick="WdatePicker({dateFmt:\'yyyy-MM-dd\'})" />' +
+                    '管理单位：<select name="managerunit" style="width: 150px;">';
+                var tempStr = '';
+                $.each(data, function (i, item) {
+                    tempStr += '<option>' + item.name + '</option>';
+                });
+                line4 += tempStr + '</select></div>';
+                var line5 = '<div>经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> 维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
+                var line6 = '<div>多媒体：<input type="file" name="file" style="margin-bottom:10px;margin-top:5px;"></div>';
+                var line7 = '<div>备注（选填）: <textarea name="remark" placeholder="......" style="width: 350px;height:120px;"></textarea></div>';
+                $('#submitFacilityButton').on('click', function () {
+                    submitFacilityData();
+                });
+                resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
+            });
+            return;
+        case 1004:
+            var facilityPicSrc = '../images/map/facility/gateway.png';
+            var resourceLayerBody = $('#resourceLayerBody');
+            resourceLayerBody.html('');
+            addInteraction();
+            $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
+                var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="报警装置" readonly="readonly" style="width: 150px;margin-right:50px;"> 报警装置类型：<select name="childtype" style="width: 120px;"><option selected="selected">其他</option></select></div>';
+                var line2 = '<div>设施名称：<input type="text"  name="name" style="width:150px;margin-right:15px;"> 建设地址（段）: <input name="address" type="text" style="width: 130px;"></div>';
+                var line3 = '<div>设施状态：<select name="status"  style="width: 150px;margin-right:50px;"><option value="1">良好</option><option value="0">正常</option><option value="-1">损坏</option></select> 投资（万元）: <input name="invest" type="text" style="width: 130px;"></div>';
+                var line4 = '<div>竣工时间: <input id="completionTime" name="finishtime" style="width: 150px;margin-right:40px;" type="text"   class="Wdate" onClick="WdatePicker({dateFmt:\'yyyy-MM-dd\'})" />' +
+                    '管理单位：<select name="managerunit" style="width: 150px;">';
+                var tempStr = '';
+                $.each(data, function (i, item) {
+                    tempStr += '<option>' + item.name + '</option>';
+                });
+                line4 += tempStr + '</select></div>';
+                var line5 = '<div>经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> 维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
+                var line6 = '<div>多媒体：<input type="file" name="file" style="margin-bottom:10px;margin-top:5px;"></div>';
+                var line7 = '<div>备注（选填）: <textarea name="remark" placeholder="......" style="width: 350px;height:120px;"></textarea></div>';
+                $('#submitFacilityButton').on('click', function () {
+                    submitFacilityData();
+                });
+                resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
+            });
+            return;
+        case 1005:
+            var facilityPicSrc = '../images/map/facility/gateway.png';
+            var resourceLayerBody = $('#resourceLayerBody');
+            resourceLayerBody.html('');
+            addInteraction();
+            $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
+                var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="执勤房" readonly="readonly" style="width: 150px;margin-right:50px;"> 执勤房类型：<select name="childtype" style="width: 150px;"><option selected="selected">其他</option></select></div>';
+                var line2 = '<div>设施名称：<input type="text"  name="name" style="width:150px;margin-right:15px;"> 建设地址（段）: <input name="address" type="text" style="width: 130px;"></div>';
+                var line3 = '<div>设施状态：<select name="status"  style="width: 150px;margin-right:50px;"><option value="1">良好</option><option value="0">正常</option><option value="-1">损坏</option></select> 投资（万元）: <input name="invest" type="text" style="width: 130px;"></div>';
+                var line4 = '<div>竣工时间: <input id="completionTime" name="finishtime" style="width: 150px;margin-right:40px;" type="text"   class="Wdate" onClick="WdatePicker({dateFmt:\'yyyy-MM-dd\'})" />' +
+                    '管理单位：<select name="managerunit" style="width: 150px;">';
+                var tempStr = '';
+                $.each(data, function (i, item) {
+                    tempStr += '<option>' + item.name + '</option>';
+                });
+                line4 += tempStr + '</select></div>';
+                var line5 = '<div>经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> 维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
+                var line6 = '<div>多媒体：<input type="file" name="file" style="margin-bottom:10px;margin-top:5px;"></div>';
+                var line7 = '<div>备注（选填）: <textarea name="remark" placeholder="......" style="width: 350px;height:120px;"></textarea></div>';
+                $('#submitFacilityButton').on('click', function () {
+                    submitFacilityData();
+                });
+                resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
+            });
+            return;
+            case 1006:
+        var facilityPicSrc = '../images/map/facility/gateway.png';
+        var resourceLayerBody = $('#resourceLayerBody');
+        resourceLayerBody.html('');
+        addInteraction();
+        $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
+            var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="瞭望塔" readonly="readonly" style="width: 150px;margin-right:50px;"> 瞭望塔类型：<select name="childtype" style="width: 150px;"><option selected="selected">砖瓦结构</option><option>钢架结构</option><option>其他</option></select></div>';
+            var line2 = '<div>设施名称：<input type="text"  name="name" style="width:150px;margin-right:15px;"> 建设地址（段）: <input name="address" type="text" style="width: 130px;"></div>';
+            var line3 = '<div>设施状态：<select name="status"  style="width: 150px;margin-right:50px;"><option value="1">良好</option><option value="0">正常</option><option value="-1">损坏</option></select> 投资（万元）: <input name="invest" type="text" style="width: 130px;"></div>';
+            var line4 = '<div>竣工时间: <input id="completionTime" name="finishtime" style="width: 150px;margin-right:40px;" type="text"   class="Wdate" onClick="WdatePicker({dateFmt:\'yyyy-MM-dd\'})" />' +
+                '管理单位：<select name="managerunit" style="width: 150px;">';
+            var tempStr = '';
+            $.each(data, function (i, item) {
+                tempStr += '<option>' + item.name + '</option>';
+            });
+            line4 += tempStr + '</select></div>';
+            var line5 = '<div>经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> 维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
+            var line6 = '<div>多媒体：<input type="file" name="file" style="margin-bottom:10px;margin-top:5px;"></div>';
+            var line7 = '<div>备注（选填）: <textarea name="remark" placeholder="......" style="width: 350px;height:120px;"></textarea></div>';
+            $('#submitFacilityButton').on('click', function () {
+                submitFacilityData();
+            });
+            resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
+        });
+        return;
+        case 1007:
+        var facilityPicSrc = '../images/map/facility/gateway.png';
+        var resourceLayerBody = $('#resourceLayerBody');
+        resourceLayerBody.html('');
+        addInteraction();
+        $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
+            var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="标志牌" readonly="readonly" style="width: 150px;margin-right:50px;"> 标志牌类型：<select name="childtype" style="width: 150px;"><option selected="selected">其他</option></select></div>';
+            var line2 = '<div>设施名称：<input type="text"  name="name" style="width:150px;margin-right:15px;"> 建设地址（段）: <input name="address" type="text" style="width: 130px;"></div>';
+            var line3 = '<div>设施状态：<select name="status"  style="width: 150px;margin-right:50px;"><option value="1">良好</option><option value="0">正常</option><option value="-1">损坏</option></select> 投资（万元）: <input name="invest" type="text" style="width: 130px;"></div>';
+            var line4 = '<div>竣工时间: <input id="completionTime" name="finishtime" style="width: 150px;margin-right:40px;" type="text"   class="Wdate" onClick="WdatePicker({dateFmt:\'yyyy-MM-dd\'})" />' +
+                '管理单位：<select name="managerunit" style="width: 150px;">';
+            var tempStr = '';
+            $.each(data, function (i, item) {
+                tempStr += '<option>' + item.name + '</option>';
+            });
+            line4 += tempStr + '</select></div>';
+            var line5 = '<div>经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> 维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
+            var line6 = '<div>多媒体：<input type="file" name="file" style="margin-bottom:10px;margin-top:5px;"></div>';
+            var line7 = '<div>备注（选填）: <textarea name="remark" placeholder="......" style="width: 350px;height:120px;"></textarea></div>';
+            $('#submitFacilityButton').on('click', function () {
+                submitFacilityData();
+            });
+            resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
+        });
+        return;
+        case 1008:
+            var facilityPicSrc = '../images/map/facility/gateway.png';
+            var resourceLayerBody = $('#resourceLayerBody');
+            resourceLayerBody.html('');
+            addInteraction();
+            $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
+                var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="灯塔" readonly="readonly" style="width: 150px;margin-right:50px;"> 灯塔类型：<select name="childtype" style="width: 150px;"><option selected="selected">其他</option></select></div>';
+                var line2 = '<div>设施名称：<input type="text"  name="name" style="width:150px;margin-right:15px;"> 建设地址（段）: <input name="address" type="text" style="width: 130px;"></div>';
+                var line3 = '<div>设施状态：<select name="status"  style="width: 150px;margin-right:50px;"><option value="1">良好</option><option value="0">正常</option><option value="-1">损坏</option></select> 投资（万元）: <input name="invest" type="text" style="width: 130px;"></div>';
+                var line4 = '<div>竣工时间: <input id="completionTime" name="finishtime" style="width: 150px;margin-right:40px;" type="text"   class="Wdate" onClick="WdatePicker({dateFmt:\'yyyy-MM-dd\'})" />' +
+                    '管理单位：<select name="managerunit" style="width: 150px;">';
+                var tempStr = '';
+                $.each(data, function (i, item) {
+                    tempStr += '<option>' + item.name + '</option>';
+                });
+                line4 += tempStr + '</select></div>';
+                var line5 = '<div>经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> 维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
+                var line6 = '<div>多媒体：<input type="file" name="file" style="margin-bottom:10px;margin-top:5px;"></div>';
+                var line7 = '<div>备注（选填）: <textarea name="remark" placeholder="......" style="width: 350px;height:120px;"></textarea></div>';
+                $('#submitFacilityButton').on('click', function () {
+                    submitFacilityData();
+                });
+                resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
+            });
+            return;
+
+
+
     }
 
 }
