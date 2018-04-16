@@ -257,7 +257,7 @@
 
 <div id="globleSearch">
     <div style="width: 300px; position: relative; ">
-        <input  id="searchKeyword" name="keyword" placeholder="请输入搜索内容" >
+        <input id="searchKeyword" name="keyword" placeholder="请输入搜索内容">
         <button onclick="showResult()" style="padding:0;"><img src="${ctx}/images/search.png"></button>
     </div>
 </div>
@@ -954,21 +954,24 @@
         </a>
     </div>
 
-    <div>
-        <div id="cartogram1" class="rect" style="height: 24%;"></div>
-        <div style="float:right"><img src="${ctx}/images/map/left_menu/message.png"></div>
+    <div class="rect" style="height: 24%;">
+        <div><span style="margin-left: 10px;">事故统计</span><img title="筛选" alt="筛选" style="float:right;height: 15%;" src="${ctx}/images/map/right_cartogram/filter.png" onclick="$('#eventStatistics').modal('show')"></div>
+        <div id="cartogram1" style="height: 85%"></div>
     </div>
 
-    <div>
-        <div id="cartogram2" class="rect" style="height: 24%;margin-top: 2px;">统计图二</div>
+    <div class="rect" style="height: 24%;margin-top: 2px;">
+        <div><span style="margin-left: 10px;">事故统计</span><img title="筛选" alt="筛选" style="float:right;height: 15%;" src="${ctx}/images/map/right_cartogram/filter.png"></div>
+        <div id="cartogram2" style="height: 85%"></div>
     </div>
 
-    <div>
-        <div id="cartogram3" class="rect" style="height: 24%;margin-top: 2px;">统计图三</div>
+    <div class="rect" style="height: 24%;margin-top: 2px;">
+        <div><span style="margin-left: 10px;">事故统计</span><img title="筛选" alt="筛选" style="float:right;height: 15%;" src="${ctx}/images/map/right_cartogram/filter.png"></div>
+        <div id="cartogram3" style="height: 85%"></div>
     </div>
 
-    <div>
-        <div id="cartogram4" class="rect" style="height: 24%;margin-top: 2px;">统计图四</div>
+    <div class="rect" style="height: 24%;margin-top: 2px;">
+        <div><span style="margin-left: 10px;">事故统计</span><img  style="float:right;height: 15%;" src="${ctx}/images/map/right_cartogram/filter.png"></div>
+        <div id="cartogram4" style="height: 85%"></div>
     </div>
 </div>
 <script type="text/javascript">
@@ -1083,23 +1086,24 @@
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('cartogram4'));
 
-            // 指定图表的配置项和数据
-            var option = {
-                backgroundColor: '#1F4866',
-                tooltip: {},
-                legend: {
-                    data:['销量']
-                },
-                xAxis: {
-                    data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                },
-                yAxis: {},
-                series: [{
-                    name: '销量',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
-            };
+    // 指定图表的配置项和数据
+    var option = {
+        grid: { left: '1%', right: '0', bottom: '0%', containLabel: true},
+        backgroundColor: '#1F4866',
+        tooltip: {},
+        legend: {
+            data: ['销量']
+        },
+        xAxis: {
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 60, 10, 10, 20]
+        }]
+    };
 
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
@@ -1144,8 +1148,6 @@
     });
 
 
-
-
     tileLayer = new ol.layer.Tile({
         source: new ol.source.TileWMS({
             url: 'http://localhost:8080/geoserver/ccf_bhf/wms',
@@ -1158,7 +1160,7 @@
 //                 CQL_FILTER: "NAME LIKE '%芒%'"
  //                CQL_FILTER: ''
             },
-            serverType:'geoserver'   //服务器类型
+            serverType: 'geoserver'   //服务器类型
 //            crossOrigin: 'anonymous'
         })
     });
@@ -1180,8 +1182,6 @@
     });
 
 
-
-
     //map.on('click', function(e){
     //    if(plotDraw.isDrawing()){
     //        return;
@@ -1201,14 +1201,6 @@
     //        deactiveDelBtn();
     //    }
     //});
-
-
-
-
-
-
-
-
 
 
     // 初始化标绘绘制工具，添加绘制结束事件响应
@@ -1243,18 +1235,18 @@
         }
     };
 
-/*    // 初始化加载一个扇形标绘符号
-    var sector = new P.PlotFactory.createPlot(P.PlotTypes.SECTOR, [center, [98.5847, 24.4365], [98.5141, 24.4161]]);
-    var feature = new ol.Feature({
-        geometry: sector
-    });
-    drawOverlay.getSource().addFeature(feature);*/
+    /*    // 初始化加载一个扇形标绘符号
+        var sector = new P.PlotFactory.createPlot(P.PlotTypes.SECTOR, [center, [98.5847, 24.4365], [98.5141, 24.4161]]);
+        var feature = new ol.Feature({
+            geometry: sector
+        });
+        drawOverlay.getSource().addFeature(feature);*/
 
 
     // 绘制结束后，添加到FeatureOverlay显示。
     function onDrawEnd(event) {
         var feature = event.feature;
-        feature.set('type','military_vector');
+        feature.set('type', 'military_vector');
 //        var format = new ol.format.WKT(),
 //        wkt = format.writeGeometry(feature.getGeometry());
 //        alert(wkt);
@@ -1283,14 +1275,13 @@
         get('btn-delete').style.display = 'none';
     }
 
-//    var temwkt ="POLYGON((98.57849887047745 24.440809887661608,98.59123862387986 24.43857666193879,98.59135350583394 24.439948416373255,98.59469220320423 24.436002683117458,98.59074646994844 24.43266398574717,98.59086022158287 24.43403583437494,98.57792655155602 24.433942060604558))";
-//   var temwkt ="POINT(98.62182177276613 24.437487052917483)";
-//    var tempformat = new ol.format.WKT();
-//    var fea = tempformat.readFeature(temwkt);
-//    drawOverlay.getSource().addFeature(fea);
-//
-//    var temp = tempformat.writeGeometry(fea.getGeometry());
-
+    //    var temwkt ="POLYGON((98.57849887047745 24.440809887661608,98.59123862387986 24.43857666193879,98.59135350583394 24.439948416373255,98.59469220320423 24.436002683117458,98.59074646994844 24.43266398574717,98.59086022158287 24.43403583437494,98.57792655155602 24.433942060604558))";
+    //   var temwkt ="POINT(98.62182177276613 24.437487052917483)";
+    //    var tempformat = new ol.format.WKT();
+    //    var fea = tempformat.readFeature(temwkt);
+    //    drawOverlay.getSource().addFeature(fea);
+    //
+    //    var temp = tempformat.writeGeometry(fea.getGeometry());
 
 
 </script>
