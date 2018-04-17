@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="${ctx}/css/custom.css" type="text/css">
     <link rel="stylesheet" href="${ctx}/css/jquery.mCustomScrollbar.css" type="text/css">
     <link rel="stylesheet" href="${ctx}/css/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="${ctx}/css/bootstrap-select.min.css" type="text/css">
     <script type="text/javascript" src="${ctx}/js/jquery.min.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${ctx}/js/My97DatePicker/WdatePicker.js" charset="UTF-8"></script>
     <script type="text/javascript" src="${ctx}/js/ligerui.min.js" charset="UTF-8"></script>
@@ -50,6 +51,7 @@
     <script type="text/javascript" src="${ctx}/js/map/jquery.mCustomScrollbar.min.js"></script>
     <script type="text/javascript" src="${ctx}/js/map/jquery.nicescroll.min.js"></script>
     <script type="text/javascript" src="${ctx}/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${ctx}/js/bootstrap-select.min.js"></script>
     <style>
 
         ._mCS_1 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
@@ -603,20 +605,69 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="sd">新建资源</h4>
+                <h4 class="modal-title">新建资源</h4>
             </div>
             <div class="modal-body">
                 <form id="resourceLayerBody" enctype="multipart/form-data">
 
                 </form>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" id="submitFacilityButton" class="btn btn-primary">提交更改</button>
-        </div>
-    </div><!-- /.modal-content -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="submitFacilityButton" class="btn btn-primary">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- 事件查询模态框（Modal） -->
+<div class="modal fade" id="eventStatistics" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">事件查询</h4>
+            </div>
+            <div class="modal-body">
+                <form id="eventStatisticsBody">
+                    <div>
+                        <div class="form-group" style="height: 20px;">
+                            <label class="col-sm-1 control-label">地址：</label>
+                            <div class="col-sm-9">
+                                <select class="selectpicker form-control"  multiple="multiple">
+                                <option value="0">
+                                    苹果
+                                </option>
+                                <option value="1">
+                                    菠萝
+                                </option>
+                                <option value="2">
+                                    香蕉
+                                </option>
+                                <option value="3">
+                                    火龙果
+                                </option>
+                            </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>开始时间：</label><input class="Wdate" style="margin-left: 20px;margin-right: 40px;" type="text" onclick="WdatePicker('yyyy-MM-dd HH:mm:ss')">
+                        <label>结束时间：</label><input class="Wdate" type="text" onclick="WdatePicker('yyyy-MM-dd HH:mm:ss')">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="submitEventButton" class="btn btn-primary">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /modal-dialog -->
+</div>
+<!-- /.modal -->
+
 </div>
 
 
