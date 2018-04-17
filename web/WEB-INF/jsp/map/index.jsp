@@ -644,12 +644,25 @@
                                 <li class="divider"></li>
                                 <li><a href="javascript:setObjType(1002)" onclick="">监控中心</a></li>
                                 <li><a href="javascript:setObjType(1003)" onclick="">监控站</a></li>
-                                <li><a href="javascript:setObjType(1004)" onclick="">报警装置</a></li>
-                                <li class="divider"></li><li class="divider"></li><li class="divider"></li>
-                                <li><a href="javascript:setObjType(1005)" onclick="">执勤房</a></li>
-                                <li><a href="javascript:setObjType(1006)" onclick="">瞭望塔</a></li>
-                                <li><a href="javascript:setObjType(1007)" onclick="">标志牌</a></li>
-                                <li><a href="javascript:setObjType(1008)" onclick="">灯塔</a></li>
+                                <li><a href="javascript:setObjType(1004)" onclick="">传输线路</a></li>
+                                <li><a href="javascript:setObjType(1005)" onclick="">报警装置</a></li>
+                                <li class="divider"></li>
+                                <li><a href="javascript:setObjType(1006)" onclick="">执勤房</a></li>
+                                <li><a href="javascript:setObjType(1007)" onclick="">瞭望塔</a></li>
+                                <li><a href="javascript:setObjType(1008)" onclick="">标志牌</a></li>
+                                <li><a href="javascript:setObjType(1009)" onclick="">灯塔</a></li>
+                                <li class="divider"></li>
+                                <li><a href="javascript:setObjType(1010)" onclick="">巡逻路</a></li>
+                                <li><a href="javascript:setObjType(1011)" onclick="">桥梁</a></li>
+                                <li><a href="javascript:setObjType(1012)" onclick="">执勤码头</a></li>
+                                <li><a href="javascript:setObjType(1013)" onclick="">直升机停机坪</a></li>
+                                <li><a href="javascript:setObjType(1014)" onclick="">通道</a></li>
+                                <li><a href="javascript:setObjType(1015)" onclick="">口岸</a></li>
+                                <li class="divider"></li>
+                                <li><a href="javascript:setObjType(1016)" onclick="">铁丝网</a></li>
+                                <li><a href="javascript:setObjType(1017)" onclick="">铁栅栏</a></li>
+                                <li><a href="javascript:setObjType(1018)" onclick="">隔离带</a></li>
+                                <li><a href="javascript:setObjType(1019)" onclick="">车辆拦阻设施</a></li>
                                 <li class="divider"></li>
                             </ul>
                         </li>
