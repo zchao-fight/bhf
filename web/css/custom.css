@@ -129,8 +129,8 @@ li {
 
 .panel-body li {
     padding: 10px;
-    border-bottom: 2px solid #34393C;
-    background-color: #4A5254;
+    border-bottom: 1px solid #34393C;
+    /*background-color: #4A5254;*/
 }
 
 .panel-body ul {

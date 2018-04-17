@@ -62,7 +62,7 @@ function showResult() {
                 switch (i) {
                     case '#departmentResult':
                         $(".panel-whole1").show();
-                        resultStr += ' <li onclick="locateDepartment(' + item.id + ')"><span>名称：' + item.name + '</span><a onclick=sendCommand("call_tel",'+item.phone+') style="float: right;margin-right: 20px;">' + item.phone + '</a> <br> <span  style="margin-top: 10px;display: block"">地址：' + item.addr + '</span> </li>';
+                        resultStr += ' <li onclick="locateDepartment(' + item.id + ')"><span>名称：' + item.name + '</span><a onclick=sendCommand("call_tel",'+item.phone+') style="float: right;">' + item.phone + '</a> <br> <span  style="margin-top: 10px;display: block"">地址：' + item.addr + '</span> </li>';
                         break;
                     case '#cameraResult':
                         $(".panel-whole2").show();

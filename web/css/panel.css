@@ -226,6 +226,7 @@ a:hover {
 }
 .rect {
     background-color:  #1F4866 !important;
+    color: white;
 }
 .float-news {
     background: linear-gradient(to left, #2CEBFD, #2CEBFD) left top no-repeat,

@@ -116,6 +116,7 @@ public class SituationController {
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("flag", "1");
+        System.out.println("1");
         return jsonObject;
     }
 
