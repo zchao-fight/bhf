@@ -636,16 +636,6 @@
                     <li><a href="javascript:wander()"><img src="${ctx}/images/map/military/wander.png" alt="漫游"
                                                            title="漫游"></a></li>
 
-
-                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle"
-                                            data-toggle="dropdown"><img
-                            src="${ctx}/images/map/menu/new.png" title="新建" alt="新建"></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:setObjType(1000)" onclick="">界碑</a></li>
-                            <li><a href="javascript:setObjType(1001)" onclick="">国门</a></li>
-                            <li class="divider"></li>
-                        </ul>
-                    </li>
                         <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><img
                                 src="${ctx}/images/map/menu/new.png" title="新建" alt="新建"></a>
                             <ul class="dropdown-menu">
