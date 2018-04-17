@@ -317,10 +317,10 @@ function setObjType(type) {
                 var line5 = '<div>经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> 维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
                 var line6 = '<div>多媒体：<input type="file" name="file" style="margin-bottom:10px;margin-top:5px;"></div>';
                 var line7 = '<div>备注（选填）: <textarea name="remark" placeholder="......" style="width: 350px;height:120px;"></textarea></div>';
-                $('#submitFacilityButton').on('click', function () {
-                    submitFacilityData();
-                });
                 resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
+                $("#submitFacilityButton").unbind("click").bind("click",function(){
+                    submitFacilityData();
+                })
             });
             return;
         case 1001:
@@ -589,16 +589,12 @@ function submitFacilityData() {
         cache: false,
         contentType: false,
         processData: false,
-        success: function (returndata) {
+        success: function (data) {
             $('#resourceLayer').modal('hide');
-            console.log(returndata.flag);
-            if (returndata.flag === 1) {
-                alert('新建资源成功');
-            } else {
-                alert('新建资源失败');
-            }
+            console.log("data"+data);
+            alert('新建资源成功');
         },
-        error: function (returndata) {
+        error: function (data) {
             alert("error:" + '资源错误');
         }
     });
