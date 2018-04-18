@@ -377,14 +377,14 @@ function setObjType(type) {
         case 1004:
             var facilityPicSrc = '../images/map/facility/gateway.png';
             resourceLayerBody.html('');
-            addInteraction();
+            addlineInteraction();
             $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
                 var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="传输线路" readonly="readonly" style="width: 150px;margin-right:50px;"> 传输线路类型：<select name="childtype" style="width: 120px;"><option selected="selected">网络线</option><option>租用中国电信光缆</option><option>租用中国移动光缆</option><option>租用中国联通光缆</option><option>复用军队光缆</option><option>其他</option></select></div>';
                 $.each(data, function (i, item) {
                     tempStr += '<option>' + item.name + '</option>';
                 });
                 line4 += tempStr + '</select></div>';
-                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> </div>';
+                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
                 resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
                 $("#submitFacilityButton").unbind("click").bind("click",function(){
                     submitFacilityData();
@@ -480,14 +480,14 @@ function setObjType(type) {
         case 1010:
             var facilityPicSrc = '../images/map/facility/gateway.png';
             resourceLayerBody.html('');
-            addInteraction();
+            addlineInteraction();
             $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
                 var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="巡逻路" readonly="readonly" style="width: 150px;margin-right:50px;"> 巡逻路类型：<select name="childtype" style="width: 150px;"><option selected="selected">国道</option><option>省道</option><option>其他</option></select></div>';
                 $.each(data, function (i, item) {
                     tempStr += '<option>' + item.name + '</option>';
                 });
                 line4 += tempStr + '</select></div>';
-                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> </div>';
+                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
                 resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
                 $("#submitFacilityButton").unbind("click").bind("click",function(){
                     submitFacilityData();
@@ -582,14 +582,14 @@ function setObjType(type) {
         case 1016:
             var facilityPicSrc = '../images/map/facility/gateway.png';
             resourceLayerBody.html('');
-            addInteraction();
+            addlineInteraction();
             $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
                 var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="铁丝网" readonly="readonly" style="width: 150px;margin-right:50px;"> 铁丝网类型：<select name="childtype" style="width: 150px;"><option selected="selected">敷设通信线路型</option><option>租用中国电信光缆</option><option>T型铁丝网</option><option>单列桩铁丝网</option><option>其他</option></select></div>';
                 $.each(data, function (i, item) {
                     tempStr += '<option>' + item.name + '</option>';
                 });
                 line4 += tempStr + '</select></div>';
-                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> </div>';
+                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
                 resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
                 $("#submitFacilityButton").unbind("click").bind("click",function(){
                     submitFacilityData();
@@ -599,14 +599,14 @@ function setObjType(type) {
         case 1017:
             var facilityPicSrc = '../images/map/facility/gateway.png';
             resourceLayerBody.html('');
-            addInteraction();
+            addlineInteraction();
             $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
                 var line1 = '<div><input name="objtype" value="11" style="display: none">项目类别：<input type="text" value="铁栅栏" readonly="readonly" style="width: 150px;margin-right:50px;"> 铁栅栏类型：<select name="childtype" style="width: 150px;"><option selected="selected">其他</option></select></div>';
                 $.each(data, function (i, item) {
                     tempStr += '<option>' + item.name + '</option>';
                 });
                 line4 += tempStr + '</select></div>';
-                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"> </div>';
+                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
                 resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
                 $("#submitFacilityButton").unbind("click").bind("click",function(){
                     submitFacilityData();
@@ -681,6 +681,29 @@ function drawEndCallBack(evt) {
     $('#resourceLayer').modal('show'); //打开属性信息设置对话框
     map.removeInteraction(draw);
 }
+/**
+ * 绘制结束事件线型的回调函数，
+ * @param {ol.interaction.DrawEvent} evt 绘制结束事件
+ */
+function drawEndClineBack(evt) {
+    // var geoType = $("#type option:selected").val();//绘制图形类型
+    var geoType = 'LineString';
+
+    currentFeature = evt.feature; //当前绘制的要素
+    var geo = currentFeature.getGeometry(); //获取要素的几何信息
+    var coordinates = geo.getCoordinates(); //获取几何坐标
+    console.log(coordinates);
+    //将几何坐标拼接为字符串
+    if (geoType === "Polygon") {
+        geoStr =  this.coordinates, 0, this.coordinates.length.join(";");
+    }
+    else {
+        geoStr = coordinates.join(";");
+        $('#longitude').val(coordinates[0]);
+    }
+    $('#resourceLayer').modal('show'); //打开属性信息设置对话框
+    map.removeInteraction(draw);
+}
 
 /**
  * 根据绘制类型进行交互绘制图形处理
@@ -696,6 +719,21 @@ function addInteraction() {
     //添加绘制结束事件监听，在绘制结束后保存信息到数据库
     draw.on('drawend', drawEndCallBack, this);
 }
+/**
+ * 根据绘制线性进行交互绘制图形处理
+ */
+function addlineInteraction() {
+    // var value = typeSelect.value; //绘制类型
+    //实例化交互绘制类对象并添加到地图容器中
+    draw = new ol.interaction.Draw({
+        source: source, //绘制层数据源
+        type: 'LineString'  //几何图形类型
+    });
+    map.addInteraction(draw);
+    //添加绘制结束事件监听，在绘制结束后保存信息到数据库
+    draw.on('drawend', drawEndClineBack, this);
+}
+
 
 /**
  * 将绘制的几何数据与对话框设置的属性数据提交到后台处理
