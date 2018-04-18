@@ -93,7 +93,7 @@
         function ml_open_demo() {
             $('.float-open').animate({
                 left: '-70px'
-            }, 100, function(){
+            }, 100, function () {
                 $('.float-news').delay(50).animate({
                     left: '0px'
                 }, 300);
@@ -378,7 +378,7 @@
                     <a data-toggle="collapse" data-parent="#accordion"
                        href="#collapseSix" title="展开">
                         <span class="totalResultNumbers"
-                                 style="float: right; margin-right: 30px;font-size: 14px;color: #4AD5FC">+</span>
+                              style="float: right; margin-right: 30px;font-size: 14px;color: #4AD5FC">+</span>
                     </a>
 
                 </h4>
@@ -635,27 +635,22 @@
                         <div class="form-group" style="height: 20px;">
                             <label class="col-sm-1 control-label">地址：</label>
                             <div class="col-sm-9">
-                                <select class="selectpicker form-control"  multiple="multiple">
-                                <option value="0">
-                                    苹果
-                                </option>
-                                <option value="1">
-                                    菠萝
-                                </option>
-                                <option value="2">
-                                    香蕉
-                                </option>
-                                <option value="3">
-                                    火龙果
-                                </option>
-                            </select>
+                                <select id="eventAddr" name="address" class="selectpicker form-control" multiple="multiple">
+                                    <c:forEach items="${addrs}" var="item">
+                                        <option>
+                                            ${item}
+                                        </option>
+                                    </c:forEach>
+                                </select>
                             </div>
 
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>开始时间：</label><input class="Wdate" style="margin-left: 20px;margin-right: 40px;" type="text" onclick="WdatePicker('yyyy-MM-dd HH:mm:ss')">
-                        <label>结束时间：</label><input class="Wdate" type="text" onclick="WdatePicker('yyyy-MM-dd HH:mm:ss')">
+                        <label>开始时间：</label><input id="eventBeginTime" class="Wdate" style="margin-left: 20px;margin-right: 40px;"
+                                                   type="text" onclick="WdatePicker('yyyy-MM-dd HH:mm:ss')">
+                        <label>结束时间：</label><input id="eventEndTime" class="Wdate" type="text"
+                                                   onclick="WdatePicker('yyyy-MM-dd HH:mm:ss')">
                     </div>
                 </form>
             </div>
@@ -687,36 +682,37 @@
                     <li><a href="javascript:wander()"><img src="${ctx}/images/map/military/wander.png" alt="漫游"
                                                            title="漫游"></a></li>
 
-                        <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><img
-                                src="${ctx}/images/map/menu/new.png" title="新建" alt="新建"></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:setObjType(1000)" onclick="">界碑</a></li>
-                                <li><a href="javascript:setObjType(1001)" onclick="">国门</a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:setObjType(1002)" onclick="">监控中心</a></li>
-                                <li><a href="javascript:setObjType(1003)" onclick="">监控站</a></li>
-                                <li><a href="javascript:setObjType(1004)" onclick="">传输线路</a></li>
-                                <li><a href="javascript:setObjType(1005)" onclick="">报警装置</a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:setObjType(1006)" onclick="">执勤房</a></li>
-                                <li><a href="javascript:setObjType(1007)" onclick="">瞭望塔</a></li>
-                                <li><a href="javascript:setObjType(1008)" onclick="">标志牌</a></li>
-                                <li><a href="javascript:setObjType(1009)" onclick="">灯塔</a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:setObjType(1010)" onclick="">巡逻路</a></li>
-                                <li><a href="javascript:setObjType(1011)" onclick="">桥梁</a></li>
-                                <li><a href="javascript:setObjType(1012)" onclick="">执勤码头</a></li>
-                                <li><a href="javascript:setObjType(1013)" onclick="">直升机停机坪</a></li>
-                                <li><a href="javascript:setObjType(1014)" onclick="">通道</a></li>
-                                <li><a href="javascript:setObjType(1015)" onclick="">口岸</a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:setObjType(1016)" onclick="">铁丝网</a></li>
-                                <li><a href="javascript:setObjType(1017)" onclick="">铁栅栏</a></li>
-                                <li><a href="javascript:setObjType(1018)" onclick="">隔离带</a></li>
-                                <li><a href="javascript:setObjType(1019)" onclick="">车辆拦阻设施</a></li>
-                                <li class="divider"></li>
-                            </ul>
-                        </li>
+                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle"
+                                            data-toggle="dropdown"><img
+                            src="${ctx}/images/map/menu/new.png" title="新建" alt="新建"></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:setObjType(1000)" onclick="">界碑</a></li>
+                            <li><a href="javascript:setObjType(1001)" onclick="">国门</a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:setObjType(1002)" onclick="">监控中心</a></li>
+                            <li><a href="javascript:setObjType(1003)" onclick="">监控站</a></li>
+                            <li><a href="javascript:setObjType(1004)" onclick="">传输线路</a></li>
+                            <li><a href="javascript:setObjType(1005)" onclick="">报警装置</a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:setObjType(1006)" onclick="">执勤房</a></li>
+                            <li><a href="javascript:setObjType(1007)" onclick="">瞭望塔</a></li>
+                            <li><a href="javascript:setObjType(1008)" onclick="">标志牌</a></li>
+                            <li><a href="javascript:setObjType(1009)" onclick="">灯塔</a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:setObjType(1010)" onclick="">巡逻路</a></li>
+                            <li><a href="javascript:setObjType(1011)" onclick="">桥梁</a></li>
+                            <li><a href="javascript:setObjType(1012)" onclick="">执勤码头</a></li>
+                            <li><a href="javascript:setObjType(1013)" onclick="">直升机停机坪</a></li>
+                            <li><a href="javascript:setObjType(1014)" onclick="">通道</a></li>
+                            <li><a href="javascript:setObjType(1015)" onclick="">口岸</a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:setObjType(1016)" onclick="">铁丝网</a></li>
+                            <li><a href="javascript:setObjType(1017)" onclick="">铁栅栏</a></li>
+                            <li><a href="javascript:setObjType(1018)" onclick="">隔离带</a></li>
+                            <li><a href="javascript:setObjType(1019)" onclick="">车辆拦阻设施</a></li>
+                            <li class="divider"></li>
+                        </ul>
+                    </li>
 
                     <li><a id="measureLength" href="javascript:void(0)"><img
                             src="${ctx}/images/map/military/measureLength.png" alt="测距" title="测距"></a></li>
@@ -1009,22 +1005,27 @@
     </div>
 
     <div class="rect" style="height: 24%;">
-        <div class="rectHeader" ><span>事件类型</span><a><img title="筛选" alt="筛选" src="${ctx}/images/map/right_cartogram/filter.png" onclick="$('#eventStatistics').modal('show')"></a></div>
+        <div class="rectHeader"><span>事件类型</span><a><img title="筛选" alt="筛选"
+                                                         src="${ctx}/images/map/right_cartogram/filter.png"
+                                                         onclick="bindSubmitEvent('eventType')"></a></div>
         <div id="eventType" style="height: 85%"></div>
     </div>
 
     <div class="rect" style="height: 24%;margin-top: 2px;">
-        <div class="rectHeader"><span>事件数量</span><a><img title="筛选" alt="筛选"  src="${ctx}/images/map/right_cartogram/filter.png"></a></div>
+        <div class="rectHeader"><span>事件数量</span><a><img title="筛选" alt="筛选"
+                                                         src="${ctx}/images/map/right_cartogram/filter.png" onclick="bindSubmitEvent('eventNum')"></a></div>
         <div id="eventNum" style="height: 85%"></div>
     </div>
 
     <div class="rect" style="height: 24%;margin-top: 2px;">
-        <div class="rectHeader"><span>事件性质</span><a><img title="筛选" alt="筛选"  src="${ctx}/images/map/right_cartogram/filter.png"></a></div>
+        <div class="rectHeader"><span>事件性质</span><a><img title="筛选" alt="筛选"
+                                                         src="${ctx}/images/map/right_cartogram/filter.png" onclick="bindSubmitEvent('eventProp')"></a></div>
         <div id="eventProp" style="height: 85%"></div>
     </div>
 
     <div class="rect" style="height: 24%;margin-top: 2px;">
-        <div class="rectHeader"><span>事件地域</span><a><img title="筛选" alt="筛选" src="${ctx}/images/map/right_cartogram/filter.png"></a></div>
+        <div class="rectHeader"><span>事件地域</span><a><img title="筛选" alt="筛选"
+                                                         src="${ctx}/images/map/right_cartogram/filter.png" onclick="bindSubmitEvent('eventRegion')"></a></div>
         <div id="eventRegion" style="height: 85%"></div>
     </div>
 </div>
@@ -1048,7 +1049,7 @@
                     show: true,
                     type: ['pie', 'funnel'],
                     option: {
-                        grid: { left: '1%', right: '0', bottom: '1%', top : '0%', containLabel: true},
+                        grid: {left: '1%', right: '0', bottom: '1%', top: '0%', containLabel: true},
                         funnel: {
                             x: '25%',
                             width: '50%',
@@ -1080,66 +1081,66 @@
     };
 
 
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        </script>
-        <script type="text/javascript">
-            // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('eventNum'));
-
-            // 指定图表的配置项和数据
-            var option = {
-                grid: { left: '1%', right: '0', bottom: '1%', containLabel: true},
-                tooltip: {},
-                legend: {
-                    data:['销量']
-                },
-                xAxis: {
-                    data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                },
-                yAxis: {},
-                series: [{
-                    name: '销量',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
-            };
-
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        </script>
-        <script type="text/javascript">
-            // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('eventProp'));
-
-            // 指定图表的配置项和数据
-            var option = {
-                grid: { left: '1%', right: '0', bottom: '1%', containLabel: true},
-                tooltip: {},
-                legend: {
-                    data:['销量']
-                },
-                xAxis: {
-                    data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                },
-                yAxis: {},
-                series: [{
-                    name: '销量',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
-            };
-
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        </script>
-        <script type="text/javascript">
-            // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('eventRegion'));
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('eventNum'));
 
     // 指定图表的配置项和数据
     var option = {
-        grid: { left: '1%', right: '0', bottom: '1%', containLabel: true},
+        grid: {left: '1%', right: '0', bottom: '1%', containLabel: true},
+        tooltip: {},
+        legend: {
+            data: ['销量']
+        },
+        xAxis: {
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('eventProp'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        grid: {left: '1%', right: '0', bottom: '1%', containLabel: true},
+        tooltip: {},
+        legend: {
+            data: ['销量']
+        },
+        xAxis: {
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('eventRegion'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        grid: {left: '1%', right: '0', bottom: '1%', containLabel: true},
         tooltip: {},
         legend: {
             data: ['销量']
@@ -1155,18 +1156,17 @@
         }]
     };
 
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        </script>
-
-
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
 
 
 <!-- Popup -->
 <div id="popup" class="ol-popup" style="background-color: #4A5254;color:#FEFBEC">
     <div id="popup-header" style="padding: 10px 0px;color: #4AD5FC;">
-        <span >属性信息</span>
-        <a href="javascript:void(0)" id="popup-closer" class="ol-popup-closer" style="float:right;margin-right: 10px;"></a>
+        <span>属性信息</span>
+        <a href="javascript:void(0)" id="popup-closer" class="ol-popup-closer"
+           style="float:right;margin-right: 10px;"></a>
     </div>
     <div id="popup-content">
 
@@ -1208,7 +1208,7 @@
                 LAYERS: 'bhf'
                 //,
 //                 CQL_FILTER: "NAME LIKE '%芒%'"
- //                CQL_FILTER: ''
+                //                CQL_FILTER: ''
             },
             serverType: 'geoserver'   //服务器类型
 //            crossOrigin: 'anonymous'
@@ -1265,7 +1265,7 @@
         color: '#FF0000',
         width: 2
     });
-//    var fill = new ol.style.Fill({color: 'rgba(0,255,0,0.4)'});
+    //    var fill = new ol.style.Fill({color: 'rgba(0,255,0,0.4)'});
     var fill = new ol.style.Fill({color: 'rgba(255,0,0,0.5)'});
     var image = new ol.style.Circle({fill: fill, stroke: stroke, radius: 8});
     drawStyle = new ol.style.Style({image: image, fill: fill, stroke: stroke});

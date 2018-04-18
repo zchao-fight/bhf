@@ -5,12 +5,9 @@ import cn.ccf.mapper.*;
 import cn.ccf.pojo.*;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
-import org.apache.xmlbeans.impl.xb.xsdschema.impl.FacetImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -61,6 +56,9 @@ public class SituationController {
     @Autowired
     private UploadMapper uploadMapper;
 
+    @Autowired
+    private StatisticsMapper statisticsMapper;
+
     //md5加密 spring框架自带md5加密
     public String MD5(String password) {
         return DigestUtils.md5DigestAsHex(password.getBytes());
@@ -76,6 +74,10 @@ public class SituationController {
         //得到通讯录Databables
         List<Contact> contacts = treeMapper.getContact();
         request.setAttribute("contact", contacts);
+
+        //得到统计所有地址
+        List<String> addrs = statisticsMapper.getDistinctAddr();
+        request.setAttribute("addrs", addrs);
 
         request.getSession().setAttribute("user_id", id);
         return "map/index";

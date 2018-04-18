@@ -1030,6 +1030,43 @@ Date.prototype.Format = function (fmt) { //author: meizz
     for (var k in o)
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
+};
+
+/*提交事件查询统计*/
+function bindSubmitEvent(type) {
+/*    $('.selectpicker').selectpicker('val', '');
+    $('.selectpicker').selectpicker('refresh');
+    $(".selectpicker").selectpicker({
+        noneSelectedText : '请选择'//默认显示内容
+    });*/
+    $('#eventStatistics').modal('show');
+    $('#submitEventButton').unbind('click').bind('click', function () {
+        var addr = $('#eventAddr').val();
+        var eventBeginTime = $('#eventBeginTime').val();
+        var eventEndTime = $('#eventEndTime').val();
+
+        if ((eventBeginTime !== '' && eventEndTime === '') || (eventBeginTime === '' && eventEndTime !== '')) {
+            alert("请同时选择开始与结束时间");
+            return;
+        }
+        if (eventEndTime < eventBeginTime) {
+            alert("结束时间不能小于开始时间");
+            return;
+        }
+
+        if (addr === null) {
+            $.ajaxSettings.async = false;
+            $.post(BASE_URL+'/map/getEventAddr.action',function(data) {
+                addr = data;
+            });
+            $.ajaxSettings.async = true;
+        }
+        $.post(BASE_URL+'/map/getEventStatistics.action',{'addr':addr, 'eventBeginTime':eventBeginTime,'eventEndTime':eventEndTime, 'type':type}, function () {
+            $('#eventStatistics').modal('hide');
+        } );
+    });
 }
+
+
 
 

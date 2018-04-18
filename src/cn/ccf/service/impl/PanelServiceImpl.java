@@ -3,13 +3,11 @@ package cn.ccf.service.impl;
 import cn.ccf.mapper.TreeMapper;
 import cn.ccf.pojo.*;
 import cn.ccf.service.PanelService;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
