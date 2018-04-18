@@ -225,8 +225,20 @@ a:hover {
     border: 1px solid  #2CEBFD;
 }
 .rect {
-    background-color:  #1F4866 !important;
-    color: white;
+    /*background-color:  #1F4866 !important;*/
+    color: #2CEBFD;
+    background-color: white !important;
+}
+.rectHeader {
+    margin-top: 5px;
+}
+.rectHeader span {
+    margin-left: 10px;
+}
+.rectHeader a img {
+    float:right;
+    margin-right:5px;
+    height: 15%;
 }
 .float-news {
     background: linear-gradient(to left, #2CEBFD, #2CEBFD) left top no-repeat,

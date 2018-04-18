@@ -94,7 +94,7 @@ function showResult() {
                         break;
                     case '#military':
                         $(".panel-whole10").show();
-                        resultStr += ' <li onclick="displayLayer(' + item.id + ')"><span>名称：' + item.name + '</span><span style="float: right;margin-right: 20px">' + item.savetime + '&nbsp;&nbsp;&nbsp;<a  href="javascript:deleteMilitaryLayer('+item.id+')"><img style="margin-bottom: 3px" src="../../images/map/delete.png"></a></span><div style="margin-top: 10px;">备注信息：' + item.remark + '</div> </li>';
+                        resultStr += ' <li onclick="displayLayer(' + item.id + ')"><span>名称：' + item.name + '</span><span style="float: right;margin-right: 20px">' + item.savetime + '&nbsp;&nbsp;&nbsp;<a  href="javascript:deleteMilitaryLayer('+item.id+')"><img style="margin-bottom: 3px" src="../images/map/delete.png"></a></span><div style="margin-top: 10px;">备注信息：' + item.remark + '</div> </li>';
                         break;
                 }
             });
@@ -143,8 +143,7 @@ function checkPreplanDetails(id) {
         resultStr += ' <li>预案名称：' + data.name + '</li>' +
             '<li>所属单位：' + data.department + '</li>' +
             '<li>事件类型：' + data.type + '</li>' +
-            '<li>事件性质：' + data.property + '</li>' +
-            '' + checkURLUndefined(data.filepath)+'<li>文件查看：<a href="/">'+data.filename + '' + checkUndefined(data.filename) + '</a></li>' +
+            '<li>事件性质：' + data.property + '</li>' + '' + checkURLUndefined(data.filepath)+'<li>文件查看：<a href="/">'+data.filename + '' + checkUndefined(data.filename) + '</a></li>' +
             '<li>处置流程：<textarea style="width:260px;height:140px;" readonly>' + data.dealflow + '</textarea></li>' +
             '<li>事件描述：<textarea style="width:260px;height:140px;" readonly>' + data.decribe + '</textarea></li>' +
             '<li>组织指挥：<textarea style="width:260px;height:140px;" readonly>' + data.command + '</textarea></li>' +

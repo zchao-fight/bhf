@@ -1009,50 +1009,46 @@
     </div>
 
     <div class="rect" style="height: 24%;">
-        <div><span style="margin-left: 10px;">事故统计</span><img title="筛选" alt="筛选" style="float:right;height: 15%;" src="${ctx}/images/map/right_cartogram/filter.png" onclick="$('#eventStatistics').modal('show')"></div>
-        <div id="cartogram1" style="height: 85%"></div>
+        <div class="rectHeader" ><span>事件类型</span><a><img title="筛选" alt="筛选" src="${ctx}/images/map/right_cartogram/filter.png" onclick="$('#eventStatistics').modal('show')"></a></div>
+        <div id="eventType" style="height: 85%"></div>
     </div>
 
     <div class="rect" style="height: 24%;margin-top: 2px;">
-        <div><span style="margin-left: 10px;">事故统计</span><img title="筛选" alt="筛选" style="float:right;height: 15%;" src="${ctx}/images/map/right_cartogram/filter.png"></div>
-        <div id="cartogram2" style="height: 85%"></div>
+        <div class="rectHeader"><span>事件数量</span><a><img title="筛选" alt="筛选"  src="${ctx}/images/map/right_cartogram/filter.png"></a></div>
+        <div id="eventNum" style="height: 85%"></div>
     </div>
 
     <div class="rect" style="height: 24%;margin-top: 2px;">
-        <div><span style="margin-left: 10px;">事故统计</span><img title="筛选" alt="筛选" style="float:right;height: 15%;" src="${ctx}/images/map/right_cartogram/filter.png"></div>
-        <div id="cartogram3" style="height: 85%"></div>
+        <div class="rectHeader"><span>事件性质</span><a><img title="筛选" alt="筛选"  src="${ctx}/images/map/right_cartogram/filter.png"></a></div>
+        <div id="eventProp" style="height: 85%"></div>
     </div>
 
     <div class="rect" style="height: 24%;margin-top: 2px;">
-        <div><span style="margin-left: 10px;">事故统计</span><img  style="float:right;height: 15%;" src="${ctx}/images/map/right_cartogram/filter.png"></div>
-        <div id="cartogram4" style="height: 85%"></div>
+        <div class="rectHeader"><span>事件地域</span><a><img title="筛选" alt="筛选" src="${ctx}/images/map/right_cartogram/filter.png"></a></div>
+        <div id="eventRegion" style="height: 85%"></div>
     </div>
 </div>
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('cartogram1'));
+    var myChart = echarts.init(document.getElementById('eventType'));
 
     // 指定图表的配置项和数据
     option = {
 
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-            orient: 'vertical',
-            x: 'left',
-            data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-        },
+//        tooltip: {
+//            trigger: 'item',
+//            formatter: "{a} <br/>{b} : {c} ({d}%)"
+//        },
         toolbox: {
             show: true,
             feature: {
                 mark: {show: true},
-                dataView: {show: true, readOnly: false},
+//                dataView: {show: true, readOnly: false},
                 magicType: {
                     show: true,
                     type: ['pie', 'funnel'],
                     option: {
+                        grid: { left: '1%', right: '0', bottom: '1%', top : '0%', containLabel: true},
                         funnel: {
                             x: '25%',
                             width: '50%',
@@ -1061,7 +1057,7 @@
                         }
                     }
                 },
-                restore: {show: true},
+//                restore: {show: true},
                 saveAsImage: {show: true}
             }
         },
@@ -1089,10 +1085,11 @@
         </script>
         <script type="text/javascript">
             // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('cartogram2'));
+            var myChart = echarts.init(document.getElementById('eventNum'));
 
             // 指定图表的配置项和数据
             var option = {
+                grid: { left: '1%', right: '0', bottom: '1%', containLabel: true},
                 tooltip: {},
                 legend: {
                     data:['销量']
@@ -1113,11 +1110,11 @@
         </script>
         <script type="text/javascript">
             // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('cartogram3'));
+            var myChart = echarts.init(document.getElementById('eventProp'));
 
             // 指定图表的配置项和数据
             var option = {
-                backgroundColor: '#1F4866',
+                grid: { left: '1%', right: '0', bottom: '1%', containLabel: true},
                 tooltip: {},
                 legend: {
                     data:['销量']
@@ -1138,12 +1135,11 @@
         </script>
         <script type="text/javascript">
             // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('cartogram4'));
+            var myChart = echarts.init(document.getElementById('eventRegion'));
 
     // 指定图表的配置项和数据
     var option = {
-        grid: { left: '1%', right: '0', bottom: '0%', containLabel: true},
-        backgroundColor: '#1F4866',
+        grid: { left: '1%', right: '0', bottom: '1%', containLabel: true},
         tooltip: {},
         legend: {
             data: ['销量']
