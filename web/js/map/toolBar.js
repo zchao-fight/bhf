@@ -384,7 +384,7 @@ function setObjType(type) {
                     tempStr += '<option>' + item.name + '</option>';
                 });
                 line4 += tempStr + '</select></div>';
-                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
+                var line5 = '<div>位置：<input  id="" name="" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
                 resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
                 $("#submitFacilityButton").unbind("click").bind("click",function(){
                     submitFacilityData();
@@ -487,7 +487,7 @@ function setObjType(type) {
                     tempStr += '<option>' + item.name + '</option>';
                 });
                 line4 += tempStr + '</select></div>';
-                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
+                var line5 = '<div>位置：<input  id="" name="" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
                 resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
                 $("#submitFacilityButton").unbind("click").bind("click",function(){
                     submitFacilityData();
@@ -589,7 +589,7 @@ function setObjType(type) {
                     tempStr += '<option>' + item.name + '</option>';
                 });
                 line4 += tempStr + '</select></div>';
-                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
+                var line5 = '<div>位置：<input  id="" name="" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
                 resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
                 $("#submitFacilityButton").unbind("click").bind("click",function(){
                     submitFacilityData();
@@ -606,7 +606,7 @@ function setObjType(type) {
                     tempStr += '<option>' + item.name + '</option>';
                 });
                 line4 += tempStr + '</select></div>';
-                var line5 = '<div>位置：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
+                var line5 = '<div>位置：<input  id="" name="" type="text" style="width: 150px;margin-right:50px;" readonly="readonly"></div>';
                 resourceLayerBody.append(line1, line2, line3, line4, line5, line6, line7);
                 $("#submitFacilityButton").unbind("click").bind("click",function(){
                     submitFacilityData();
@@ -693,14 +693,16 @@ function drawEndClineBack(evt) {
     var geo = currentFeature.getGeometry(); //获取要素的几何信息
     var coordinates = geo.getCoordinates(); //获取几何坐标
     console.log(coordinates);
+    appendCoordinate = function(coordinate){
     //将几何坐标拼接为字符串
     if (geoType === "Polygon") {
-        geoStr =  this.coordinates, 0, this.coordinates.length.join(";");
+    if (!this.flatCoordinates) {
+        this.flatCoordinates = coordinate.slice();
+    } else {
+        ol.array.extend(this.flatCoordinates, coordinate);
     }
-    else {
-        geoStr = coordinates.join(";");
-        $('#longitude').val(coordinates[0]);
-    }
+    this.changed();
+    }};
     $('#resourceLayer').modal('show'); //打开属性信息设置对话框
     map.removeInteraction(draw);
 }
