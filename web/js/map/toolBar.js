@@ -693,16 +693,16 @@ function drawEndClineBack(evt) {
     var geo = currentFeature.getGeometry(); //获取要素的几何信息
     var coordinates = geo.getCoordinates(); //获取几何坐标
     console.log(coordinates);
-    appendCoordinate = function(coordinate){
     //将几何坐标拼接为字符串
-    if (geoType === "Polygon") {
-    if (!this.flatCoordinates) {
-        this.flatCoordinates = coordinate.slice();
-    } else {
-        ol.array.extend(this.flatCoordinates, coordinate);
+    if (geoType === "Point") {
+        geoStr = coordinates.join(";");
+        $('#longitude').val(coordinates[0]);
+        $('#latitude').val(coordinates[1]);
+        geoStr = coordinates[0].join(";");
     }
-    this.changed();
-    }};
+    else {
+        geoStr = coordinates[0].join(";");
+        }
     $('#resourceLayer').modal('show'); //打开属性信息设置对话框
     map.removeInteraction(draw);
 }
