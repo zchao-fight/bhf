@@ -1063,7 +1063,52 @@ function bindSubmitEvent(type) {
             });
             $.ajaxSettings.async = true;
         }
-        $.post(BASE_URL+'/map/getEventStatistics.action',{'addr':addr, 'eventBeginTime':eventBeginTime,'eventEndTime':eventEndTime, 'type':type}, function () {
+        $.post(BASE_URL+'/map/getEventStatistics.action',{'addr':addr, 'eventBeginTime':eventBeginTime,'eventEndTime':eventEndTime, 'type':type}, function (data) {
+            // console.log(data);
+            // console.log(data.length);
+            if (data.length === 0) {
+                alert("查询统计结果为空，请重新查询");
+                return;
+            }
+
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('eventType'));
+
+            // 指定图表的配置项和数据
+            option = {
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: {show: true},
+                        magicType: {
+                            show: true,
+                            type: ['pie', 'funnel'],
+                            option: {
+                                grid: {left: '1%', right: '0', bottom: '1%', top: '0%', containLabel: true},
+                                funnel: {
+                                    x: '25%',
+                                    width: '50%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
+                        saveAsImage: {show: true}
+                    }
+                },
+                calculable: true,
+                series: [
+                    {
+                        name: '事件来源',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data:data
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
             $('#eventStatistics').modal('hide');
         } );
     });

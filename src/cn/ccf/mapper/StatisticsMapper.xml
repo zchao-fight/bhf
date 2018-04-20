@@ -4,4 +4,14 @@
     <select id="getDistinctAddr" resultType="java.lang.String">
         select distinct address from yzt_event
     </select>
+    
+    <select id="getEventType" resultType="map">
+        select com_zy_class.ChildType as name, count(1) as value from yzt_event JOIN com_zy_class on yzt_event.EventTypeID = com_zy_class.Id where yzt_event.Address in
+        <foreach collection="addr" item="addrItem" index="index"
+                 open="(" close=")" separator=",">
+            #{addrItem}
+        </foreach>
+        and Time BETWEEN #{beginTime} and #{endTime}
+         GROUP BY EventTypeID
+    </select>
 </mapper>

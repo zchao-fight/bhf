@@ -648,9 +648,9 @@
                     </div>
                     <div class="form-group">
                         <label>开始时间：</label><input id="eventBeginTime" class="Wdate" style="margin-left: 20px;margin-right: 40px;"
-                                                   type="text" onclick="WdatePicker('yyyy-MM-dd HH:mm:ss')">
+                                                   type="text" onclick="WdatePicker({ dateFmt: 'yyyy/M/d HH:mm:ss' })">
                         <label>结束时间：</label><input id="eventEndTime" class="Wdate" type="text"
-                                                   onclick="WdatePicker('yyyy-MM-dd HH:mm:ss')">
+                                                   onclick="WdatePicker({ dateFmt: 'yyyy/M/d HH:mm:ss' })">
                     </div>
                 </form>
             </div>
@@ -1114,22 +1114,42 @@
     var myChart = echarts.init(document.getElementById('eventProp'));
 
     // 指定图表的配置项和数据
-    var option = {
+    option = {
+        tooltip : {
+            trigger: 'axis'
+        },
         grid: {left: '1%', right: '0', bottom: '1%', containLabel: true},
-        tooltip: {},
-        legend: {
-            data: ['销量']
+        toolbox: {
+            show : true,
+            feature : {
+//                mark : {show: true},
+//                dataView : {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+//                restore : {show: true},
+                saveAsImage : {show: true}
+            }
         },
-        xAxis: {
-            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-        },
-        yAxis: {},
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-        }]
+        calculable : true,
+        xAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        yAxis : [
+            {
+                type : 'category',
+                data : ['轻度','中度','重度']
+            }
+        ],
+        series : [
+            {
+                name:'数量',
+                type:'bar',
+                data:[10, 13, 30]
+            }
+        ]
     };
+
 
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
@@ -1139,22 +1159,54 @@
     var myChart = echarts.init(document.getElementById('eventRegion'));
 
     // 指定图表的配置项和数据
-    var option = {
+    option = {
         grid: {left: '1%', right: '0', bottom: '1%', containLabel: true},
-        tooltip: {},
-        legend: {
-            data: ['销量']
+        tooltip : {
+            trigger: 'axis'
         },
-        xAxis: {
-            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+//                dataView : {show: true, readOnly: false},
+//                restore : {show: true},
+                saveAsImage : {show: true}
+            }
         },
-        yAxis: {},
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 60, 10, 10, 20]
-        }]
+        calculable : true,
+        polar : [
+            {
+                indicator : [
+                    {text : '德宏'},
+                    {text : '瑞丽'},
+                    {text : '武装部'},
+                    {text : '克州'},
+                    {text : '力量'},
+                    {text : '技巧'}
+                ]
+            }
+        ],
+        series : [
+            {
+                name: '完全实况球员数据',
+                type: 'radar',
+                itemStyle: {
+                    normal: {
+                        areaStyle: {
+                            type: 'default'
+                        }
+                    }
+                },
+                data : [
+                    {
+                        value : [79, 42, 91, 49, 80, 36],
+                        name : '数量'
+                    }
+                ]
+            }
+        ]
     };
+
 
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
