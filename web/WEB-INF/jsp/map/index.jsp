@@ -74,6 +74,12 @@
 
 <%--树形--%>
 <script>
+    $(function () {
+        initStatistics('eventType');
+        initStatistics('eventNum');
+        initStatistics('eventProp');
+        initStatistics('eventRegion');
+    });
     $(document).ready(function () {
 
         getVideoTree();
@@ -111,6 +117,15 @@
 
         // setTimeout(function(){ml_close_demo()},5000);
 
+        $('.shrinkToRight').click(function () {
+            $('.float-right-open').animate({
+                right: '0px'
+            }, 100, function () {
+                $('#right-panel').delay(50).animate({
+                    right: '-250px'
+                }, 300);
+            });
+        });
     });
 
 
@@ -635,10 +650,11 @@
                         <div class="form-group" style="height: 20px;">
                             <label class="col-sm-1 control-label">地址：</label>
                             <div class="col-sm-9">
-                                <select id="eventAddr" name="address" class="selectpicker form-control" multiple="multiple">
+                                <select id="eventAddr" name="address" class="selectpicker form-control"
+                                        multiple="multiple">
                                     <c:forEach items="${addrs}" var="item">
                                         <option>
-                                            ${item}
+                                                ${item}
                                         </option>
                                     </c:forEach>
                                 </select>
@@ -647,7 +663,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>开始时间：</label><input id="eventBeginTime" class="Wdate" style="margin-left: 20px;margin-right: 40px;"
+                        <label>开始时间：</label><input id="eventBeginTime" class="Wdate"
+                                                   style="margin-left: 20px;margin-right: 40px;"
                                                    type="text" onclick="WdatePicker({ dateFmt: 'yyyy/M/d HH:mm:ss' })">
                         <label>结束时间：</label><input id="eventEndTime" class="Wdate" type="text"
                                                    onclick="WdatePicker({ dateFmt: 'yyyy/M/d HH:mm:ss' })">
@@ -996,222 +1013,46 @@
         });
     });
 
+
+
 </script>
 <div id="right-panel" class="right-panel" style="position: fixed;top:40px;bottom:0;width: 250px;right:-250px;">
-    <div style="height:20px; ">
-        <a class="right-close-btn" href="javascript:void(0)" style="margin-top: 2px;">
-            <img src="${ctx}/images/map/right_cartogram/shrink_right.png">
-        </a>
-    </div>
+    <%--<div style="height:20px; ">--%>
+        <%--<a class="right-close-btn" href="javascript:void(0)" style="margin-top: 2px;">--%>
+            <%--<img src="${ctx}/images/map/right_cartogram/shrink_right.png">--%>
+        <%--</a>--%>
+    <%--</div>--%>
 
-    <div class="rect" style="height: 24%;">
-        <div class="rectHeader"><span>事件类型</span><a><img title="筛选" alt="筛选"
-                                                         src="${ctx}/images/map/right_cartogram/filter.png"
-                                                         onclick="bindSubmitEvent('eventType')"></a></div>
+    <div class="rect" style="height: 25%;">
+
+        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span style="margin-left: 60px;">事件类型</span><a class="filter"><img  title="筛选" alt="筛选"
+                                                                                            src="${ctx}/images/map/right_cartogram/filter.png"
+                                                                                            onclick="bindSubmitEvent('eventType')"></a>
+        </div>
         <div id="eventType" style="height: 85%"></div>
     </div>
 
-    <div class="rect" style="height: 24%;margin-top: 2px;">
-        <div class="rectHeader"><span>事件数量</span><a><img title="筛选" alt="筛选"
-                                                         src="${ctx}/images/map/right_cartogram/filter.png" onclick="bindSubmitEvent('eventNum')"></a></div>
+    <div class="rect" style="height: 25%;margin-top: 2px;">
+        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span style="margin-left: 60px;">事件数量</span><a class="filter"><img title="筛选" alt="筛选"
+                                                         src="${ctx}/images/map/right_cartogram/filter.png"
+                                                         onclick="bindSubmitEvent('eventNum')"></a></div>
         <div id="eventNum" style="height: 85%"></div>
     </div>
 
-    <div class="rect" style="height: 24%;margin-top: 2px;">
-        <div class="rectHeader"><span>事件性质</span><a><img title="筛选" alt="筛选"
-                                                         src="${ctx}/images/map/right_cartogram/filter.png" onclick="bindSubmitEvent('eventProp')"></a></div>
+    <div class="rect" style="height: 25%;margin-top: 2px;">
+        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span style="margin-left: 60px;">事件性质</span><a class="filter"><img title="筛选" alt="筛选"
+                                                         src="${ctx}/images/map/right_cartogram/filter.png"
+                                                         onclick="bindSubmitEvent('eventProp')"></a></div>
         <div id="eventProp" style="height: 85%"></div>
     </div>
 
-    <div class="rect" style="height: 24%;margin-top: 2px;">
-        <div class="rectHeader"><span>事件地域</span><a><img title="筛选" alt="筛选"
-                                                         src="${ctx}/images/map/right_cartogram/filter.png" onclick="bindSubmitEvent('eventRegion')"></a></div>
+    <div class="rect" style="height: 25%;margin-top: 2px;">
+        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span style="margin-left: 60px;">事件地域</span><a class="filter"><img title="筛选" alt="筛选"
+                                                         src="${ctx}/images/map/right_cartogram/filter.png"
+                                                         onclick="bindSubmitEvent('eventRegion')"></a></div>
         <div id="eventRegion" style="height: 85%"></div>
     </div>
 </div>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('eventType'));
-
-    // 指定图表的配置项和数据
-    option = {
-
-//        tooltip: {
-//            trigger: 'item',
-//            formatter: "{a} <br/>{b} : {c} ({d}%)"
-//        },
-        toolbox: {
-            show: true,
-            feature: {
-                mark: {show: true},
-//                dataView: {show: true, readOnly: false},
-                magicType: {
-                    show: true,
-                    type: ['pie', 'funnel'],
-                    option: {
-                        grid: {left: '1%', right: '0', bottom: '1%', top: '0%', containLabel: true},
-                        funnel: {
-                            x: '25%',
-                            width: '50%',
-                            funnelAlign: 'left',
-                            max: 1548
-                        }
-                    }
-                },
-//                restore: {show: true},
-                saveAsImage: {show: true}
-            }
-        },
-        calculable: true,
-        series: [
-            {
-                name: '访问来源',
-                type: 'pie',
-                radius: '55%',
-                center: ['50%', '60%'],
-                data: [
-                    {value: 335, name: '直接访问'},
-                    {value: 310, name: '邮件营销'},
-                    {value: 234, name: '联盟广告'},
-                    {value: 135, name: '视频广告'},
-                    {value: 1548, name: '搜索引擎'}
-                ]
-            }
-        ]
-    };
-
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-</script>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('eventNum'));
-
-    // 指定图表的配置项和数据
-    var option = {
-        grid: {left: '1%', right: '0', bottom: '1%', containLabel: true},
-        tooltip: {},
-        legend: {
-            data: ['销量']
-        },
-        xAxis: {
-            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-        },
-        yAxis: {},
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-        }]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-</script>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('eventProp'));
-
-    // 指定图表的配置项和数据
-    option = {
-        tooltip : {
-            trigger: 'axis'
-        },
-        grid: {left: '1%', right: '0', bottom: '1%', containLabel: true},
-        toolbox: {
-            show : true,
-            feature : {
-//                mark : {show: true},
-//                dataView : {show: true, readOnly: false},
-                magicType: {show: true, type: ['line', 'bar']},
-//                restore : {show: true},
-                saveAsImage : {show: true}
-            }
-        },
-        calculable : true,
-        xAxis : [
-            {
-                type : 'value'
-            }
-        ],
-        yAxis : [
-            {
-                type : 'category',
-                data : ['轻度','中度','重度']
-            }
-        ],
-        series : [
-            {
-                name:'数量',
-                type:'bar',
-                data:[10, 13, 30]
-            }
-        ]
-    };
-
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-</script>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('eventRegion'));
-
-    // 指定图表的配置项和数据
-    option = {
-        grid: {left: '1%', right: '0', bottom: '1%', containLabel: true},
-        tooltip : {
-            trigger: 'axis'
-        },
-        toolbox: {
-            show : true,
-            feature : {
-                mark : {show: true},
-//                dataView : {show: true, readOnly: false},
-//                restore : {show: true},
-                saveAsImage : {show: true}
-            }
-        },
-        calculable : true,
-        polar : [
-            {
-                indicator : [
-                    {text : '德宏'},
-                    {text : '瑞丽'},
-                    {text : '武装部'},
-                    {text : '克州'},
-                    {text : '力量'},
-                    {text : '技巧'}
-                ]
-            }
-        ],
-        series : [
-            {
-                name: '完全实况球员数据',
-                type: 'radar',
-                itemStyle: {
-                    normal: {
-                        areaStyle: {
-                            type: 'default'
-                        }
-                    }
-                },
-                data : [
-                    {
-                        value : [79, 42, 91, 49, 80, 36],
-                        name : '数量'
-                    }
-                ]
-            }
-        ]
-    };
-
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-</script>
-
 
 <!-- Popup -->
 <div id="popup" class="ol-popup" style="background-color: #4A5254;color:#FEFBEC">

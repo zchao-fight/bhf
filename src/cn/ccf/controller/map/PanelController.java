@@ -55,20 +55,20 @@ public class PanelController {
 
         if (eventEndTime.equals("")) {
             Date date = new Date();
+            //格式化时间 月份不用补0
             SimpleDateFormat df = new SimpleDateFormat("y/M/d HH:mm:ss");
             eventEndTime = df.format(date);
         }
-
 
         switch (type) {
             case "eventType":
                 return statisticsMapper.getEventType(addr, eventBeginTime, eventEndTime);
             case "eventNum":
-                break;
+                return statisticsMapper.getEventNum(addr, eventBeginTime, eventEndTime);
             case "eventProp":
-                break;
+                return statisticsMapper.getEventProp(addr, eventBeginTime, eventEndTime);
             case "eventRegion":
-                break;
+                return statisticsMapper.getEventRegion(addr, eventBeginTime, eventEndTime);
         }
         return new ArrayList<>();
     }

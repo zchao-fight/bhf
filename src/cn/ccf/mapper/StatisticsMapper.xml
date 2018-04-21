@@ -14,4 +14,34 @@
         and Time BETWEEN #{beginTime} and #{endTime}
          GROUP BY EventTypeID
     </select>
+
+    <select id="getEventNum" resultType="map">
+
+        select date_format(Time, '%c月') as time, count(*) as value from yzt_event JOIN com_zy_class on yzt_event.EventTypeID = com_zy_class.Id where yzt_event.Address in
+        <foreach collection="addr" item="addrItem" index="index" open="(" close=")" separator=",">
+            #{addrItem}
+        </foreach> and Time BETWEEN #{beginTime} and #{endTime}
+        group by date_format(Time, '%Y-%m');
+
+    </select>
+
+    <select id="getEventProp" resultType="map">
+        select yzt_event.Level as level, count(1) as value from yzt_event JOIN com_zy_class on yzt_event.EventTypeID = com_zy_class.Id where yzt_event.Address in
+        <foreach collection="addr" item="addrItem" index="index"
+                 open="(" close=")" separator=",">
+            #{addrItem}
+        </foreach>
+        and Time BETWEEN #{beginTime} and #{endTime}
+        GROUP BY Level
+    </select>
+
+    <select id="getEventRegion" resultType="map">
+        select yzt_event.Address as addr, count(1) as value from yzt_event JOIN com_zy_class on yzt_event.EventTypeID = com_zy_class.Id where yzt_event.Address in
+        <foreach collection="addr" item="addrItem" index="index"
+                 open="(" close=")" separator=",">
+            #{addrItem}
+        </foreach>
+        and Time BETWEEN #{beginTime} and #{endTime}
+        GROUP BY Address order by value desc
+    </select>
 </mapper>

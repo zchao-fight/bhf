@@ -232,10 +232,10 @@ a:hover {
 .rectHeader {
     margin-top: 5px;
 }
-.rectHeader span {
-    margin-left: 10px;
+.shrinkToRight {
+    margin-left:5px;
 }
-.rectHeader a img {
+.filter {
     float:right;
     margin-right:5px;
     height: 15%;

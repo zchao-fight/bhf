@@ -1064,15 +1064,209 @@ function bindSubmitEvent(type) {
             $.ajaxSettings.async = true;
         }
         $.post(BASE_URL+'/map/getEventStatistics.action',{'addr':addr, 'eventBeginTime':eventBeginTime,'eventEndTime':eventEndTime, 'type':type}, function (data) {
+            console.log(data);
             // console.log(data);
             // console.log(data.length);
             if (data.length === 0) {
                 alert("查询统计结果为空，请重新查询");
                 return;
             }
+            var myChart = null;
+            if (type === 'eventType') {
+                // 基于准备好的dom，初始化echarts实例
+                myChart = echarts.init(document.getElementById('eventType'));
 
+                // 指定图表的配置项和数据
+                option = {
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    grid: {left: '1%', right: '0', bottom: '1%', top: '0%', containLabel: true},
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    calculable: true,
+                    series: [
+                        {
+                            name: '事件来源',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data:data
+                        }
+                    ]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            } else if (type === 'eventNum') {
+                var months = [];
+                var nums = [];
+                $.each(data,function(index, item) {
+                    months.push(item.time);
+                    nums.push(item.value);
+                });
+
+                // 基于准备好的dom，初始化echarts实例
+                myChart = echarts.init(document.getElementById('eventNum'));
+
+                // 指定图表的配置项和数据
+                var option = {
+                    grid: {left: '1%', right: '0', bottom: '1%', y : 10, containLabel: true},
+                    xAxis: {
+                        data: months
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '销量',
+                        type: 'bar',
+                        data: nums
+                    }]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            } else if(type === 'eventProp') {
+                var level = [];
+                var nums = [];
+                $.each(data, function (index, item) {
+                    if(item.level === 1) {
+                        level.push('轻度');
+                        nums.push(item.value);
+                    }
+                    if(item.level === 2) {
+                        level.push('中度');
+                        nums.push(item.value);
+                    }
+                    if(item.level === 3) {
+                        level.push('重度');
+                        nums.push(item.value);
+                    }
+                });
+
+                // 基于准备好的dom，初始化echarts实例
+                myChart = echarts.init(document.getElementById('eventProp'));
+
+                // 指定图表的配置项和数据
+                option = {
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    grid: {left: '1%', bottom: '1%',containLabel: true},
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            magicType: {show: true, type: ['line', 'bar']},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'category',
+                            data : level
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'数量',
+                            type:'bar',
+                            data:nums
+                        }
+                    ]
+                };
+
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            } else if(type === 'eventRegion') {
+                    var regions = [];
+                    var nums = [];
+                    var max = data[0].value;
+                    $.each(data, function (index, item) {
+                        regions.push({text: item.addr, max : max});
+                        nums.push(item.value);
+                    });
+
+                // 基于准备好的dom，初始化echarts实例
+                myChart = echarts.init(document.getElementById('eventRegion'));
+
+                // 指定图表的配置项和数据
+                option = {
+                    grid: {left: '10%', right: '0', bottom: '1%', y: 10, containLabel: true},
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    radar: [
+                        {
+                            indicator: regions,
+                            radius: 40
+                        }
+                    ],
+                    series: [
+                        {
+                            type: 'radar',
+                            tooltip: {
+                                trigger: 'item'
+                            },
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data: [
+                                {
+                                    value: nums,
+                                    name : '区域统计：'
+                                }
+                            ]
+                        }
+                    ]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            }
+            $('#eventStatistics').modal('hide');
+        } );
+    });
+}
+
+function initStatistics(type) {
+        var eventBeginTime = '';
+        var eventEndTime = '';
+        var addr = null;
+        $.ajaxSettings.async = false;
+        $.post(BASE_URL+'/map/getEventAddr.action',function(data) {
+            addr = data;
+        });
+        $.ajaxSettings.async = true;
+
+    $.post(BASE_URL+'/map/getEventStatistics.action',{'addr':addr, 'eventBeginTime':eventBeginTime,'eventEndTime':eventEndTime, 'type':type}, function (data) {
+        console.log(data);
+        var myChart = null;
+        if (type === 'eventType') {
             // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('eventType'));
+            myChart = echarts.init(document.getElementById('eventType'));
 
             // 指定图表的配置项和数据
             option = {
@@ -1109,9 +1303,143 @@ function bindSubmitEvent(type) {
             };
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
-            $('#eventStatistics').modal('hide');
-        } );
-    });
+        } else if (type === 'eventNum') {
+            var months = [];
+            var nums = [];
+            $.each(data,function(index, item) {
+                months.push(item.time);
+                nums.push(item.value);
+            });
+
+            // 基于准备好的dom，初始化echarts实例
+            myChart = echarts.init(document.getElementById('eventNum'));
+
+            // 指定图表的配置项和数据
+            var option = {
+                grid: {left: '1%', right: '0', bottom: '1%', y : 10, containLabel: true},
+                xAxis: {
+                    data: months
+                },
+                yAxis: {},
+                series: [{
+                    name: '销量',
+                    type: 'bar',
+                    data: nums
+                }]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        } else if(type === 'eventProp') {
+            var level = [];
+            var nums = [];
+            $.each(data, function (index, item) {
+                if(item.level === 1) {
+                    level.push('轻度');
+                    nums.push(item.value);
+                }
+                if(item.level === 2) {
+                    level.push('中度');
+                    nums.push(item.value);
+                }
+                if(item.level === 3) {
+                    level.push('重度');
+                    nums.push(item.value);
+                }
+            });
+
+            // 基于准备好的dom，初始化echarts实例
+            myChart = echarts.init(document.getElementById('eventProp'));
+
+            // 指定图表的配置项和数据
+            option = {
+                tooltip : {
+                    trigger: 'axis'
+                },
+                grid: {left: '1%', bottom: '1%', y : 20 ,containLabel: true},
+                toolbox: {
+                    show : true,
+                    feature : {
+                        magicType: {show: true, type: ['line', 'bar']},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'category',
+                        data : level
+                    }
+                ],
+                series : [
+                    {
+                        name:'数量',
+                        type:'bar',
+                        data:nums
+                    }
+                ]
+            };
+
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        } else if(type === 'eventRegion') {
+            var regions = [];
+            var nums = [];
+            var max = data[0].value;
+            $.each(data, function (index, item) {
+                regions.push({text: item.addr, max : max});
+                nums.push(item.value);
+            });
+
+            // 基于准备好的dom，初始化echarts实例
+            myChart = echarts.init(document.getElementById('eventRegion'));
+
+            // 指定图表的配置项和数据
+            option = {
+                grid: {left: '10%', right: '0', bottom: '1%', y: 10, containLabel: true},
+                tooltip: {
+                    trigger: 'axis'
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                radar: [
+                    {
+                        indicator: regions,
+                        radius: 40
+                    }
+                ],
+                series: [
+                    {
+                        type: 'radar',
+                        tooltip: {
+                            trigger: 'item'
+                        },
+                        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: [
+                            {
+                                value: nums,
+                                name : '区域统计：'
+                            }
+                        ]
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+        $('#eventStatistics').modal('hide');
+    } );
 }
 
 
