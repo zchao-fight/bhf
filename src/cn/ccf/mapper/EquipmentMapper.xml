@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ccf.mapper.EquipmentMapper" >
+  <resultMap id="BaseResultMap" type="cn.ccf.pojo.Equipment" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="Type" property="type" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="Model" property="model" jdbcType="VARCHAR" />
+    <result column="Count" property="count" jdbcType="INTEGER" />
+    <result column="DepartmentID" property="departmentid" jdbcType="INTEGER" />
+    <result column="Longitude" property="longitude" jdbcType="DOUBLE" />
+    <result column="Latitude" property="latitude" jdbcType="DOUBLE" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+    <result column="Factory" property="factory" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.ccf.pojo.Equipment" extends="BaseResultMap" >
+    <result column="Location" property="location" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, Type, Name, Model, Count, DepartmentID, Longitude, Latitude, Remark, Factory
+  </sql>
+  <sql id="Blob_Column_List" >
+    Location
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from com_equipment_info
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from com_equipment_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ccf.pojo.Equipment" >
+    insert into com_equipment_info (ID, Type, Name, 
+      Model, Count, DepartmentID, 
+      Longitude, Latitude, Remark, 
+      Factory, Location)
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{model,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER}, 
+      #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, #{remark,jdbcType=VARCHAR}, 
+      #{factory,jdbcType=VARCHAR}, #{location,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ccf.pojo.Equipment" >
+    insert into com_equipment_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="type != null" >
+        Type,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="model != null" >
+        Model,
+      </if>
+      <if test="count != null" >
+        Count,
+      </if>
+      <if test="departmentid != null" >
+        DepartmentID,
+      </if>
+      <if test="longitude != null" >
+        Longitude,
+      </if>
+      <if test="latitude != null" >
+        Latitude,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="factory != null" >
+        Factory,
+      </if>
+      <if test="location != null" >
+        Location,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="factory != null" >
+        #{factory,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ccf.pojo.Equipment" >
+    update com_equipment_info
+    <set >
+      <if test="type != null" >
+        Type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        Model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        Count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="departmentid != null" >
+        DepartmentID = #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null" >
+        Longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        Latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="factory != null" >
+        Factory = #{factory,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        Location = #{location,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.ccf.pojo.Equipment" >
+    update com_equipment_info
+    set Type = #{type,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      Model = #{model,jdbcType=VARCHAR},
+      Count = #{count,jdbcType=INTEGER},
+      DepartmentID = #{departmentid,jdbcType=INTEGER},
+      Longitude = #{longitude,jdbcType=DOUBLE},
+      Latitude = #{latitude,jdbcType=DOUBLE},
+      Remark = #{remark,jdbcType=VARCHAR},
+      Factory = #{factory,jdbcType=VARCHAR},
+      Location = #{location,jdbcType=LONGVARBINARY}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ccf.pojo.Equipment" >
+    update com_equipment_info
+    set Type = #{type,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      Model = #{model,jdbcType=VARCHAR},
+      Count = #{count,jdbcType=INTEGER},
+      DepartmentID = #{departmentid,jdbcType=INTEGER},
+      Longitude = #{longitude,jdbcType=DOUBLE},
+      Latitude = #{latitude,jdbcType=DOUBLE},
+      Remark = #{remark,jdbcType=VARCHAR},
+      Factory = #{factory,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

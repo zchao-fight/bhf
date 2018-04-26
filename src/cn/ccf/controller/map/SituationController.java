@@ -4,6 +4,7 @@ import cn.ccf.constants.GVS_TYPE;
 import cn.ccf.mapper.*;
 import cn.ccf.pojo.*;
 import com.alibaba.fastjson.JSONObject;
+import fr.opensagres.xdocreport.template.velocity.internal.Foreach;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 
 @Controller
 public class SituationController {
@@ -59,6 +61,9 @@ public class SituationController {
     @Autowired
     private StatisticsMapper statisticsMapper;
 
+    @Autowired
+    private EquipmentMapper equipmentMapper;
+
     //md5加密 spring框架自带md5加密
     public String MD5(String password) {
         return DigestUtils.md5DigestAsHex(password.getBytes());
@@ -86,6 +91,34 @@ public class SituationController {
     @RequestMapping("map/createFacility")
     @ResponseBody
     public JSONObject createFacility(@RequestParam("file") MultipartFile file,Facility facility, HttpServletRequest request) {
+        String location = request.getParameter("location");
+        if (!location.equals("")) {
+            String headerBuffer = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                    "<Placemark xmlns=\"http://www.opengis.net/kml/2.2\">\n" +
+                    "  <name>tempRoute.kml</name>\n" +
+                    "  <LineString>\n" +
+                    "    <coordinates>";
+            String footer = "</coordinates>\n" +
+                    "  </LineString>\n" +
+                    "</Placemark>";
+            String[] arr = location.split(";");
+            StringBuilder header = new StringBuilder();
+            header.append(headerBuffer);
+            for (String s : arr) {
+                header.append(s).append("\n");
+            }
+
+            String kml = header + footer;
+            System.out.println(kml);
+            try {
+                facility.setKml(kml.getBytes("utf-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
         int result = facilityMapper.insert(facility);
         System.out.println(result);
         if (file.getSize() != 0) {
@@ -106,12 +139,20 @@ public class SituationController {
                 upload.setAddtime(dateFormat.format(date));
                 upload.setSourceid(facility.getId());
                 String fileSuffix = originalName.substring(index+1);
-                String[] suffixArray = {"jpg","png", "jpeg", "gif"};
-                boolean picFlag = Arrays.asList(suffixArray).contains(fileSuffix.toLowerCase());
+                String[] picSuffixArray = {"jpg","png", "jpeg", "gif", "bmp"};
+                String[] videoSuffixArray = {"avi", "mp4", "rmvb"};
+                String[] DocSuffixArray = {"doc","pdf", "excel", "txt", "docx"};
+                boolean picFlag = Arrays.asList(picSuffixArray).contains(fileSuffix.toLowerCase());
+                boolean videoFlag = Arrays.asList(videoSuffixArray).contains(fileSuffix.toLowerCase());
+                boolean docFlag = Arrays.asList(DocSuffixArray).contains(fileSuffix.toLowerCase());
                 if (picFlag) {
-                    upload.setType(32769);
+                    upload.setType(GVS_TYPE.COM_OBJECT_IMAGE);
+                } else if (videoFlag) {
+                    upload.setType(GVS_TYPE.COM_OBJECT_VIDEO);
+                } else if (docFlag) {
+                    upload.setType(GVS_TYPE.COM_OBJECT_DOC);
                 } else {
-                    upload.setType(32768);
+                    upload.setType(GVS_TYPE.COM_OBJECT_OTHER);
                 }
                 uploadMapper.insert(upload);
             }
@@ -122,15 +163,87 @@ public class SituationController {
         return jsonObject;
     }
 
+    @RequestMapping("map/createEquipment")
+    @ResponseBody
+    public JSONObject createEquipment(@RequestParam("file") MultipartFile file,Equipment equipment, HttpServletRequest request) {
+        int result = equipmentMapper.insert(equipment);
+        if (file.getSize() != 0) {
+            String originalName = file.getOriginalFilename();
+            int index = originalName.lastIndexOf(".");
+            String uuid = UUID.randomUUID().toString();
+            String newFileName = uuid + originalName.substring(index);
+            try {
+                file.transferTo(new File(VIRTUAL_FILE_PATH+newFileName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                Upload upload = new Upload();
+                upload.setFilename(newFileName);
+                upload.setFilepath("http://localhost:8080");
+                Date date = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                upload.setAddtime(dateFormat.format(date));
+                upload.setSourceid(equipment.getId());
+                String fileSuffix = originalName.substring(index+1);
+                String[] picSuffixArray = {"jpg","png", "jpeg", "gif", "bmp"};
+                String[] videoSuffixArray = {"avi", "mp4", "rmvb"};
+                String[] DocSuffixArray = {"doc","pdf", "excel", "txt", "docx"};
+                boolean picFlag = Arrays.asList(picSuffixArray).contains(fileSuffix.toLowerCase());
+                boolean videoFlag = Arrays.asList(videoSuffixArray).contains(fileSuffix.toLowerCase());
+                boolean docFlag = Arrays.asList(DocSuffixArray).contains(fileSuffix.toLowerCase());
+                if (picFlag) {
+                    upload.setType(GVS_TYPE.COM_EQUIPMENT_IMAGE);
+                } else if (videoFlag) {
+                    upload.setType(GVS_TYPE.COM_EQUIPMENT_VIDEO);
+                } else if (docFlag) {
+                    upload.setType(GVS_TYPE.COM_EQUIPMENT_DOC);
+                } else {
+                    upload.setType(GVS_TYPE.COM_EQUIPMENT_OTHER);
+                }
+                uploadMapper.insert(upload);
+            }
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("flag", "1");
+        System.out.println("1");
+        return jsonObject;
+    }
+
+    @RequestMapping("map/createCamera")
+    @ResponseBody
+    public JSONObject createCamera(YZTCameraDetails yztCameraDetails, HttpServletRequest request) {
+        YZTCamera yztCamera = new YZTCamera();
+        yztCamera.setName(yztCameraDetails.getName());
+        yztCamera.setAddress(yztCameraDetails.getAddress());
+        yztCamera.setLongitude(yztCameraDetails.getLongitude());
+        yztCamera.setLatitude(yztCameraDetails.getLatitude());
+        yztCamera.setFinishtime(yztCameraDetails.getFinishtime());
+        yztCamera.setLayerid((yztCameraDetails.getLayerid() == null) ? 0 : yztCameraDetails.getLayerid());
+        yztCamera.setObjtype(yztCameraDetails.getObjtype());
+        yztCamera.setPlayurl(yztCameraDetails.getPlayurl());
+        yztCamera.setUserunit(yztCameraDetails.getUserunit());
+        yztCamera.setManagerunit(yztCameraDetails.getManagerunit());
+        yztCamera.setRemark(yztCameraDetails.getRemark());
+        yztCamera.setStatus(yztCameraDetails.getStatus());
+        if (yztCameraDetails.getType() == 0) {
+            //海康
+            yztCamera.setPtzurl("hik://" + yztCameraDetails.getUsername() + ":" + yztCameraDetails.getPassword() + "@" +yztCameraDetails.getIp() + ":" + yztCameraDetails.getPort() + "/" + yztCameraDetails.getChannel());
+        } else {
+            //大华
+            yztCamera.setPtzurl("dahua://" + yztCameraDetails.getUsername() + ":" + yztCameraDetails.getPassword() + "@" +yztCameraDetails.getIp() + ":" + yztCameraDetails.getPort() + "/" + yztCameraDetails.getChannel());
+        }
+        yztCameraMapper.insert(yztCamera);
+
+        return new JSONObject();
+    }
+
     @RequestMapping("map/getManagementUnit")
     @ResponseBody
     public List<Department> getManagementUnit() {
-
         List<Department> managementUnits;
         DepartmentExample departmentExample = new DepartmentExample();
         managementUnits = departmentMapper.selectByExample(departmentExample);
         return managementUnits;
-
     }
 
     @RequestMapping("map/saveLayer")

@@ -128,8 +128,8 @@ function showRadar() {
 	$.post(BASE_URL + "/stat/duty.action", {}, function(data) {
 		var myChart = echarts.init(document.getElementById('radar'));
 
-		var tempData = new Array();
-		if (data.name.length == 0) {
+		var tempData = [];
+		if (data.name.length === 0) {
 			return;
 		}
 
@@ -147,7 +147,7 @@ function showRadar() {
 				showDelay : 0
 			},
 			legend : {
-				left : 'left',
+				left : 'left'
 			},
 			toolbox : {},
 			calculable : true,
@@ -188,7 +188,7 @@ function showPieChart() {
 	$.post(BASE_URL + "/stat/getVisit.action", {},
 			function(data) {
 
-				var tempData = new Array();
+				var tempData = [];
 
 				for (var i = 0; i < data.name.length; i++) {
 					var temp = {
@@ -233,7 +233,7 @@ function showPieChart() {
 					                   normal: {
 					                       show: false
 					                   }
-					               },
+					               }
 
 					           },
 					           {

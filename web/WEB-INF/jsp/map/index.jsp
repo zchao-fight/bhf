@@ -617,19 +617,18 @@
 <div class="modal fade" id="resourceLayer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" id="resourceContent">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">新建资源</h4>
             </div>
             <div class="modal-body">
-                <form id="resourceLayerBody" enctype="multipart/form-data">
-
+                <form id="resourceLayerBody">
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" id="submitFacilityButton" class="btn btn-primary">提交更改</button>
+                <button type="button" id="submitResourceButton" class="btn btn-primary">提交</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /modal-dialog -->
@@ -703,30 +702,34 @@
                                             data-toggle="dropdown"><img
                             src="${ctx}/images/map/menu/new.png" title="新建" alt="新建"></a>
                         <ul class="dropdown-menu">
-                            <li><a href="javascript:setObjType(1000)" onclick="">界碑</a></li>
-                            <li><a href="javascript:setObjType(1001)" onclick="">国门</a></li>
+                            <li><a href="javascript:createResource('camera')" onclick="">摄像机</a></li>
                             <li class="divider"></li>
-                            <li><a href="javascript:setObjType(1002)" onclick="">监控中心</a></li>
-                            <li><a href="javascript:setObjType(1003)" onclick="">监控站</a></li>
-                            <li><a href="javascript:setObjType(1004)" onclick="">传输线路</a></li>
-                            <li><a href="javascript:setObjType(1005)" onclick="">报警装置</a></li>
+                            <li><a href="javascript:createResource('equipment')" onclick="">装备</a></li>
                             <li class="divider"></li>
-                            <li><a href="javascript:setObjType(1006)" onclick="">执勤房</a></li>
-                            <li><a href="javascript:setObjType(1007)" onclick="">瞭望塔</a></li>
-                            <li><a href="javascript:setObjType(1008)" onclick="">标志牌</a></li>
-                            <li><a href="javascript:setObjType(1009)" onclick="">灯塔</a></li>
+                            <li><a href="javascript:createResource('facility',1000,'point')" onclick="">界碑</a></li>
+                            <li><a href="javascript:createResource('facility',1001,'point')" onclick="">国门</a></li>
                             <li class="divider"></li>
-                            <li><a href="javascript:setObjType(1010)" onclick="">巡逻路</a></li>
-                            <li><a href="javascript:setObjType(1011)" onclick="">桥梁</a></li>
-                            <li><a href="javascript:setObjType(1012)" onclick="">执勤码头</a></li>
-                            <li><a href="javascript:setObjType(1013)" onclick="">直升机停机坪</a></li>
-                            <li><a href="javascript:setObjType(1014)" onclick="">通道</a></li>
-                            <li><a href="javascript:setObjType(1015)" onclick="">口岸</a></li>
+                            <li><a href="javascript:createResource('facility',1002,'point')" onclick="">监控中心</a></li>
+                            <li><a href="javascript:createResource('facility',1003,'point')" onclick="">监控站</a></li>
+                            <li><a href="javascript:createResource('facility',1004,'line')" onclick="">传输线路</a></li>
+                            <li><a href="javascript:createResource('facility',1005,'point')" onclick="">报警装置</a></li>
                             <li class="divider"></li>
-                            <li><a href="javascript:setObjType(1016)" onclick="">铁丝网</a></li>
-                            <li><a href="javascript:setObjType(1017)" onclick="">铁栅栏</a></li>
-                            <li><a href="javascript:setObjType(1018)" onclick="">隔离带</a></li>
-                            <li><a href="javascript:setObjType(1019)" onclick="">车辆拦阻设施</a></li>
+                            <li><a href="javascript:createResource('facility',1006,'point')" onclick="">执勤房</a></li>
+                            <li><a href="javascript:createResource('facility',1007,'point')" onclick="">瞭望塔</a></li>
+                            <li><a href="javascript:createResource('facility',1008,'point')" onclick="">标志牌</a></li>
+                            <li><a href="javascript:createResource('facility',1009,'point')" onclick="">灯塔</a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:createResource('facility',1010,'point')" onclick="">巡逻路</a></li>
+                            <li><a href="javascript:createResource('facility',1011,'point')" onclick="">桥梁</a></li>
+                            <li><a href="javascript:createResource('facility',1012,'point')" onclick="">执勤码头</a></li>
+                            <li><a href="javascript:createResource('facility',1013,'point')" onclick="">直升机停机坪</a></li>
+                            <li><a href="javascript:createResource('facility',1014,'point')" onclick="">通道</a></li>
+                            <li><a href="javascript:createResource('facility',1015,'point')" onclick="">口岸</a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:createResource('facility',1016,'point')" onclick="">铁丝网</a></li>
+                            <li><a href="javascript:createResource('facility',1017,'point')" onclick="">铁栅栏</a></li>
+                            <li><a href="javascript:createResource('facility',1018,'point')" onclick="">隔离带</a></li>
+                            <li><a href="javascript:createResource('facility',1019,'point')" onclick="">车辆拦阻设施</a></li>
                             <li class="divider"></li>
                         </ul>
                     </li>
@@ -835,7 +838,7 @@
                     </li>
                     <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="${ctx}/images/map/military/military_list.png" title="军标" alt="军标"/></a>
-                        <ul class="dropdown-menu" id="military_list" style="overflow-y: scroll;width: 100px;">
+                        <ul class="dropdown-menu" id="military_list" style="overflow-y: scroll;width: 110px;">
                             <li><a href="javascript:void(0)" onclick="setObjType(100)"><img
                                     src="${ctx}/images/map/military/military_pic/100.png" title="解放军1" alt="人员"></a>
                             </li>
@@ -937,13 +940,13 @@
                           </a>
                       </li>--%>
                     <li>
-                        <a id="saveLayer" onclick="$('#myModal').show()" href="#" data-toggle="modal"
+                        <a id="saveLayer" data-toggle="modal"
                            data-target="#myModal">
                             <img src="${ctx}/images/map/menu/save.png" alt="保存图层" title="保存图层">
                         </a>
 
                         <!-- 模态框（Modal） -->
-                        <div class="modal fade" id="myModal" style="display: none" tabindex="-1" role="dialog"
+                        <div class="modal fade" id="myModal"  tabindex="-1" role="dialog"
                              aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">

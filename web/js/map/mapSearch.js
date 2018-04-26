@@ -217,7 +217,7 @@ function checkEventDetails(id) {
             '<li>&#12288;&#12288;组成员：<textarea style="height: 160px;width:260px;" readonly>' + data.commandgroupid + '</textarea></li>' +
             '<li>&#12288;事件描述：<textarea style="height: 350px;width:260px;" readonly>' + data.remark + '</textarea></li>';
         $('#resultDetails').find('ul').html(resultStr);
-    })
+    });
     $("#resultDetails").show();
 }
 

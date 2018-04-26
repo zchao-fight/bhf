@@ -76,4 +76,35 @@ public class GVS_TYPE
     public static final int GVS_PLANE = GVS_ICON + 0X02;                //飞机
     public static final int GVS_PEOPLE = GVS_ICON + 0X03;               //人员
     public static final int GVS_FONT = GVS_ICON + 0X04;                 //标绘字体
+
+	//基础设施文件
+	 public static final int COM_OBJECT = 0X8000;
+	 public static final int COM_OBJECT_IMAGE = 0X8001;//图片 png jpg jpeg bmp
+	 public static final int COM_OBJECT_VIDEO = 0X8002;//视频 mp4 avi rmvb
+	 public static final int COM_OBJECT_DOC = 0X8003;  //DOC\PDF\TXT\EXCEL
+	 public static final int COM_OBJECT_OTHER = 0X8004;//其他
+
+	//情报附件
+	 public static final int WD_SITUATION_REPORT = 0x10000;
+	 public static final int WD_SITUATION_REPORT_ANNEX = 0x10001;//情报附件
+
+	 public static final int COM_CONTACT = 0x20000;//联系人形象照片
+	 public static final int COM_CONTACT_IMAGE = 0x20001;//图片
+
+	 public static final int COM_PROFESSOR = 0x40000;//专家形象照片
+	 public static final int COM_PROFESSOR_IMAGE = 0x40001;//图片
+
+	//装备文件
+	 public static final int COM_EQUIPMENT = 0X80000;
+	 public static final int COM_EQUIPMENT_IMAGE = 0X80001;//图片 png jpg jpeg bmp
+	 public static final int COM_EQUIPMENT_VIDEO = 0X80002;//视频 mp4 avi rmvb
+	 public static final int COM_EQUIPMENT_DOC = 0X80003;  //DOC\PDF\TXT\EXCEL
+	 public static final int COM_EQUIPMENT_OTHER = 0X80004;//其他
+
+	//服务协议使用文件
+	 public static final int SERVICE = 0x100000;
+	 public static final int SERVICE_COORDINATION = SERVICE + 0x11;//协同标绘使用
+
+
+
 }
