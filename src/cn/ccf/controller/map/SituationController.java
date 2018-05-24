@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -65,16 +66,18 @@ public class SituationController {
     private EquipmentMapper equipmentMapper;
 
     //md5加密 spring框架自带md5加密
-    public String MD5(String password) {
-        return DigestUtils.md5DigestAsHex(password.getBytes());
+    public String MD5(String password) throws UnsupportedEncodingException {
+        return DigestUtils.md5DigestAsHex(password.getBytes("UTF-8"));
     }
 
 
     @RequestMapping("map/index")
     public String showMap(HttpServletRequest request, int id) throws Exception{
 
+        /*
         Logger logger = Logger.getLogger(SituationController.class);
         logger.info("我只是测试一下日志");
+        */
 
         //得到通讯录Databables
         List<Contact> contacts = treeMapper.getContact();
@@ -85,6 +88,7 @@ public class SituationController {
         request.setAttribute("addrs", addrs);
 
         request.getSession().setAttribute("user_id", id);
+        request.getSession().setAttribute("username", userMapper.selectByPrimaryKey(id).getName());
         return "map/index";
     }
 
@@ -166,7 +170,7 @@ public class SituationController {
     @RequestMapping("map/createEquipment")
     @ResponseBody
     public JSONObject createEquipment(@RequestParam("file") MultipartFile file,Equipment equipment, HttpServletRequest request) {
-        int result = equipmentMapper.insert(equipment);
+        equipmentMapper.insert(equipment);
         if (file.getSize() != 0) {
             String originalName = file.getOriginalFilename();
             int index = originalName.lastIndexOf(".");
@@ -218,7 +222,7 @@ public class SituationController {
         yztCamera.setLongitude(yztCameraDetails.getLongitude());
         yztCamera.setLatitude(yztCameraDetails.getLatitude());
         yztCamera.setFinishtime(yztCameraDetails.getFinishtime());
-        yztCamera.setLayerid((yztCameraDetails.getLayerid() == null) ? 0 : yztCameraDetails.getLayerid());
+        yztCamera.setLayerid((yztCameraDetails.getLayerid() == null) ? Integer.valueOf(0) : yztCameraDetails.getLayerid());
         yztCamera.setObjtype(yztCameraDetails.getObjtype());
         yztCamera.setPlayurl(yztCameraDetails.getPlayurl());
         yztCamera.setUserunit(yztCameraDetails.getUserunit());
@@ -287,7 +291,7 @@ public class SituationController {
             parentDepartment = departmentMapper.selectByPrimaryKey(parentID).getName();
         }
         if (department.getLeaderid() != null) {
-            int leaderID = Integer.valueOf(department.getLeaderid());
+            int leaderID = Integer.parseInt(department.getLeaderid());
             leaderName = userMapper.selectByPrimaryKey(leaderID).getName();
         } else {
             leaderName = "无";
@@ -309,7 +313,7 @@ public class SituationController {
     /**
      * zc 内部类
      */
-    class YZTCameraVO extends YZTCamera {
+    public static class YZTCameraVO extends YZTCamera {
         String cameraType, cameraStatus;
 
         public void setCameraType(String cameraType) {

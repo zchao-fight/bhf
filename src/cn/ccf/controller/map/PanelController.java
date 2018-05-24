@@ -42,6 +42,12 @@ public class PanelController {
         return panelService.getResourceTree();
     }
 
+    @RequestMapping("getComprehensiveAnalysis")
+    @ResponseBody
+    public List<ResourceTree> getComprehensiveAnalysis() {
+        return panelService.getComprehensiveAnalysis();
+    }
+
     @RequestMapping(value = "getEventAddr", method = RequestMethod.POST)
     @ResponseBody
     public List<String> getEventAddr() {

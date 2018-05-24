@@ -16,38 +16,57 @@ function showResult() {
     /**
      * 展示shp图层，地名搜索
      */
-
     if (keyword !== '') {
+        /*官方推荐方式，但是会有地图缓存，造成闪屏
+        var filterParams = {
+                    'FILTER': null,
+                    'CQL_FILTER': null,
+                    'FEATUREID': null
+                };
+                var searchSHP = "NAME LIKE '%"+keyword+"%'";
+                filterParams["CQL_FILTER"] = searchSHP;
+                tileLayer.getSource().updateParams(filterParams);
+
+
+                var wmsFeature = new ol.format.WMSGetFeatureInfo(['bhf']);
+                console.log(wmsFeature);
+                var tempArray = wmsFeature.readFeatures();
+                console.log(tempArray);*/
+
+        map.removeLayer(tileLayer);
+        tileLayer = new ol.layer.Tile({
+            source: new ol.source.TileWMS({
+                url: 'http://localhost:8080/geoserver/ccf_bhf/wms',
+                params: {
+                    'VERSION': '1.1.1',
+                    'tiled': false,
+                    LAYERS: 'ccf_bhf:point',//图层组
+                    CQL_FILTER: "NAME LIKE '%" + keyword + "%'"
+                },
+                serverType: 'geoserver'   //服务器类型
+            })
+        });
+        map.addLayer(tileLayer);
+
+    } else {
         var filterParams = {
             'FILTER': null,
             'CQL_FILTER': null,
             'FEATUREID': null
         };
-        var searchSHP = "NAME LIKE '%"+keyword+"%'";
-        filterParams["CQL_FILTER"] = searchSHP;
+
         tileLayer.getSource().updateParams(filterParams);
 
+        /*
+         //定义select控制器
+        var select= new ol.interaction.Select();
+        map.addInteraction(select);//map加载该控件，默认是激活可用的
+        select.on('select', function(e) {
+            console.log(e.selected);  //打印已选择的Feature
+        });
+        */
 
-        var wmsFeature = new ol.format.WMSGetFeatureInfo(['bhf']);
-        console.log(wmsFeature);
-        var tempArray = wmsFeature.readFeatures();
-        console.log(tempArray);
-
-
-    } else {
-        var filterParams = {
-            'FILTER': null,
-            'CQL_FILTER': '',
-            'FEATUREID': null
-        };
-        tileLayer.getSource().updateParams(filterParams);
     }
-
-
-
-
-
-
 
     $.post(BASE_URL + '/map/search.action', {keyword: keyword}, function (data) {
 
@@ -55,6 +74,7 @@ function showResult() {
             $(".panel-whole" + temp).hide();
         }
         var totalNum = 0;
+        var resultStr = null;
         $.each(data, function (i, entry) {
             totalNum += entry.length;
             resultStr = '<div style="margin-left: 10px;">符合条件个数：' + entry.length + '</div>'
@@ -62,11 +82,11 @@ function showResult() {
                 switch (i) {
                     case '#departmentResult':
                         $(".panel-whole1").show();
-                        resultStr += ' <li onclick="locateDepartment(' + item.id + ')"><span>名称：' + item.name + '</span><a onclick=sendCommand("call_tel",'+item.phone+') style="float: right;">' + item.phone + '</a> <br> <span  style="margin-top: 10px;display: block"">地址：' + item.addr + '</span> </li>';
+                        resultStr += ' <li onclick="locateDepartment(' + item.id + ')"><span>名称：' + item.name + '</span><a onclick=sendCommand("call_tel",' + item.phone + ') style="float: right;">' + item.phone + '</a> <br> <span  style="margin-top: 10px;display: block"">地址：' + item.addr + '</span> </li>';
                         break;
                     case '#cameraResult':
                         $(".panel-whole2").show();
-                        resultStr += ' <li onclick="locateCamera(' + item.id + ')"><span>名称：' + item.name + '</span><span style="float: right;margin-right: 20px"><a onclick=sendCommand("play_video",'+item.id+')>播放</a></span> <br> <span style="margin-top: 10px;display: block"">地址：' + item.address + '</span> </li>';
+                        resultStr += ' <li onclick="locateCamera(' + item.id + ')"><span>名称：' + item.name + '</span><span style="float: right;margin-right: 20px"><a onclick=sendCommand("play_video",' + item.id + ')>播放</a></span> <br> <span style="margin-top: 10px;display: block"">地址：' + item.address + '</span> </li>';
                         break;
                     case '#facilityResult':
                         $(".panel-whole3").show();
@@ -94,7 +114,7 @@ function showResult() {
                         break;
                     case '#military':
                         $(".panel-whole10").show();
-                        resultStr += ' <li onclick="displayLayer(' + item.id + ')"><span>名称：' + item.name + '</span><span style="float: right;margin-right: 20px">' + item.savetime + '&nbsp;&nbsp;&nbsp;<a  href="javascript:deleteMilitaryLayer('+item.id+')"><img style="margin-bottom: 3px" src="../images/map/delete.png"></a></span><div style="margin-top: 10px;">备注信息：' + item.remark + '</div> </li>';
+                        resultStr += ' <li onclick="displayLayer(' + item.id + ')"><span>名称：' + item.name + '</span><span style="float: right;margin-right: 20px">' + item.savetime + '&nbsp;&nbsp;&nbsp;<a  href="javascript:deleteMilitaryLayer(' + item.id + ')"><img style="margin-bottom: 3px" src="../images/map/delete.png"></a></span><div style="margin-top: 10px;">备注信息：' + item.remark + '</div> </li>';
                         break;
                 }
             });
@@ -104,7 +124,7 @@ function showResult() {
         if (totalNum === 0) {
             $('#totalNum').html('未查询到符合条件结果');
         } else {
-            $('#totalNum').html('查询符合条件总数为:'+totalNum+'条');
+            $('#totalNum').html('查询符合条件总数为:' + totalNum + '条');
         }
     });
     $("#searchResult").show(1000);
@@ -143,7 +163,7 @@ function checkPreplanDetails(id) {
         resultStr += ' <li>预案名称：' + data.name + '</li>' +
             '<li>所属单位：' + data.department + '</li>' +
             '<li>事件类型：' + data.type + '</li>' +
-            '<li>事件性质：' + data.property + '</li>' + '' + checkURLUndefined(data.filepath)+'<li>文件查看：<a href="/">'+data.filename + '' + checkUndefined(data.filename) + '</a></li>' +
+            '<li>事件性质：' + data.property + '</li>' + '' + checkURLUndefined(data.filepath) + '<li>文件查看：<a href="/">' + data.filename + '' + checkUndefined(data.filename) + '</a></li>' +
             '<li>处置流程：<textarea style="width:260px;height:140px;" readonly>' + data.dealflow + '</textarea></li>' +
             '<li>事件描述：<textarea style="width:260px;height:140px;" readonly>' + data.decribe + '</textarea></li>' +
             '<li>组织指挥：<textarea style="width:260px;height:140px;" readonly>' + data.command + '</textarea></li>' +
@@ -155,7 +175,7 @@ function checkPreplanDetails(id) {
 
 function checkCaseDetails(id) {
     $.post(BASE_URL + '/map/checkCaseDetails.action', {id: id}, function (data) {
-        var resultStr = '<div style="margin: 10px 0px;color: #4AD5FC;"><h4>案例信息</h4><a style="float: right;margin-right: 10px;" class="ol-popup-closer" onclick="hideDetailsPanel()"></a></div>';
+        var resultStr = '<div style="margin: 10px 0;color: #4AD5FC;"><h4>案例信息</h4><a style="float: right;margin-right: 10px;" class="ol-popup-closer" onclick="hideDetailsPanel()"></a></div>';
         resultStr += '<li>案例名称：' + data.name + '</li>' +
             '<li>&#12288;&#12288;时间：' + data.eventtime + '</li>' +
             '<li>&#12288;&#12288;地点：' + data.eventaddress + '</li>' +
@@ -163,7 +183,7 @@ function checkCaseDetails(id) {
             '<li>事件类型：' + data.type + '</li>' +
             '<li>事件规模：' + data.eventscale + '</li>' +
             '<li>事件性质：' + data.eventlevel + '</li>' +
-            '' + checkURLUndefined(data.filepath) +'<li>相关文件：<a href="/">'+data.filename+ '' + checkUndefined(data.filename) + '</a></li>' +
+            '' + checkURLUndefined(data.filepath) + '<li>相关文件：<a href="/">' + data.filename + '' + checkUndefined(data.filename) + '</a></li>' +
             '<li>事件描述：<textarea style="width:260px;height:160px;" readonly>' + data.eventdescribe + '</textarea></li>' +
             '<li>解决方案：<textarea style="width:260px;height:160px;" readonly>' + data.eventsolution + '</textarea></li>' +
             '<li>处置结果：<textarea style="width:260px;height:160px;" readonly>' + data.eventresult + '</textarea></li>';
@@ -196,7 +216,7 @@ function checkLawDetails(id) {
             '<li>发布文号：' + data.pulishnumber + '</li>' +
             '<li>&#12288;关键字：' + data.keywords + '</li>' +
             '<li>生效时间：' + data.abledtime + '</li>' +
-            '' + checkURLUndefined(data.filepath) +'<li>附件名称：<a href="/">'+data.filename+ '' + checkUndefined(data.filename) + '</a></li>' +
+            '' + checkURLUndefined(data.filepath) + '<li>附件名称：<a href="/">' + data.filename + '' + checkUndefined(data.filename) + '</a></li>' +
             '<li>&#12288;&#12288;摘要：<textarea style="height: 600px;width:260px;" readonly>' + data.abstract + '</textarea></li>';
         $('#resultDetails').find('ul').html(resultStr);
     })
@@ -244,7 +264,7 @@ function locateDepartment(id) {
             id: data.id,
             type: 'department',
             phone: data.phone,
-            coordinate : [data.lng, data.lat]
+            coordinate: [data.lng, data.lat]
         });
         // 设置样式，在样式中就可以设置图标
         anchor.setStyle(new ol.style.Style({
@@ -308,6 +328,8 @@ closer.onclick = function () {
  */
 map.on('singleclick', function (evt) {
 
+
+
     addIcon(evt.coordinate, objType);
 
     if (plotDraw.isDrawing()) {
@@ -315,11 +337,9 @@ map.on('singleclick', function (evt) {
     }
 
 
-
     var feature = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
         return feature;
     });
-
 
 
     if (feature) {
@@ -425,15 +445,15 @@ map.on('singleclick', function (evt) {
             case 'military_vector':
                 plotEdit.activate(feature);
                 // activeDelBtn();
-                plotVectorAction='deactivate';
+                plotVectorAction = 'deactivate';
                 break;
             default:
-                // if (plotVectorAction === 'activate') {
-                //     // 开始编辑
-                //     plotEdit.activate(feature);
-                //     activeDelBtn();
-                //     plotVectorAction='deactivate';
-                // }
+            // if (plotVectorAction === 'activate') {
+            //     // 开始编辑
+            //     plotEdit.activate(feature);
+            //     activeDelBtn();
+            //     plotVectorAction='deactivate';
+            // }
 
         }
     } else {
@@ -640,10 +660,11 @@ map.on('pointermove', function (e) {
 /**
  * 增加鼠标右键菜单
  */
-function  test() {
+function test() {
     alert("hello world");
 }
-$(map.getViewport()).on("contextmenu", function(evt){
+
+$(map.getViewport()).on("contextmenu", function (evt) {
 
     evt.preventDefault();//@author zc 阻止系统右键菜单
     var coordinate = map.getEventCoordinate(evt);//获取鼠标坐标
@@ -657,12 +678,12 @@ $(map.getViewport()).on("contextmenu", function(evt){
     var menuUL, menuListToCenter;
     if (feature) {
 
-        if (feature.get('type') === 'department' || feature.get('type') === 'camera' ||feature.get('type') === 'facility' ||feature.get('type') === 'military_pic') {
+        if (feature.get('type') === 'department' || feature.get('type') === 'camera' || feature.get('type') === 'facility' || feature.get('type') === 'military_pic') {
             menuUL = document.createElement('ul');
             menuUL.className = 'contextmenuUL';
             var menuListDel = document.createElement('li');
             var menuListDelA = document.createElement('a');
-            menuListDelA.onclick = function(){
+            menuListDelA.onclick = function () {
                 deleteFeature(feature);
             };
             menuListDelA.href = 'javascript:void(0)';
@@ -671,7 +692,7 @@ $(map.getViewport()).on("contextmenu", function(evt){
 
             var menuListRename = document.createElement('li');
             var menuListRenameA = document.createElement('a');
-            menuListRenameA.onclick = function(){
+            menuListRenameA.onclick = function () {
                 renameFeature(feature);
             };
             menuListRenameA.href = 'javascript:void(0)';
@@ -682,14 +703,14 @@ $(map.getViewport()).on("contextmenu", function(evt){
             menuUL.appendChild(menuListRename);
             content.appendChild(menuUL);
             popup.setPositioning('top-left');
-            popup.setOffset([0,36]);
+            popup.setOffset([0, 36]);
             popup.setPosition(feature.get('coordinate'));
         } else if (feature.get('type') === 'military_vector') {
             menuUL = document.createElement('ul');
             menuUL.className = 'contextmenuUL';
             var menuListDel = document.createElement('li');
             var menuListDelA = document.createElement('a');
-            menuListDelA.onclick = function(){
+            menuListDelA.onclick = function () {
                 deleteFeature(feature);
             };
             menuListDelA.href = 'javascript:void(0)';
@@ -698,7 +719,7 @@ $(map.getViewport()).on("contextmenu", function(evt){
 
             menuUL.appendChild(menuListDel);
             content.appendChild(menuUL);
-            popup.setOffset([0,0]);
+            popup.setOffset([0, 0]);
             popup.setPosition(coordinate);
         }
     } else {
@@ -707,7 +728,7 @@ $(map.getViewport()).on("contextmenu", function(evt){
 
         var menuListZoomOut = document.createElement('li');
         var menuListZoomOutA = document.createElement('a');
-        menuListZoomOutA.onclick = function(){
+        menuListZoomOutA.onclick = function () {
             var view = map.getView();
             view.animate({
                 zoom: view.getZoom() + 1,
@@ -721,7 +742,7 @@ $(map.getViewport()).on("contextmenu", function(evt){
 
         var menuListZoomIn = document.createElement('li');
         var menuListZoomInA = document.createElement('a');
-        menuListZoomInA.onclick = function(){
+        menuListZoomInA.onclick = function () {
             var view = map.getView();
             view.animate({
                 zoom: view.getZoom() - 1,
@@ -735,7 +756,7 @@ $(map.getViewport()).on("contextmenu", function(evt){
 
         menuListToCenter = document.createElement('li');
         var menuListToCenterA = document.createElement('a');
-        menuListToCenterA.onclick = function(){
+        menuListToCenterA.onclick = function () {
 
             var view = map.getView();
             // 设置地图中心为芒市的坐标，即可让地图移动到芒市
@@ -749,7 +770,7 @@ $(map.getViewport()).on("contextmenu", function(evt){
         menuUL.appendChild(menuListToCenter);
 
         content.appendChild(menuUL);
-        popup.setOffset([0,0]);
+        popup.setOffset([0, 0]);
         popup.setPosition(coordinate);
     }
 
@@ -765,43 +786,43 @@ function renameFeature(feature) {
     });
 }
 
-function deleteFeature(feature){
-  $.ligerDialog.confirm('确定删除元素吗？', function (flag) {
-                    /**
-                     * @author zc
-                     * @function 删除单个feature
-                     */
-                    if (flag) {
-                        if (feature.get('type') ==='military_pic' || feature.get('type') === 'department' || feature.get('type') === 'facility' || feature.get('type') === 'camera') {
-                            layer.getSource().removeFeature(feature);
-                        } else {
-                            drawOverlay.getSource().removeFeature(feature);
-                            deactiveDelBtn();
-                            plotEdit.deactivate();
-                        }
-                    }
-                });
+function deleteFeature(feature) {
+    $.ligerDialog.confirm('确定删除元素吗？', function (flag) {
+        /**
+         * @author zc
+         * @function 删除单个feature
+         */
+        if (flag) {
+            if (feature.get('type') === 'military_pic' || feature.get('type') === 'department' || feature.get('type') === 'facility' || feature.get('type') === 'camera') {
+                layer.getSource().removeFeature(feature);
+            } else {
+                drawOverlay.getSource().removeFeature(feature);
+                deactiveDelBtn();
+                plotEdit.deactivate();
+            }
+        }
+    });
 }
 
-$(map.getViewport()).on("click", function(e){
+$(map.getViewport()).on("click", function (e) {
     e.preventDefault();
-   popup.setPosition(undefined);
+    popup.setPosition(undefined);
 });
 
 
 function locateFacility(id) {
     $.post(BASE_URL + '/map/locateFacility.action', {id: id}, function (data) {
-        //移动到feature所在位置
+            //移动到feature所在位置
             moveToFeature([data.longitude, data.latitude]);
             // 创建一个Feature，并设置好在地图上的位置
             var anchor = new ol.Feature({
                 geometry: new ol.geom.Point([data.longitude, data.latitude]),
                 id: data.id,
                 type: 'facility',
-                coordinate : [data.longitude, data.latitude]
+                coordinate: [data.longitude, data.latitude]
             });
             // 设置样式，在样式中就可以设置图标
-                anchor.setStyle(new ol.style.Style({
+            anchor.setStyle(new ol.style.Style({
                 image: new ol.style.Icon({
                     src: '../images/map/department/department.png'
                 }),
@@ -893,8 +914,11 @@ map.on('dblclick', function (evt) {
 
 function sendCommand(commandType, commandParam) {
 
-    $.post(BASE_URL + '/map/sendCommand.action', {commandType: commandType,commandParam:commandParam }, function (data) {
-            // alert("消息发送成功");
+    $.post(BASE_URL + '/map/sendCommand.action', {
+        commandType: commandType,
+        commandParam: commandParam
+    }, function (data) {
+        // alert("消息发送成功");
         console.log("消息发送成功")
     });
 }
@@ -905,9 +929,9 @@ function displayLayer(id) {
         // var temwkt ="POLYGON((98.57849887047745 24.440809887661608,98.59123862387986 24.43857666193879,98.59135350583394 24.439948416373255,98.59469220320423 24.436002683117458,98.59074646994844 24.43266398574717,98.59086022158287 24.43403583437494,98.57792655155602 24.433942060604558))";
         var format = new ol.format.WKT();
         var wktTextArray = data.wktText.split(';');
-        for (var i=0;i<wktTextArray.length-1;i++) {
+        for (var i = 0; i < wktTextArray.length - 1; i++) {
             var militaryFeature = format.readFeature(wktTextArray[i]);
-            militaryFeature.set('type','military_vector');
+            militaryFeature.set('type', 'military_vector');
             drawOverlay.getSource().addFeature(militaryFeature);
         }
 
@@ -916,12 +940,12 @@ function displayLayer(id) {
         var coordinateArray = data.coordinate.split(';');
         var offsetYArray = data.offsetY.split(';');
 
-        for (i=0; i<picSrcArray.length;i++) {
+        for (i = 0; i < picSrcArray.length; i++) {
             //添加feature
             var picFeature = new ol.Feature({
                 geometry: new ol.geom.Point(eval(coordinateArray[i])),
                 type: 'military_pic',
-                coordinate : eval(coordinateArray[i])
+                coordinate: eval(coordinateArray[i])
             });
 
 

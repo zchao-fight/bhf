@@ -1,5 +1,4 @@
 package cn.ccf.pojo;
-
 public class Case {
     private Integer id;
 

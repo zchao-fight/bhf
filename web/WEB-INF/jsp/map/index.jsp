@@ -66,7 +66,7 @@
 <script>
     (function ($) {
         $(window).load(function () {
-            $(".ztree").mCustomScrollbar({scrollInertia: 2000, mouseWheelPixels: 100});
+            $(".ztree").mCustomScrollbar({scrollInertia: 500, mouseWheelPixels: 100});
         });
     })(jQuery);
 </script>
@@ -84,6 +84,7 @@
 
         getVideoTree();
         getResourceTree();
+        getComprehensiveAnalysis();
 
         //
         function ml_close_demo() {
@@ -108,6 +109,7 @@
 
         $('.float-close').click(function () {
             ml_close_demo();
+            $('#resultDetails').hide();
             return false;
         });
         $('.open-btn').click(function () {
@@ -122,7 +124,7 @@
                 right: '0px'
             }, 100, function () {
                 $('#right-panel').delay(50).animate({
-                    right: '-250px'
+                    right: '-260px'
                 }, 300);
             });
         });
@@ -134,7 +136,7 @@
 <%--增加鼠标响应事件
 @author zc
 --%>
-<body onkeydown="if (event.keyCode!==13){}else showResult();">
+<body onkeydown="if (event.keyCode!==13){}else showResult();" onbeforeunload="close()">
 
 <%--左侧菜单--%>
 <div class="float-open" id="float-open" style="left:-2px;">
@@ -165,10 +167,10 @@
                     <div class="j-sw-c"
                          style="width:220px; position: relative; padding: 0px; margin: 0px; left: -450px;">
                         <ul class="ztree" id="videoTree"
-                            style="float: left; width: 220px;overflow-y:auto;overflow-x:hidden;height: 300px">
+                            style="float: left; width: 220px;overflow-y:auto;overflow-x:hidden;height: 335px">
                         </ul>
                         <ul class="ztree" id="resourceTree"
-                            style="float: left; width: 220px;overflow-y:auto;overflow-x:hidden;height: 300px">
+                            style="float: left; width: 220px;overflow-y:auto;overflow-x:hidden;height: 335px">
                         </ul>
                     </div>
                 </div>
@@ -186,7 +188,7 @@
                 </li>
                 <li class="newprd-s2">
                     <a style="padding-bottom:5px;padding-right:30px;padding-left:30px">
-                        事件
+                        综合研判
                     </a>
                 </li>
             </ul>
@@ -223,7 +225,7 @@
                                 $(document).ready(function () {
                                     $('#contact').DataTable({
                                         "lengthChange": false,
-                                        "iDisplayLength": 4,
+                                        "iDisplayLength": 8,
                                         "searching": false,
                                         "pagingType": "simple",
                                         "oLanguage": { // 国际化配置
@@ -250,8 +252,8 @@
 
                             </script>
                         </ul>
-                        <ul style="float: left; width: 240px;">
-                            我是事件
+                        <ul id="comprehensiveAnalysis" class="ztree" style="float: left; width: 240px;margin-left:10px;overflow-y:auto;overflow-x:hidden;height: 335px">
+
                         </ul>
                     </div>
                 </div>
@@ -275,7 +277,7 @@
 <div id="globleSearch">
     <div style="width: 300px; position: relative; ">
         <input id="searchKeyword" name="keyword" placeholder="请输入搜索内容">
-        <button onclick="showResult()" style="padding:0;"><img src="${ctx}/images/search.png"></button>
+        <button id="searchButton" onclick="showResult()" style="padding:0;"><img src="${ctx}/images/search.png"></button>
     </div>
 </div>
 
@@ -612,6 +614,61 @@
 
 </style>
 
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="mySaveLayerModal"  tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">保存图层-图层信息</h4>
+            </div>
+            <div class="modal-body" style="margin-left:30px;">
+                &nbsp; &#12288;&#12288;标 题:&nbsp;&nbsp;<input type="text" id="layerName"
+                                                              style="width: 350px"
+                                                              placeholder="请输入标题">
+                <span style="color: red">*</span>
+                <br>
+                备 注 信 息:&nbsp;&nbsp;<textarea id="layerRemark" placeholder="请输入备注信息"
+                                              style="height:200px;width:350px;"></textarea>
+                <%--<div id="saveLayerTip" style="color: red;font-size:12px;">提示信息：若当前图层无元素，不建议保存，但您仍可以保存</div>--%>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="saveLayer()">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 系统设置模态框（Modal） -->
+<div class="modal fade" id="systemSetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="systemSetContent">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">系统设置</h4>
+            </div>
+            <div class="modal-body">
+                <form id="systemSetBody">
+                    <div>
+                        主题设置
+                        <label style="cursor: pointer"><input style="margin-left: 50px;" type="radio" name="theme" value="purple">紫色</label>
+                        <label style="cursor: pointer"><input style="margin-left: 50px;" type="radio" name="theme" value="black" checked="checked">黑色</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="submitSystemSetButton" class="btn btn-primary" onclick="modifySystemSet()">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /modal-dialog -->
+</div><!-- /.modal -->
+
 
 <!-- 新建资源图层模态框（Modal） -->
 <div class="modal fade" id="resourceLayer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -702,6 +759,7 @@
                                             data-toggle="dropdown"><img
                             src="${ctx}/images/map/menu/new.png" title="新建" alt="新建"></a>
                         <ul class="dropdown-menu">
+
                             <li><a href="javascript:createResource('camera')" onclick="">摄像机</a></li>
                             <li class="divider"></li>
                             <li><a href="javascript:createResource('equipment')" onclick="">装备</a></li>
@@ -745,9 +803,10 @@
                     <li><a href="javascript:StartCapture()"><img src="${ctx}/images/map/military/screenshot.png"
                                                                  alt="截图" title="截图"></a></li>
                     <!--<li class="btn-primary"><a href="javascript:void(0)">图层控制</a></li>-->
-                    <li><a href="javascript:activate(P.PlotTypes.MARKER)()"><img
+                    <li ><a href="javascript:activate(P.PlotTypes.MARKER)()"><img
                             src="${ctx}/images/map/military/point_menu.png" title="点标" alt="点标"></a>
                     </li>
+                        <li style="color:white;"><a href="javascript:drawPolygon()" onclick="">报警区域</a></li>
                     <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle"
                                             data-toggle="dropdown"><img
                             src="${ctx}/images/map/military/line_menu.png" title="线标" alt="线标"></a>
@@ -939,40 +998,17 @@
                               <img src="${ctx}/images/map/menu/download.png" alt="导出" title="导出">
                           </a>
                       </li>--%>
+                        <li>
+                            <a id="systemSet" data-toggle="modal"
+                               data-target="#systemSetModal">
+                                <img src="${ctx}/images/map/menu/set.png" alt="设置" title="设置">
+                            </a>
+                        </li>
                     <li>
                         <a id="saveLayer" data-toggle="modal"
-                           data-target="#myModal">
+                           data-target="#mySaveLayerModal">
                             <img src="${ctx}/images/map/menu/save.png" alt="保存图层" title="保存图层">
                         </a>
-
-                        <!-- 模态框（Modal） -->
-                        <div class="modal fade" id="myModal"  tabindex="-1" role="dialog"
-                             aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                            &times;
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">保存图层-图层信息</h4>
-                                    </div>
-                                    <div class="modal-body" style="margin-left:30px;">
-                                        &nbsp; &#12288;&#12288;标 题:&nbsp;&nbsp;<input type="text" id="layerName"
-                                                                                      style="width: 350px"
-                                                                                      placeholder="请输入标题">
-                                        <span style="color: red">*</span>
-                                        <br>
-                                        备 注 信 息:&nbsp;&nbsp;<textarea id="layerRemark" placeholder="请输入备注信息"
-                                                                      style="height:200px;width:350px;"></textarea>
-                                        <%--<div id="saveLayerTip" style="color: red;font-size:12px;">提示信息：若当前图层无元素，不建议保存，但您仍可以保存</div>--%>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                        <button type="button" class="btn btn-primary" onclick="saveLayer()">提交</button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal -->
-                        </div>
                     </li>
 
 
@@ -998,11 +1034,171 @@
 </div>
 
 
+<script>
+    var username = '${sessionScope.username}';
+    var ws;//一个ws对象就是一个通信管道 不要忘记加工程名
+    var target = 'ws://127.0.0.1:8080/bhf/chatSocket?username=' + username;
+    window.onload = function () {
+        ws = new WebSocket(target);
+        ws.onmessage = function (event) {
+
+//                console.log(event.data);
+//                var msg = JSON.parse(event.data);
+//                console.log(msg);
+
+            var msg =  eval('('+event.data+')');
+            console.log("内容是："+msg);
+            if (undefined !== msg.welcome) {
+                $('#content').append('<div style="color:red;margin-bottom:5px;margin-left:5px;">'+msg.welcome+'</div>');
+            }
+
+            if (undefined !== msg.users) {
+                $('#userList').html('');
+                $('#userList').append("<div style='color: red;font-size: 20px;margin-bottom:10px;font-weight: bold'>成员列表</div>");
+                $.each(msg.users, function (i, entry) {
+                    $('#userList').append("<input style='margin-left: 10px;' type=checkbox value='"+entry+"'>"+entry+"<br>")
+                })
+            }
+
+            if (undefined !== msg.content && "" !== msg.content) {
+                if (msg.plotting === 1) {
+//                    var wktText = msg.content.split('<br>')[1];
+                    var wktText = msg.content;
+                    var format = new ol.format.WKT();
+
+                    var wktTextArray = wktText.split(';');
+                    for (var i = 0; i < wktTextArray.length - 1; i++) {
+                        var militaryFeature = format.readFeature(wktTextArray[i]);
+                        militaryFeature.set('type', 'military_vector');
+                        drawOverlay.getSource().addFeature(militaryFeature);
+                    }
+                } else {
+                    $('#content').append(msg.content);
+                    console.log(msg.content);
+                }
+
+
+            }
+        };
+
+        ws.onclose=function(e){
+            console.log(e);
+//                alert('退出群聊');
+//                ws.close(); //关闭TCP连接
+        };
+    };
+
+    function  close() {
+
+        ws.close();
+        return "确认离开吗？";
+
+    }
+
+    function subSend() {
+        var msg = $('#msg').val();
+        var obj = null;
+        if ($('#userList :checked').size() === 0) {
+//                广播
+            obj = {
+                msg : msg,
+                type : 1,//广播 2单聊
+                isPlotting : 0//标绘
+            }
+        } else {
+//                单聊
+            var to = $("#userList :checked").val();
+//            alert(to);
+            console.log("发送给用户：" + to);
+            obj = {
+                to : to,
+                msg : msg,
+                type : 2,//广播 2单聊
+                isPlotting : 0//标绘
+            }
+        }
+
+        ws.send(JSON.stringify(obj));
+        $('#msg').val('');
+        $('#content').scrollTop($('#content')[0].scrollHeight+20);
+    }
+
+    function collaborate() {
+        var vectorFeatures = drawOverlay.getSource().getFeatures();
+        var wktText = '';
+        for (var i in vectorFeatures) {
+            var format = new ol.format.WKT(),
+                wkt = format.writeGeometry(vectorFeatures[i].getGeometry());
+            wktText += wkt + ';';
+
+            // console.log("测试经纬度："+ vectorFeatures[i].getGeometry().getCoordinates());
+        }
+        console.log(wktText);
+
+
+        var msg = wktText;
+        var obj = null;
+        if ($('#userList :checked').size() === 0) {
+//                广播
+            obj = {
+                msg : msg,
+                type : 1, //广播 2单聊
+                isPlotting : 1//标绘
+            }
+        } else {
+//                单聊
+            var to = $("#userList :checked").val();
+            alert(to);
+            obj = {
+                to : to,
+                msg : msg,
+                type : 2 ,//广播 2单聊
+                isPlotting : 1//标绘
+            }
+        }
+        ws.send(JSON.stringify(obj));
+
+
+
+    }
+
+</script>
+
+<div style="position: absolute;top:200px;right:50px;background-color: whitesmoke" >
+    <div id="container" style="float: left;width:400px;height: 400px;border: dotted 1px black;">
+        <div class="panel-heading">标绘群组</div>
+        <div id="content" style="float: left;width:400px;height: 300px;border: dotted 1px black;overflow-y: scroll">
+
+        </div>
+        <%--<div class="panel panel-primary">--%>
+
+            <%--<div id="msg" class="panel-body">--%>
+
+            <%--</div>--%>
+            <%--<div class="panel-footer">--%>
+                <%--在线人数<span id="onlineCount">1</span>人--%>
+            <%--</div>--%>
+        <%--</div>--%>
+
+        <div style="float: left;width:400px;height: 100px;border: dotted 1px black;">
+            <input id="msg" type="text">
+            <input type="button" value="发送" onclick="subSend()">
+            <input type="button" value="协同" onclick="collaborate()">
+        </div>
+
+    </div>
+    <div id="userList" style="float: left;width:200px;height: 400px;border: dotted 1px black;"></div>
+</div>
+
+
+
+
+
 <%--右侧统计--%>
 <div class="float-right-open"
      style="position: fixed;top:40px;right:2px;padding:4px 4px 4px 6px;width:20px;height: 20px;">
     <a class="right-open-btn" href="javascript:void(0);">
-        <img src="${ctx}/images/map/right_cartogram/expand_right.png" style="opacity:0.6;">
+        <img src="${ctx}/images/map/right_cartogram/expand_right.png">
     </a>
 </div>
 <script type="text/javascript">
@@ -1010,7 +1206,7 @@
         $('.float-right-open').animate({
             right: '-25px'
         }, 100, function () {
-            $('.right-panel').delay(50).animate({
+            $('#right-panel').delay(50).animate({
                 right: '0px'
             }, 300);
         });
@@ -1019,7 +1215,7 @@
 
 
 </script>
-<div id="right-panel" class="right-panel" style="position: fixed;top:40px;bottom:0;width: 250px;right:-250px;">
+<div id="right-panel" class="right-panel" style="position: fixed;top:40px;bottom:0;width: 250px;right:-260px;">
     <%--<div style="height:20px; ">--%>
         <%--<a class="right-close-btn" href="javascript:void(0)" style="margin-top: 2px;">--%>
             <%--<img src="${ctx}/images/map/right_cartogram/shrink_right.png">--%>
@@ -1079,7 +1275,7 @@
 <script type="text/javascript">
 
     //增加军标标绘
-    var map, plotDraw, plotEdit, drawOverlay, drawStyle;
+    var map, plotDraw, plotEdit, drawOverlay, drawStyle, tileLayer;
     //zc 自定义
     var plotVectorAction;
 
@@ -1093,7 +1289,6 @@
         })
     });
 
-
     tileLayer = new ol.layer.Tile({
         source: new ol.source.TileWMS({
             url: 'http://localhost:8080/geoserver/ccf_bhf/wms',
@@ -1101,7 +1296,8 @@
                 'VERSION': '1.1.1',
                 'tiled': false,
                 STYLES: '',
-                LAYERS: 'bhf'
+                LAYERS: 'ccf_bhf:point',
+                CQL_FILTER: "NAME LIKE '%张超%'"
                 //,
 //                 CQL_FILTER: "NAME LIKE '%芒%'"
                 //                CQL_FILTER: ''
@@ -1124,7 +1320,21 @@
             minZoom: 4,
             maxZoom: 18
         }),
-        target: 'map'
+        target: 'map',
+        controls : ol.control.defaults().extend([
+                new ol.control.OverviewMap({
+                    layers: [offlineMapLayer, tileLayer],
+                    view: new ol.View({
+                        projection: 'EPSG:4326'
+                    })
+                }),
+            new ol.control.ScaleLine({})
+//            new ol.control.ZoomSlider({})
+        ])
+    });
+
+    map.on('postcompose', function (e) {
+        console.log(e);
     });
 
 

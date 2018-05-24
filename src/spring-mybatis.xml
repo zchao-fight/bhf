@@ -11,7 +11,7 @@
     <!--<context:component-scan base-package="cn.ccf"/>-->
 
     <context:component-scan base-package="cn.ccf">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
 
@@ -19,7 +19,8 @@
     <!-- 两种不同方式引入配置文件 -->
     <!-- <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:jdbc.properties" /> </bean> -->
-    <context:property-placeholder ignore-unresolvable="true" location="classpath:jdbc.properties,classpath:resource-icon.properties"/>
+    <context:property-placeholder ignore-unresolvable="true"
+                                  location="classpath:jdbc.properties,classpath:resource-icon.properties"/>
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
@@ -64,6 +65,20 @@
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+
+    <!-- aop -->
+
+    <aop:aspectj-autoproxy/>
+
+    <bean id="controllerAop" class="cn.ccf.module.aop.ControllerAop"/>
+
+    <aop:config>
+        <aop:aspect id="myAop" ref="controllerAop">
+            <aop:pointcut id="target" expression="execution(* cn.ccf.controller.map..*.*(..))"/>
+            <aop:around method="handlerControllerMethod" pointcut-ref="target"/>
+        </aop:aspect>
+    </aop:config>
 
 
 </beans>

@@ -13,6 +13,10 @@
 });*/
 
 
+
+
+
+
 /**
  * @author zc
  * @function 移动到本级区域
@@ -148,6 +152,26 @@ function drawLine() {
     });
     map.addInteraction(snap);
 
+    draw.on('drawend', drawEndCallBackAlarm, this);
+
+
+}
+var geo;
+function drawEndCallBackAlarm(evt) {
+
+
+
+    currentFeature = evt.feature; //当前绘制的要素
+    console.log(evt);
+    geo = currentFeature.getGeometry(); //获取要素的几何信息
+    var coordinates = geo.getCoordinates(); //获取几何坐标
+    console.log(coordinates);
+    //将几何坐标拼接为字符串
+
+        geoStr = coordinates.join(";");
+        console.log(geoStr);
+
+    map.removeInteraction(draw);
 }
 
 /**
@@ -168,6 +192,7 @@ function drawPolygon() {
         source: source
     });
     map.addInteraction(snap);
+    draw.on('drawend', drawEndCallBackAlarm, this);
 }
 
 /**
@@ -249,7 +274,7 @@ function createResource(type, seq, geometry) {
         var temp4 = null;
         if (geometry === 'point') {
             addInteraction();
-            temp4  = '<div>&#12288;&#12288;经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly">&#12288;&#12288;&#12288;&#12288;&nbsp;&nbsp;&nbsp;维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
+            temp4 = '<div>&#12288;&#12288;经度：<input  id="longitude" name="longitude" type="text" style="width: 150px;margin-right:50px;" readonly="readonly">&#12288;&#12288;&#12288;&#12288;&nbsp;&nbsp;&nbsp;维度：<input name="latitude" id="latitude" type="text" style="width:150px;" readonly="readonly"></div>';
 
         } else if (geometry === 'line') {
             addlineInteraction();
@@ -335,7 +360,7 @@ function createResource(type, seq, geometry) {
         $.ajaxSettings.async = false;
         $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
             $.each(data, function (i, item) {
-                tempStr += '<option value="'+item.id+'">' + item.name + '</option>';
+                tempStr += '<option value="' + item.id + '">' + item.name + '</option>';
             });
             ownedUnit += tempStr + '</select>';
         });
@@ -345,7 +370,7 @@ function createResource(type, seq, geometry) {
             "<div style='margin-left:10px;'>型号规格： <input type='text' style='width:300px;' name='model' placeholder='请输入规格'> *</div>" +
             "<div style='margin-left:10px;'>装备数量： <input type='text' style='width:300px;' name='count' placeholder='请输入数字'> *</div>" +
             "<div>装备类型： <select type='text' style='width:304px;' name='type'><option>车载</option><option>手持机</option><option>武器</option><option>雷达</option></select></div>" +
-            "<div>所属单位： "+ownedUnit+"</div>" +
+            "<div>所属单位： " + ownedUnit + "</div>" +
             "<div>生产厂家： <input type='text' name='factory' style='width:300px;' placeholder='请输入厂家'></div>" +
             "<div style='margin:5px 25px 5px 0'>&#12288;多媒体： <input style='display: inline;' type='file' name='file'> </div>" +
             "<div>&#12288;&#12288;经度： <input style='width: 100px;margin-right:50px;' type='text' name='longitude' id='longitude' >维度： <input style='width:100px;' type='text' name='latitude' id='latitude'></div>" +
@@ -365,7 +390,7 @@ function createResource(type, seq, geometry) {
         $.ajaxSettings.async = false;
         $.post(BASE_URL + '/map/getManagementUnit.action', function (data) {
             $.each(data, function (i, item) {
-                tempStr += '<option value="'+item.id+'">' + item.name + '</option>';
+                tempStr += '<option value="' + item.id + '">' + item.name + '</option>';
             });
             userUnit += tempStr + '</select>';
             managerUnit += tempStr + '</select>';
@@ -381,12 +406,12 @@ function createResource(type, seq, geometry) {
             "<tr style='margin-top:20px'><td>竣工时间</td><td>镜头类型</td><td>图层（默认为0）</td></tr>" +
             "<tr class='event'><td><input class='Wdate' onclick='WdatePicker()' name='finishtime'></td><td><select style='width: 162px;' name='objtype'><option value='983569'>枪机</option><option value='983570'>球机</option><option value='983571'>大球</option></select></td><td><input type='text' name='layerid'></td></tr>" +
             "<tr style='margin-top:20px'><td>使用单位</td><td>管理单位</td><td>位置</td></tr>" +
-            "<tr class='event'><td>"+userUnit+"</td><td>"+managerUnit+"</td><td><input type='text' style='width: 78px;' id='longitude' name='longitude' readonly><input type='text' id='latitude' style='width:78px;' name='latitude' readonly></td></tr>"+
+            "<tr class='event'><td>" + userUnit + "</td><td>" + managerUnit + "</td><td><input type='text' style='width: 78px;' id='longitude' name='longitude' readonly><input type='text' id='latitude' style='width:78px;' name='latitude' readonly></td></tr>" +
             "<tr><td>组播地址</td></tr>" +
             "<tr class='event'><td colspan='3'><input type='text' style='width:520px;' name='playurl'></td></tr>" +
             "<tr style='margin-top:20px;'><td>备注</td></tr>" +
             "<tr><td colspan='3'><textarea style='width:520px;height:150px;' name='remark'></textarea></td></tr>";
-            // "<tr><td colspan='3'><input type='file'></td></tr>";
+        // "<tr><td colspan='3'><input type='file'></td></tr>";
         resourceLayerBody.append(cameraStr);
         $("#submitResourceButton").unbind("click").bind("click", function () {
             submitCameraData();
@@ -567,7 +592,6 @@ function addlineInteraction() {
 }
 
 
-
 /**
  * 将绘制的几何数据与对话框设置的属性数据提交到后台处理
  * 提交facility
@@ -596,19 +620,20 @@ function submitFacilityData() {
     currentFeature = null;  //置空当前绘制的几何要素
     geoStr = null; //置空当前绘制图形的geoStr
 }
+
 /**
  * 将绘制的几何数据与对话框设置的属性数据提交到后台处理
  * 提交camera
  */
 function submitCameraData() {
-    var resourceLayerBody =  $("#resourceLayerBody");
+    var resourceLayerBody = $("#resourceLayerBody");
     resourceLayerBody.attr("enctype", "application/x-www-form-urlencoded");
     var data = resourceLayerBody.serialize();
 
-$.post(BASE_URL + '/map/createCamera.action', data, function () {
-    alert('新建资源成功');
-    $('#resourceLayer').modal('hide');
-});
+    $.post(BASE_URL + '/map/createCamera.action', data, function () {
+        alert('新建资源成功');
+        $('#resourceLayer').modal('hide');
+    });
     currentFeature = null;  //置空当前绘制的几何要素
     geoStr = null; //置空当前绘制图形的geoStr
 }
@@ -647,6 +672,9 @@ function addIcon(coord, type) {
         return;
     } else {
         var picSrc = null;
+        if(geo.intersectsCoordinate(coord)) {
+            alert("报警区域内");
+        }
         objType = null;
         switch (type) {
             case 1:
@@ -862,6 +890,8 @@ function saveLayer() {
         var format = new ol.format.WKT(),
             wkt = format.writeGeometry(vectorFeatures[i].getGeometry());
         wktText += wkt + ';';
+
+        // console.log("测试经纬度："+ vectorFeatures[i].getGeometry().getCoordinates());
     }
     console.log(wktText);
     $('#layerName').val('');
@@ -981,6 +1011,7 @@ function bindSubmitEvent(type) {
                         }
                     },
                     calculable: true,
+
                     series: [
                         {
                             name: '事件来源',
@@ -1008,11 +1039,27 @@ function bindSubmitEvent(type) {
                 var option = {
                     grid: {left: '1%', right: '0', bottom: '1%', y: 10, containLabel: true},
                     xAxis: {
-                        data: months
+                        data: months,
+                        axisLine: {
+                            lineStyle: {
+                                color: 'white'
+                            }
+                        }
                     },
-                    yAxis: {},
+                    yAxis: {
+                        axisLine: {
+                            lineStyle: {
+                                color: 'white'
+                            }
+                        }
+                    },
                     series: [{
-                        name: '销量',
+                        itemStyle:{
+                            normal:{
+                                color:'#4ad2ff'
+                            }
+                        },
+                        name: '数量',
                         type: 'bar',
                         data: nums
                     }]
@@ -1043,6 +1090,7 @@ function bindSubmitEvent(type) {
 
                 // 指定图表的配置项和数据
                 option = {
+
                     tooltip: {
                         trigger: 'axis'
                     },
@@ -1057,20 +1105,35 @@ function bindSubmitEvent(type) {
                     calculable: true,
                     xAxis: [
                         {
-                            type: 'value'
+                            type: 'value',
+                            axisLine: {
+                                lineStyle: {
+                                    color: 'white'
+                                }
+                            }
                         }
                     ],
                     yAxis: [
                         {
                             type: 'category',
-                            data: level
+                            data: level,
+                            axisLine: {
+                                lineStyle: {
+                                    color: 'white'
+                                }
+                            }
                         }
                     ],
                     series: [
                         {
                             name: '数量',
                             type: 'bar',
-                            data: nums
+                            data: nums,
+                            itemStyle:{
+                                normal:{
+                                    color:'#4ad2ff'
+                                }
+                            }
                         }
                     ]
                 };
@@ -1178,13 +1241,20 @@ function initStatistics(type) {
                     }
                 },
                 calculable: true,
+                color:['white', '#4ad2ff','yellow','#E98F6F'],
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
                 series: [
                     {
-                        name: '事件来源',
+
+                        name: '事件类型',
                         type: 'pie',
                         radius: '55%',
                         center: ['50%', '60%'],
                         data: data
+
                     }
                 ]
             };
@@ -1204,12 +1274,31 @@ function initStatistics(type) {
             // 指定图表的配置项和数据
             var option = {
                 grid: {left: '1%', right: '0', bottom: '1%', y: 10, containLabel: true},
+                tooltip : {
+                    trigger: 'axis'
+                },
                 xAxis: {
+                    axisLine: {
+                        lineStyle: {
+                            color: 'white'
+                        }
+                    },
                     data: months
                 },
-                yAxis: {},
+                yAxis: {
+                    axisLine: {
+                        lineStyle: {
+                            color: 'white'
+                        }
+                    }
+                },
                 series: [{
-                    name: '销量',
+                    itemStyle:{
+                        normal:{
+                            color:'#4ad2ff'
+                        }
+                    },
+                    name: '数量',
                     type: 'bar',
                     data: nums
                 }]
@@ -1254,17 +1343,32 @@ function initStatistics(type) {
                 calculable: true,
                 xAxis: [
                     {
-                        type: 'value'
+                        type: 'value',
+                        axisLine: {
+                            lineStyle: {
+                                color: 'white'
+                            }
+                        }
                     }
                 ],
                 yAxis: [
                     {
                         type: 'category',
-                        data: level
+                        data: level,
+                        axisLine: {
+                            lineStyle: {
+                                color: 'white'
+                            }
+                        }
                     }
                 ],
                 series: [
                     {
+                        itemStyle:{
+                            normal:{
+                                color:'#4ad2ff'
+                            }
+                        },
                         name: '数量',
                         type: 'bar',
                         data: nums
@@ -1312,11 +1416,25 @@ function initStatistics(type) {
                         tooltip: {
                             trigger: 'item'
                         },
-                        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        // symbol: "none", // 去掉图表中各个图区域的边框线拐点
+                        itemStyle: {
+                            color:'#005AAF', // 图表中各个图区域的边框线拐点颜色
+                            normal: {
+                                lineStyle: {
+                                    color :"#4ad2ff",// 图表中各个图区域的边框线颜色
+                                    width : 2
+                                },
+                                areaStyle: {
+                                    color:"#4ad2ff",
+                                    type: 'default'
+                                }
+                            }
+                        },
                         data: [
                             {
                                 value: nums,
                                 name: '区域统计：'
+
                             }
                         ]
                     }
@@ -1329,6 +1447,26 @@ function initStatistics(type) {
     });
 }
 
+function changeTheme(type) {
 
+    if(type === 'black') {
+        $('#searchResult').css('background-color', '#313833');
+        $('#filling_header').css('background-color', '#313833');
+        $('#searchKeyword').css('background-color', '#313833');
+        $('#searchButton').css('background-color', '#313833');
+        $('#float-news').css('cssText', 'background-color: #313833 !important');
+    } else if (type === 'purple') {
+        $('#searchResult').css('background-color', 'purple');
+        $('#filling_header').css('background-color', 'purple');
+        $('#searchKeyword').css('background-color', 'purple');
+        $('#searchButton').css('background-color', 'purple');
+        $('#float-news').css('cssText', 'background-color: purple !important');
+    }
+}
+
+
+function modifySystemSet() {
+    changeTheme($("input[name='theme']:checked").val())
+}
 
 

@@ -19,6 +19,15 @@
     <select id="getContact" resultType="cn.ccf.pojo.Contact">
         select * from com_contact
     </select>
+   <select id="getPreplan" resultType="cn.ccf.pojo.Preplan">
+        select * from com_preplan
+    </select>
+   <select id="getProfessor" resultType="cn.ccf.pojo.Professor">
+        select * from com_professer_info
+    </select>
+   <select id="getCase" resultType="cn.ccf.pojo.Case">
+        select * from com_case_info
+    </select>
 
 
 </mapper>

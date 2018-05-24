@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import cn.ccf.forum.model.Board;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface BoardMapper {
 	
 	Board selectBoardById(Integer id);

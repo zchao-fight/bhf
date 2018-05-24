@@ -16,5 +16,9 @@ public interface TreeMapper {
      List<Equipment> getEquipment();
      //通讯录
      List<Contact> getContact();
+     //综合研判
+     List<Preplan> getPreplan();
+     List<Professor> getProfessor();
+     List<Case> getCase();
 
 }
