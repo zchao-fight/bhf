@@ -88,6 +88,7 @@ public class SituationController {
         request.setAttribute("addrs", addrs);
 
         request.getSession().setAttribute("user_id", id);
+        String name = userMapper.selectByPrimaryKey(id).getName();
         request.getSession().setAttribute("username", userMapper.selectByPrimaryKey(id).getName());
         return "map/index";
     }

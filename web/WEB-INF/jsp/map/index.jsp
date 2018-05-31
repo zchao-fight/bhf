@@ -52,7 +52,12 @@
     <script type="text/javascript" src="${ctx}/js/map/jquery.nicescroll.min.js"></script>
     <script type="text/javascript" src="${ctx}/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${ctx}/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="${ctx}/js/drag.js"></script>
+    <script type="text/javascript" src="${ctx}/js/ue/ueditor.config.js"></script>
+    <script type="text/javascript" src="${ctx}/js/ue/ueditor.all.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="${ctx}/js/ue/lang/zh-cn/zh-cn.js"></script>
     <style>
+
 
         ._mCS_1 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
             background: #09c;
@@ -64,6 +69,8 @@
 
 </head>
 <script>
+
+
     (function ($) {
         $(window).load(function () {
             $(".ztree").mCustomScrollbar({scrollInertia: 500, mouseWheelPixels: 100});
@@ -252,7 +259,8 @@
 
                             </script>
                         </ul>
-                        <ul id="comprehensiveAnalysis" class="ztree" style="float: left; width: 240px;margin-left:10px;overflow-y:auto;overflow-x:hidden;height: 335px">
+                        <ul id="comprehensiveAnalysis" class="ztree"
+                            style="float: left; width: 240px;margin-left:10px;overflow-y:auto;overflow-x:hidden;height: 335px">
 
                         </ul>
                     </div>
@@ -277,7 +285,8 @@
 <div id="globleSearch">
     <div style="width: 300px; position: relative; ">
         <input id="searchKeyword" name="keyword" placeholder="请输入搜索内容">
-        <button id="searchButton" onclick="showResult()" style="padding:0;"><img src="${ctx}/images/search.png"></button>
+        <button id="searchButton" onclick="showResult()" style="padding:0;"><img src="${ctx}/images/search.png">
+        </button>
     </div>
 </div>
 
@@ -615,7 +624,7 @@
 </style>
 
 <!-- 模态框（Modal） -->
-<div class="modal fade" id="mySaveLayerModal"  tabindex="-1" role="dialog"
+<div class="modal fade" id="mySaveLayerModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -656,14 +665,18 @@
                 <form id="systemSetBody">
                     <div>
                         主题设置
-                        <label style="cursor: pointer"><input style="margin-left: 50px;" type="radio" name="theme" value="purple">紫色</label>
-                        <label style="cursor: pointer"><input style="margin-left: 50px;" type="radio" name="theme" value="black" checked="checked">黑色</label>
+                        <label style="cursor: pointer"><input style="margin-left: 50px;" type="radio" name="theme"
+                                                              value="purple">紫色</label>
+                        <label style="cursor: pointer"><input style="margin-left: 50px;" type="radio" name="theme"
+                                                              value="black" checked="checked">黑色</label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" id="submitSystemSetButton" class="btn btn-primary" onclick="modifySystemSet()">提交</button>
+                <button type="button" id="submitSystemSetButton" class="btn btn-primary" onclick="modifySystemSet()">
+                    提交
+                </button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /modal-dialog -->
@@ -803,10 +816,10 @@
                     <li><a href="javascript:StartCapture()"><img src="${ctx}/images/map/military/screenshot.png"
                                                                  alt="截图" title="截图"></a></li>
                     <!--<li class="btn-primary"><a href="javascript:void(0)">图层控制</a></li>-->
-                    <li ><a href="javascript:activate(P.PlotTypes.MARKER)()"><img
+                    <li><a href="javascript:activate(P.PlotTypes.MARKER)()"><img
                             src="${ctx}/images/map/military/point_menu.png" title="点标" alt="点标"></a>
                     </li>
-                        <li style="color:white;"><a href="javascript:drawPolygon()" onclick="">报警区域</a></li>
+                    <li style="color:white;"><a href="javascript:drawPolygon()" onclick="">报警区域</a></li>
                     <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle"
                                             data-toggle="dropdown"><img
                             src="${ctx}/images/map/military/line_menu.png" title="线标" alt="线标"></a>
@@ -998,12 +1011,12 @@
                               <img src="${ctx}/images/map/menu/download.png" alt="导出" title="导出">
                           </a>
                       </li>--%>
-                        <li>
-                            <a id="systemSet" data-toggle="modal"
-                               data-target="#systemSetModal">
-                                <img src="${ctx}/images/map/menu/set.png" alt="设置" title="设置">
-                            </a>
-                        </li>
+                    <li>
+                        <a id="collPlotting" onclick="joinCollPlotting()">
+                            <img src="${ctx}/images/map/chat/cooperChat.png" style="height:26px;"
+                                  alt="协同标绘" title="协同标绘">
+                        </a>
+                    </li>
                     <li>
                         <a id="saveLayer" data-toggle="modal"
                            data-target="#mySaveLayerModal">
@@ -1011,6 +1024,12 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a id="systemSet" data-toggle="modal"
+                           data-target="#systemSetModal">
+                            <img src="${ctx}/images/map/menu/set.png" alt="设置" title="设置">
+                        </a>
+                    </li>
 
                     <script>
                         $("#military_list").height((document.body.clientHeight - 60) + "px");
@@ -1035,10 +1054,25 @@
 
 
 <script>
-    var username = '${sessionScope.username}';
+
+
+    /*
+
+    暂时注释掉， 我还会回来的
+    $(function () {
+         $(":checkbox[name='onlineList']").click(function() {
+             alert('test');
+             var $subs = $("input[name='onlineList']");
+             alert($subs.length);
+             $("#selectAll").prop("checked",$subs.length == $subs.filter(":checked").length ? true : false);
+         });
+     });*/
     var ws;//一个ws对象就是一个通信管道 不要忘记加工程名
-    var target = 'ws://127.0.0.1:8080/bhf/chatSocket?username=' + username;
-    window.onload = function () {
+    function joinCollPlotting() {
+        var username = '${sessionScope.username}';
+
+        var target = 'ws://127.0.0.1:8080/bhf/chatSocket?username=' + username;
+        //初始加载 window.onload
         ws = new WebSocket(target);
         ws.onmessage = function (event) {
 
@@ -1046,25 +1080,36 @@
 //                var msg = JSON.parse(event.data);
 //                console.log(msg);
 
-            var msg =  eval('('+event.data+')');
-            console.log("内容是："+msg);
+            var msg = eval('(' + event.data + ')');
+            console.log("内容是：" + msg);
             if (undefined !== msg.welcome) {
-                $('#content').append('<div style="color:red;margin-bottom:5px;margin-left:5px;">'+msg.welcome+'</div>');
+                $('#content').append('<div style="color:red;margin-bottom:5px;margin-left:5px;">' + msg.welcome + '</div>');
             }
 
             if (undefined !== msg.users) {
                 $('#userList').html('');
-                $('#userList').append("<div style='color: red;font-size: 20px;margin-bottom:10px;font-weight: bold'>成员列表</div>");
+                /*  $('#userList').append("<div style='font-size: 16px;margin-bottom:10px;font-weight: bold'>在线列表</div>");
+                  <!--<input type=\"checkbox\" id=\"investselect\">反选/取消反选-->
+
+                  $('#userList').append("<div style='margin-left: 10px;'><input type='checkbox' id='selectAll' onclick='selectAllOrCancel(this)'>全选/取消全选</div>");*/
+
                 $.each(msg.users, function (i, entry) {
-                    $('#userList').append("<input style='margin-left: 10px;' type=checkbox value='"+entry+"'>"+entry+"<br>")
+                    $('#userList').append("<input name='onlineList' style='margin-left: 10px;' type=checkbox value='" + entry + "'>" + entry + "<br>")
                 })
             }
 
             if (undefined !== msg.content && "" !== msg.content) {
                 if (msg.plotting === 1) {
 //                    var wktText = msg.content.split('<br>')[1];
-                    var wktText = msg.content;
+
+                    var militaryText = msg.content;
+                    var militaryTextArray = militaryText.split('&');
+
+                    var wktText = militaryTextArray[0];
                     var format = new ol.format.WKT();
+
+                    drawOverlay.getSource().clear(true);
+                    layer.getSource().clear(true);
 
                     var wktTextArray = wktText.split(';');
                     for (var i = 0; i < wktTextArray.length - 1; i++) {
@@ -1072,126 +1117,261 @@
                         militaryFeature.set('type', 'military_vector');
                         drawOverlay.getSource().addFeature(militaryFeature);
                     }
+
+                    var picSrcArray = militaryTextArray[1].split(';');
+                    var coordinateArray = militaryTextArray[2].split(';');
+                    var picTextArray = militaryTextArray[3].split(';');
+                    var offsetYArray = militaryTextArray[4].split(';');
+
+                    if (militaryTextArray[1] !== '') {
+                        for (i = 0; i < picSrcArray.length-1; i++) {
+                            //添加feature
+                            var picFeature = new ol.Feature({
+                                geometry: new ol.geom.Point(eval(coordinateArray[i])),
+                                type: 'military_pic',
+                                coordinate: eval(coordinateArray[i])
+                            });
+
+
+                            picFeature.setStyle(new ol.style.Style({
+                                image: new ol.style.Icon({
+                                    src: picSrcArray[i],
+                                    scale: map.getView().getZoom() / 14
+                                }),
+                                text: new ol.style.Text({
+                                    textAlign: 'center', //位置
+                                    offsetY: offsetYArray[i],
+                                    textBaseline: 'middle', //基准线
+                                    font: 'normal 14px 微软雅黑',  //文字样式
+                                    text: picTextArray[i],  //文本内容
+                                    fill: new ol.style.Fill({color: '#aa3300'}), //文本填充样式（即文字颜色）
+                                    stroke: new ol.style.Stroke({color: '#ffcc33', width: 2})
+                                })
+                            }));
+                            layer.getSource().addFeature(picFeature);
+                        }
+                    }
+
+
                 } else {
                     $('#content').append(msg.content);
                     console.log(msg.content);
                 }
-
-
             }
+
+            $('#content').scrollTop($('#content')[0].scrollHeight);
         };
 
-        ws.onclose=function(e){
+        ws.onclose = function (e) {
             console.log(e);
 //                alert('退出群聊');
 //                ws.close(); //关闭TCP连接
         };
-    };
 
-    function  close() {
+        $('#draggableChat').show(500);
+        $('#collPlotting').removeAttr('onclick');//去掉a标签中的onclick事件
 
+    }
+
+    function closeSocket() {
+        var flag = confirm("确定退出协同标绘？");
+        if (flag) {
+            $('#draggableChat').hide();
+            ws.close();
+            $("#collPlotting").attr("onclick","joinCollPlotting()");
+        }
+    }
+
+    function close() {
         ws.close();
         return "确认离开吗？";
+    }
 
+    function showPopover(target, msg) {
+        target.attr("data-original-title", msg);
+//        $('[data-toggle="tooltip"]').tooltip();
+        target.tooltip('show');
+//        target.focus();
+
+        //1秒后消失提示框
+        setTimeout(
+            function () {
+                target.attr("data-original-title", "");
+                target.tooltip('hide');
+            }, 1000
+        );
     }
 
     function subSend() {
-        var msg = $('#msg').val();
+//        var msg = $('#msg').val();
+        var msg = ue.getContent();
         var obj = null;
         if ($('#userList :checked').size() === 0) {
-//                广播
-            obj = {
-                msg : msg,
-                type : 1,//广播 2单聊
-                isPlotting : 0//标绘
-            }
+            showPopover($("#sendPlottingMessage"), "请选择成员");
+            return;
+            /*                广播
+                        obj = {
+                            msg : msg,
+                            type : 1,//广播 2单聊
+                            isPlotting : 0//标绘
+                        }*/
         } else {
+            if (msg === '') {
+                showPopover($("#sendPlottingMessage"), "发送内容不能为空");
+                return;
+            }
 //                单聊
-            var to = $("#userList :checked").val();
-//            alert(to);
-            console.log("发送给用户：" + to);
+            var to = "";
+            $("#userList :checked").each(function () {
+                to += $(this).val() + ";";
+            });
             obj = {
-                to : to,
-                msg : msg,
-                type : 2,//广播 2单聊
-                isPlotting : 0//标绘
+                to: to,
+                msg: msg,
+                type: 2,//广播 2单聊
+                isPlotting: 0//标绘
             }
         }
 
+
         ws.send(JSON.stringify(obj));
-        $('#msg').val('');
-        $('#content').scrollTop($('#content')[0].scrollHeight+20);
+        ue.setContent("");
+    }
+
+    function selectAllOrCancel(obj) {
+        $(":checkbox[name='onlineList']").prop("checked", obj.checked); // this指代的你当前选择的这个元素的JS对象
     }
 
     function collaborate() {
+
+        if ($('#userList :checked').size() === 0) {
+            showPopover($("#sendPlottingMessage"), "请选择成员");
+            return;
+        }
+
+        var features = layer.getSource().getFeatures();
+        var picSrc = '';
+        var coordinate = '';
+        var picText = '';
+        var offsetY = '';
+        for (var i in features) {
+            picSrc += features[i].getStyle().getImage().getSrc() + ';';
+            coordinate += '[' + features[i].get('coordinate') + '];';
+            picText += features[i].getStyle().getText().getText() + ';';
+            offsetY += features[i].getStyle().getText().getOffsetY() + ';';
+        }
+
+
         var vectorFeatures = drawOverlay.getSource().getFeatures();
         var wktText = '';
-        for (var i in vectorFeatures) {
-            var format = new ol.format.WKT(),
-                wkt = format.writeGeometry(vectorFeatures[i].getGeometry());
-            wktText += wkt + ';';
 
+        for (var j in vectorFeatures) {
+            var format = new ol.format.WKT(),
+                wkt = format.writeGeometry(vectorFeatures[j].getGeometry());
+            wktText += wkt + ';';
             // console.log("测试经纬度："+ vectorFeatures[i].getGeometry().getCoordinates());
         }
-        console.log(wktText);
 
 
-        var msg = wktText;
+        if (picSrc === '' && wktText === '') {
+            showPopover($("#sendPlottingMessage"), "请先进行标绘");
+            return;
+        }
+
+        var msg = wktText + '&' + picSrc + '&' + coordinate + '&' + picText + '&' + offsetY;
         var obj = null;
         if ($('#userList :checked').size() === 0) {
 //                广播
             obj = {
-                msg : msg,
-                type : 1, //广播 2单聊
-                isPlotting : 1//标绘
+                msg: msg,
+                type: 1, //广播 2单聊
+                isPlotting: 1//标绘
             }
         } else {
 //                单聊
-            var to = $("#userList :checked").val();
-            alert(to);
+            var to = "";
+            $("#userList :checked").each(function () {
+                to += $(this).val() + ";";
+            });
+
             obj = {
-                to : to,
-                msg : msg,
-                type : 2 ,//广播 2单聊
-                isPlotting : 1//标绘
+                to: to,
+                msg: msg,
+                type: 2,//广播 2单聊
+                isPlotting: 1//标绘
             }
         }
         ws.send(JSON.stringify(obj));
-
-
-
+        showPopover($("#sendPlottingMessage"), "协同成功");
     }
 
 </script>
 
-<div style="position: absolute;top:200px;right:50px;background-color: whitesmoke" >
-    <div id="container" style="float: left;width:400px;height: 400px;border: dotted 1px black;">
-        <div class="panel-heading">标绘群组</div>
-        <div id="content" style="float: left;width:400px;height: 300px;border: dotted 1px black;overflow-y: scroll">
+<script>
+    $(function () {
+        $('#draggableChat').myDrag({
+            handler: '.handler'
+        })
+    })
+</script>
+
+
+<div id="draggableChat"
+     style="position: absolute;width:500px;top:200px;right:50px;background-color: whitesmoke;display:none">
+
+    <div id="chatTitle" class="panel-heading handler"
+         style="width: 470px;font-weight: bold;font-size:16px;border-bottom: 1px solid #C4D4BC">
+        <img src="${ctx}/images/map/chat/cooperChat.png" style="width: 26px;height: 26px;"/>&nbsp;协同标绘
+        <a style="color:red;float:right;margin-right: 5px;" onclick="closeSocket()">X</a>
+    </div>
+    <div id="container" style="float: left;width:350px;height: 462px;">
+
+        <div id="content" style="float: left;width:350px;height: 300px;overflow-y: scroll">
 
         </div>
-        <%--<div class="panel panel-primary">--%>
-
-            <%--<div id="msg" class="panel-body">--%>
-
-            <%--</div>--%>
-            <%--<div class="panel-footer">--%>
-                <%--在线人数<span id="onlineCount">1</span>人--%>
-            <%--</div>--%>
-        <%--</div>--%>
-
-        <div style="float: left;width:400px;height: 100px;border: dotted 1px black;">
-            <input id="msg" type="text">
-            <input type="button" value="发送" onclick="subSend()">
-            <input type="button" value="协同" onclick="collaborate()">
+        <div style="float: left;width:350px;">
+            <div>
+                <script id="editor">
+                </script>
+            </div>
         </div>
+        <%--<input id="msg" type="text">--%>
+        <div>
+            <input style='margin-left:216px;margin-right:20px;' id="sendMessage" type="button" value=" 发 送 "
+                   data-toggle="tooltip" data-placement="top" onclick="subSend()">
+            <input data-toggle="tooltip" id="sendPlottingMessage" type="button" value=" 协 同 " onclick="collaborate()">
+        </div>
+
 
     </div>
-    <div id="userList" style="float: left;width:200px;height: 400px;border: dotted 1px black;"></div>
+    <div style="float: left;width:140px;height: 400px;">
+        <div style='font-size: 16px;margin-bottom:10px;'>在线列表</div>
+        <div style='margin-left: 10px;'>
+            <input type='checkbox' id='selectAll' onclick='selectAllOrCancel(this)'>全选/取消全选
+        </div>
+        <div id="userList" style="overflow-y: auto"></div>
+    </div>
 </div>
 
-
-
+<script>
+    var ue = UE.getEditor('editor', {
+        toolbars: [
+            ['fullscreen',
+                'fontsize', 'fontfamily', 'simpleupload', 'insertimage', 'emotion']
+        ],
+        //focus时自动清空初始化时的内容
+        autoClearinitialContent: true,
+        //关闭字数统计
+        wordCount: false,
+        //关闭elementPath
+        elementPathEnabled: false,
+        //默认的编辑区域高度
+        initialFrameHeight: 100,
+        autoHeightEnabled: false,
+        enableAutoSave: false, //禁止自动保存
+        autoSyncData: false//自动同步编辑器要提交的数据
+    });
+</script>
 
 
 <%--右侧统计--%>
@@ -1213,42 +1393,48 @@
     });
 
 
-
 </script>
 <div id="right-panel" class="right-panel" style="position: fixed;top:40px;bottom:0;width: 250px;right:-260px;">
     <%--<div style="height:20px; ">--%>
-        <%--<a class="right-close-btn" href="javascript:void(0)" style="margin-top: 2px;">--%>
-            <%--<img src="${ctx}/images/map/right_cartogram/shrink_right.png">--%>
-        <%--</a>--%>
+    <%--<a class="right-close-btn" href="javascript:void(0)" style="margin-top: 2px;">--%>
+    <%--<img src="${ctx}/images/map/right_cartogram/shrink_right.png">--%>
+    <%--</a>--%>
     <%--</div>--%>
 
     <div class="rect" style="height: 25%;">
 
-        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span style="margin-left: 60px;">事件类型</span><a class="filter"><img  title="筛选" alt="筛选"
-                                                                                            src="${ctx}/images/map/right_cartogram/filter.png"
-                                                                                            onclick="bindSubmitEvent('eventType')"></a>
+        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span
+                style="margin-left: 60px;">事件类型</span><a class="filter"><img title="筛选" alt="筛选"
+                                                                             src="${ctx}/images/map/right_cartogram/filter.png"
+                                                                             onclick="bindSubmitEvent('eventType')"></a>
         </div>
         <div id="eventType" style="height: 85%"></div>
     </div>
 
     <div class="rect" style="height: 25%;margin-top: 2px;">
-        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span style="margin-left: 60px;">事件数量</span><a class="filter"><img title="筛选" alt="筛选"
-                                                         src="${ctx}/images/map/right_cartogram/filter.png"
-                                                         onclick="bindSubmitEvent('eventNum')"></a></div>
+        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span
+                style="margin-left: 60px;">事件数量</span><a class="filter"><img title="筛选" alt="筛选"
+                                                                             src="${ctx}/images/map/right_cartogram/filter.png"
+                                                                             onclick="bindSubmitEvent('eventNum')"></a>
+        </div>
         <div id="eventNum" style="height: 85%"></div>
     </div>
 
     <div class="rect" style="height: 25%;margin-top: 2px;">
-        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span style="margin-left: 60px;">事件性质</span><a class="filter"><img title="筛选" alt="筛选"
-                                                         src="${ctx}/images/map/right_cartogram/filter.png"
-                                                         onclick="bindSubmitEvent('eventProp')"></a></div>
+        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span
+                style="margin-left: 60px;">事件性质</span><a class="filter"><img title="筛选" alt="筛选"
+                                                                             src="${ctx}/images/map/right_cartogram/filter.png"
+                                                                             onclick="bindSubmitEvent('eventProp')"></a>
+        </div>
         <div id="eventProp" style="height: 85%"></div>
     </div>
 
     <div class="rect" style="height: 25%;margin-top: 2px;">
-        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span style="margin-left: 60px;">事件地域</span><a class="filter"><img title="筛选" alt="筛选"
-                                                         src="${ctx}/images/map/right_cartogram/filter.png"
-                                                         onclick="bindSubmitEvent('eventRegion')"></a></div>
+        <div class="rectHeader"><a class="shrinkToRight"><img src="${ctx}/images/map/right_cartogram/shrink_right.png"></a><span
+                style="margin-left: 60px;">事件地域</span><a class="filter"><img title="筛选" alt="筛选"
+                                                                             src="${ctx}/images/map/right_cartogram/filter.png"
+                                                                             onclick="bindSubmitEvent('eventRegion')"></a>
+        </div>
         <div id="eventRegion" style="height: 85%"></div>
     </div>
 </div>
@@ -1321,13 +1507,13 @@
             maxZoom: 18
         }),
         target: 'map',
-        controls : ol.control.defaults().extend([
-                new ol.control.OverviewMap({
-                    layers: [offlineMapLayer, tileLayer],
-                    view: new ol.View({
-                        projection: 'EPSG:4326'
-                    })
-                }),
+        controls: ol.control.defaults().extend([
+            new ol.control.OverviewMap({
+                layers: [offlineMapLayer, tileLayer],
+                view: new ol.View({
+                    projection: 'EPSG:4326'
+                })
+            }),
             new ol.control.ScaleLine({})
 //            new ol.control.ZoomSlider({})
         ])

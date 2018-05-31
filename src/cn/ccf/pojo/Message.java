@@ -25,9 +25,11 @@ public class Message {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (isPlotting == 1) {
             this.content = content;
+            this.isPlotting = 1;
         } else if (isPlotting == 0){
+            this.isPlotting = 0;
             this.content = "<div style='color:#808080;margin-left:5px;'>" + name + " " + simpleDateFormat.format(new Date()) + "</div>"
-                    + "<div style='color:#000000;font-size:16px;margin-left:5px;margin-bottom:10px;background-color:#CED6CD;border-radius:5px;padding:10px;display:inline-block;'>" + content + "</div>";
+                    + "<div style='color:#000000;font-size:16px;margin-left:5px;margin-bottom:10px;background-color:#CED6CD;border-radius:5px;padding:10px 5px 0px 5px;display:inline-block;'>" + content + "</div>";
         }
 
     }

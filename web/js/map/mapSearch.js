@@ -940,7 +940,8 @@ function displayLayer(id) {
         var coordinateArray = data.coordinate.split(';');
         var offsetYArray = data.offsetY.split(';');
 
-        for (i = 0; i < picSrcArray.length; i++) {
+
+        for (i = 0; i < picSrcArray.length-1; i++) {
             //添加feature
             var picFeature = new ol.Feature({
                 geometry: new ol.geom.Point(eval(coordinateArray[i])),

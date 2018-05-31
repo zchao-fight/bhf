@@ -246,5 +246,11 @@ a {
     display: none;
 }
 
+#draggableChat input[type="button"] {
+    padding-right:5px;
+    padding-left:5px;
+}
+
+
 
 

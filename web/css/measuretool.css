@@ -1,6 +1,6 @@
 .tooltip {
   position: relative;
-  background: rgba(0, 0, 0, 0.5);
+  /*background: rgba(0, 0, 0, 0.5);*/
   border-radius: 4px;
   color: white;
   padding: 4px 24px 4px 8px;

@@ -162,7 +162,6 @@ function drawEndCallBackAlarm(evt) {
 
 
     currentFeature = evt.feature; //当前绘制的要素
-    console.log(evt);
     geo = currentFeature.getGeometry(); //获取要素的几何信息
     var coordinates = geo.getCoordinates(); //获取几何坐标
     console.log(coordinates);
@@ -672,9 +671,10 @@ function addIcon(coord, type) {
         return;
     } else {
         var picSrc = null;
-        if(geo.intersectsCoordinate(coord)) {
+
+       /* if(geo.intersectsCoordinate(coord)) {
             alert("报警区域内");
-        }
+        }*/
         objType = null;
         switch (type) {
             case 1:
@@ -886,9 +886,9 @@ function saveLayer() {
 
     var vectorFeatures = drawOverlay.getSource().getFeatures();
     var wktText = '';
-    for (var i in vectorFeatures) {
+    for (var j in vectorFeatures) {
         var format = new ol.format.WKT(),
-            wkt = format.writeGeometry(vectorFeatures[i].getGeometry());
+            wkt = format.writeGeometry(vectorFeatures[j].getGeometry());
         wktText += wkt + ';';
 
         // console.log("测试经纬度："+ vectorFeatures[i].getGeometry().getCoordinates());

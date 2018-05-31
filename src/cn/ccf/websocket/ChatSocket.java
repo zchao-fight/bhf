@@ -7,6 +7,8 @@ import com.alibaba.fastjson.JSON;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,16 +34,16 @@ public class ChatSocket {
      * @param session 可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
      */
     @OnOpen
-    public void open(Session session) {
+    public void open(Session session) throws UnsupportedEncodingException {
         String queryString = session.getQueryString();
-        username = queryString.split("=")[1];
+        username = URLDecoder.decode(queryString, "utf-8").split("=")[1];
         System.out.println(queryString);
 
         usernames.add((this.username));
         sessions.add(session);
         map.put(username, session);
 
-        String msg = "欢迎"+this.username+"进入聊天室！！";
+        String msg = "欢迎"+this.username+"进入协同标绘！！";
 
         Message message = new Message();
         message.setWelcome(msg);
@@ -57,7 +59,7 @@ public class ChatSocket {
     public void close(Session session) {
         sessions.remove(session);
         usernames.remove(this.username);
-        String msg = "欢送"+this.username+"离开聊天室！！";
+        String msg = "欢送"+this.username+"离开协同标绘！！";
 
         Message message = new Message();
         message.setWelcome(msg);
@@ -72,7 +74,7 @@ public class ChatSocket {
      * @param session 可选的参数
      */
     @OnMessage
-    public void message(Session session, String msg) {
+    public void message(Session session, String msg) throws Exception {
 
         System.out.println(msg);
         ContentVo contentVo = JSON.parseObject(msg, ContentVo.class);
@@ -81,7 +83,6 @@ public class ChatSocket {
             //广播
             Message message = new Message();
             if (contentVo.getIsPlotting() == 1) {
-                message.setPlotting(1);
                 message.setContent(this.username, contentVo.getMsg(), 1);
             } else {
                 message.setContent(this.username, contentVo.getMsg(), 0);
@@ -90,18 +91,35 @@ public class ChatSocket {
             this.broacast(sessions, message.toJson());
         } else {
             //单聊
-            String to = contentVo.getTo();
-            Session to_session = map.get(to);
-
+            String selectedUser = contentVo.getTo();
+            String[] tos = selectedUser.split(";");
             Message message = new Message();
-            message.setContent(this.username, contentVo.getMsg(), 1);
 
-            try {
-                to_session.getBasicRemote().sendText(message.toJson());
+
+//            Session to_session = map.get(to);
+
+
+
+
+            if (contentVo.getIsPlotting() == 1) {
+                message.setContent(this.username, contentVo.getMsg(), 1);
+                for (String to : tos) {
+                    if (username.equals(to)) {
+                        continue;
+                    }
+                    map.get(to).getBasicRemote().sendText(message.toJson());
+                }
+            } else {
+                message.setContent(this.username, contentVo.getMsg(), 0);
+                System.out.println(username);
+                for (String to : tos) {
+                    if (username.equals(to)) {
+                        continue;
+                    }
+                    map.get(to).getBasicRemote().sendText(message.toJson());
+                }
                 //发给你自己的消息
                 session.getBasicRemote().sendText(message.toJson());
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
