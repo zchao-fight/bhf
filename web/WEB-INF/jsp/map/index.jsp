@@ -54,7 +54,7 @@
     <script type="text/javascript" src="${ctx}/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="${ctx}/js/drag.js"></script>
     <script type="text/javascript" src="${ctx}/js/ue/ueditor.config.js"></script>
-    <script type="text/javascript" src="${ctx}/js/ue/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="${ctx}/js/ue/ueditor.all.js"></script>
     <script type="text/javascript" charset="utf-8" src="${ctx}/js/ue/lang/zh-cn/zh-cn.js"></script>
     <style>
 
@@ -538,7 +538,7 @@
         </div>
     </div>
 </div>
-<div id="resultDetails">
+<div id="resultDetails" style="overflow: hidden">
     <ul>
 
     </ul>
@@ -635,12 +635,12 @@
                 <h4 class="modal-title" id="myModalLabel">保存图层-图层信息</h4>
             </div>
             <div class="modal-body" style="margin-left:30px;">
-                &nbsp; &#12288;&#12288;标 题:&nbsp;&nbsp;<input type="text" id="layerName"
+                &nbsp; &#12288;&#12288;标 题 :&nbsp;&nbsp;<input type="text" id="layerName"
                                                               style="width: 350px"
                                                               placeholder="请输入标题">
                 <span style="color: red">*</span>
-                <br>
-                备 注 信 息:&nbsp;&nbsp;<textarea id="layerRemark" placeholder="请输入备注信息"
+                <br/>
+                <span style="vertical-align: top">备 注 信 息 :&nbsp;&nbsp;</span><textarea id="layerRemark" placeholder="请输入备注信息"
                                               style="height:200px;width:350px;"></textarea>
                 <%--<div id="saveLayerTip" style="color: red;font-size:12px;">提示信息：若当前图层无元素，不建议保存，但您仍可以保存</div>--%>
             </div>
@@ -819,7 +819,7 @@
                     <li><a href="javascript:activate(P.PlotTypes.MARKER)()"><img
                             src="${ctx}/images/map/military/point_menu.png" title="点标" alt="点标"></a>
                     </li>
-                    <li style="color:white;"><a href="javascript:drawPolygon()" onclick="">报警区域</a></li>
+                    <%--<li style="color:white;"><a href="javascript:drawPolygon()" onclick="">报警区域</a></li>--%>
                     <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle"
                                             data-toggle="dropdown"><img
                             src="${ctx}/images/map/military/line_menu.png" title="线标" alt="线标"></a>

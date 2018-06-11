@@ -159,15 +159,20 @@ function checkURLUndefined(str) {
 
 function checkPreplanDetails(id) {
     $.post(BASE_URL + '/map/checkPreplanDetails.action', {id: id}, function (data) {
+
+        console.log(data);
+
+
         var resultStr = '<div style="margin: 10px 0px;color: #4AD5FC;"><h4>预案信息</h4><a style="float: right;margin-right: 10px;" class="ol-popup-closer" onclick="hideDetailsPanel()"></a></div>';
         resultStr += ' <li>预案名称：' + data.name + '</li>' +
             '<li>所属单位：' + data.department + '</li>' +
             '<li>事件类型：' + data.type + '</li>' +
-            '<li>事件性质：' + data.property + '</li>' + '' + checkURLUndefined(data.filepath) + '<li>文件查看：<a href="/">' + data.filename + '' + checkUndefined(data.filename) + '</a></li>' +
-            '<li>处置流程：<textarea style="width:260px;height:140px;" readonly>' + data.dealflow + '</textarea></li>' +
-            '<li>事件描述：<textarea style="width:260px;height:140px;" readonly>' + data.decribe + '</textarea></li>' +
-            '<li>组织指挥：<textarea style="width:260px;height:140px;" readonly>' + data.command + '</textarea></li>' +
-            '<li>参与力量：<textarea style="width:260px;height:140px;" readonly>' + data.participant + '</textarea></li>';
+            '<li>事件性质：' + data.property + '</li>' +
+             '<li>文件查看：<a href='+ checkURLUndefined(data.filepath) +'/'+data.filename +'>' + checkUndefined(data.filename) + '</a></li>' +
+            '<li><span style="vertical-align: top">处置流程：</span><textarea style="width:260px;height:135px;" readonly>' + (data.dealflow !== null && data.dealflow !== ''  ? data.dealflow : '无') + '</textarea></li>' +
+            '<li><span style="vertical-align: top">事件描述：</span><textarea style="width:260px;height:135px;" readonly>' + (data.decribe !== null && data.decribe !== ''  ? data.decribe : '无') + '</textarea></li>' +
+            '<li><span style="vertical-align: top">组织指挥：</span><textarea style="width:260px;height:135px;" readonly>' + (data.command !== null && data.command !== ''  ? data.command : '无') + '</textarea></li>' +
+            '<li><span style="vertical-align: top">参与力量：</span><textarea style="width:260px;height:135px;" readonly>' + (data.participant !== null && data.participant !== '' ? data.participant : '无') + '</textarea></li>';
         $('#resultDetails').find('ul').html(resultStr);
     });
     $("#resultDetails").show();
@@ -183,10 +188,10 @@ function checkCaseDetails(id) {
             '<li>事件类型：' + data.type + '</li>' +
             '<li>事件规模：' + data.eventscale + '</li>' +
             '<li>事件性质：' + data.eventlevel + '</li>' +
-            '' + checkURLUndefined(data.filepath) + '<li>相关文件：<a href="/">' + data.filename + '' + checkUndefined(data.filename) + '</a></li>' +
-            '<li>事件描述：<textarea style="width:260px;height:160px;" readonly>' + data.eventdescribe + '</textarea></li>' +
-            '<li>解决方案：<textarea style="width:260px;height:160px;" readonly>' + data.eventsolution + '</textarea></li>' +
-            '<li>处置结果：<textarea style="width:260px;height:160px;" readonly>' + data.eventresult + '</textarea></li>';
+            '<li>相关文件：<a href='+ checkURLUndefined(data.filepath) +'/'+data.filename +'>' + checkUndefined(data.filename) + '</a></li>' +
+            '<li><span style="vertical-align: top">事件描述：</span><textarea style="width:260px;height:160px;" readonly>' + (data.eventdescribe !== null && data.eventdescribe !== '' ? data.eventdescribe : '无') + '</textarea></li>' +
+            '<li><span style="vertical-align: top">解决方案：</span><textarea style="width:260px;height:160px;" readonly>' + (data.eventsolution !== null && data.eventsolution !== '' ? data.eventsolution : '无') + '</textarea></li>' +
+            '<li><span style="vertical-align: top">处置结果：</span><textarea style="width:260px;height:160px;" readonly>' + (data.eventresult !== null && data.eventresult !== '' ? data.eventresult : '无')  + '</textarea></li>';
         $('#resultDetails').find('ul').html(resultStr);
     })
     $("#resultDetails").show();
@@ -216,26 +221,26 @@ function checkLawDetails(id) {
             '<li>发布文号：' + data.pulishnumber + '</li>' +
             '<li>&#12288;关键字：' + data.keywords + '</li>' +
             '<li>生效时间：' + data.abledtime + '</li>' +
-            '' + checkURLUndefined(data.filepath) + '<li>附件名称：<a href="/">' + data.filename + '' + checkUndefined(data.filename) + '</a></li>' +
-            '<li>&#12288;&#12288;摘要：<textarea style="height: 600px;width:260px;" readonly>' + data.abstract + '</textarea></li>';
+            '<li>附件名称：<a href=' + checkURLUndefined(data.filepath) +'/'+ data.filename +'>' + '' + checkUndefined(data.filename) + '</a></li>' +
+            '<li><span style="vertical-align: top">&#12288;&#12288;摘要：</span><textarea style="height: 590px;width:260px;" readonly>' + data.abstract + '</textarea></li>';
         $('#resultDetails').find('ul').html(resultStr);
-    })
+    });
     $("#resultDetails").show();
 }
 
 function checkEventDetails(id) {
     $.post(BASE_URL + '/map/checkEventDetails.action', {id: id}, function (data) {
         var resultStr = '<div style="margin: 10px 0px;color: #4AD5FC;"><h4>事件信息</h4><a style="float: right;margin-right: 10px;" class="ol-popup-closer" onclick="hideDetailsPanel()"></a></div>';
-        resultStr += '<li>&#12288;事件名称：' + data.name + '</li>' +
-            '<li>&#12288;&#12288;&#12288;地点：' + data.address + '</li>' +
-            '<li>&#12288;事件时间：' + data.time + '</li>' +
-            '<li>&#12288;&#12288;上报人：' + data.reportpeople + '</li>' +
-            '<li>上报人电话：' + data.reportpeople + '</li>' +
-            '<li>&#12288;&#12288;责任人：' + data.responsepeopleid + '</li>' +
-            '<li>&#12288;&#12288;处理组：' + data.commandgroupid + '</li>' +
-            '<li>&#12288;&#12288;&#12288;状态：' + data.status + '</li>' +
-            '<li>&#12288;&#12288;组成员：<textarea style="height: 160px;width:260px;" readonly>' + data.commandgroupid + '</textarea></li>' +
-            '<li>&#12288;事件描述：<textarea style="height: 350px;width:260px;" readonly>' + data.remark + '</textarea></li>';
+        resultStr += '<li>事件名称：' + data.name + '</li>' +
+            '<li>&#12288;&#12288;地点：' + data.address + '</li>' +
+            '<li>事件时间：' + data.time + '</li>' +
+            '<li>&#12288;上报人：' + data.reportpeople + '</li>' +
+            '<li style="padding-left: 0">上报人电话：' + data.reportpeople + '</li>' +
+            '<li>&#12288;责任人：' + data.responsepeopleid + '</li>' +
+            '<li>&#12288;处理组：' + data.commandgroupid + '</li>' +
+            '<li>&#12288;&#12288;状态：' + data.status + '</li>' +
+            '<li><span style="vertical-align: top">&#12288;组成员：</span><textarea style="height: 160px;width:260px;" readonly>' + data.commandgroupid + '</textarea></li>' +
+            '<li><span style="vertical-align: top">事件描述：</span><textarea style="height: 350px;width:260px;" readonly>' + data.remark + '</textarea></li>';
         $('#resultDetails').find('ul').html(resultStr);
     });
     $("#resultDetails").show();

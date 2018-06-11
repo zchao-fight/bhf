@@ -36,14 +36,16 @@
     top: 42px;
     bottom: 0;
     left: 314px;
-    width: 400px;
-    background-color: #232027;
+    width: 360px;
     /*opacity:0.8;*/
     border-radius: 5px;
-    border-left: 1px solid black;
+    /*border-left: 1px solid black;*/
     display: none;
     height: auto;
     overflow: auto;
+    border: 1px solid  #2CEBFD;
+    background-color: #4A5254;
+    color: #FEFBEC;
 }
 
 /**
@@ -135,11 +137,6 @@ li {
 
 .panel-body ul {
     margin: 0;
-    color: #FEFBEC;
-}
-
-#resultDetails {
-    background-color: #4A5254;
     color: #FEFBEC;
 }
 

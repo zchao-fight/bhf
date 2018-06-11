@@ -1,7 +1,7 @@
 package cn.ccf.constants;
 
 public enum DetailType {
-	
+
 	HOME(0,"主页"),
 	NOTICE(1,"通知公告"),
 	NEWS(2,"边防要闻"),
@@ -10,8 +10,7 @@ public enum DetailType {
 	FORUM(5,"论坛互动"),
 	STYLE(6,"基层风采"),
 	FILM(7,"戍边风采");
-	
-	
+
 	private int type;
 	private String name;
 	

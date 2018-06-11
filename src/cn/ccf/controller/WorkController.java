@@ -40,9 +40,8 @@ public class WorkController {
 	 */
 	@RequestMapping("work/detail")
 	public String detail(HttpServletRequest req, int id) {
-		
-		
-		
+
+
 		req.setAttribute("type", DetailType.WORK.getType());
 		req.setAttribute("data", workMapper.selectByPrimaryKey(id));
 		

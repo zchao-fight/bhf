@@ -267,6 +267,7 @@ function createResource(type, seq, geometry) {
         $.ajaxSettings.async = true;
 
 
+
         $("#submitResourceButton").unbind("click").bind("click", function () {
             submitFacilityData();
         });
@@ -897,7 +898,7 @@ function saveLayer() {
     $('#layerName').val('');
     $('#layerRemark').val('');
 
-    $('#myModal').modal('hide');
+
 
 
     // var savetime = new Date().Format("yyyy/MM/dd hh:mm:ss");
@@ -916,6 +917,8 @@ function saveLayer() {
     }, function () {
         alert('图层保存成功');
     });
+
+    $('#mySaveLayerModal').modal('hide');
 
 }
 
